@@ -1,0 +1,90 @@
+/* https://velog.io/@jehjong/CSS%EC%97%90-%ED%8F%B0%ED%8A%B8-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-%EC%9B%B9%ED%8F%B0%ED%8A%B8-%ED%8F%B0%ED%8A%B8-%ED%8C%8C%EC%9D%BC */
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: "Pretendard-Regular", sans-serif;
+  font-size: 1rem;
+}
+
+#outer {
+  /* text-align: center; */
+  margin: 5rem 20rem;
+}
+
+#create-top {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px auto;
+}
+#member-id > img {
+  width: 1rem;
+  margin: 0 0.3rem 0 0;
+}
+#box {
+  text-align: center;
+  border-radius: 10px;
+  margin-top: 1rem;
+  /* border: 1px solid gray;
+  border-radius: 10px; */
+  box-shadow: 1.2em 0.5em 0.4em #f79466, -1em -0.5em 0.4em #ffdac9;
+  /* box-shadow: https://developer.mozilla.org/ko/docs/Web/CSS/box-shadow */
+  padding: 1.5rem;
+}
+#box-top {
+  margin: 1rem auto;
+  display: flex;
+  justify-content: center;
+}
+#local-select {
+  width: 9.5rem;
+  height: 1.6rem;
+  border-radius: 3px;
+  margin: auto 1rem;
+}
+#input-title {
+  width: 30rem;
+  height: 1.3rem;
+}
+
+#contents {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#image-container {
+  width: 5rem;
+}
+#preview-image {
+  width: 10rem;
+  margin: auto 1rem;
+  object-fit: contain;
+  /*object-fit: https://nykim.work/86 */
+}
+
+#input-post {
+  width: 30rem;
+  height: 10rem;
+}
+
+#post {
+  width: 10rem;
+  height: 2.5rem;
+  margin: 2rem 0 0 10rem;
+  border: 0;
+  border-radius: 4rem;
+  background-color: #ffdac9;
+}
+
+#post:hover {
+  background-color: #f79466;
+}
+
+li {
+  list-style: none;
+}
