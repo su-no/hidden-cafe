@@ -3,7 +3,7 @@
   --color-brown: #ceb292;
 }
 
-button {
+#page-view-post button {
   border: none;
   background-color: transparent;
   padding: 5px;
@@ -12,24 +12,24 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+#page-view-post button:hover {
   color: var(--color-orange);
   transition: 200ms;
 }
 
-.container {
+#page-view-post .container {
   background-color: white;
   width: 1000px;
   margin: auto;
   padding: 20px;
 }
 
-.post {
+#page-view-post .post {
   margin: 20px;
   width: 960px;
 }
 
-.post-header {
+#page-view-post .post-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -37,117 +37,117 @@ button:hover {
   margin-bottom: 20px;
 }
 
-.post-user {
+#page-view-post .post-user {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.post-profile-img {
+#page-view-post .post-profile-img {
   width: 60px;
   margin-right: 10px;
 }
 
-.post-user-name {
+#page-view-post .post-user-name {
   font-size: 32px;
 }
 
-.post-create-date {
+#page-view-post .post-create-date {
   color: darkgrey;
   font-size: 20px;
 }
 
-.post-box {
+#page-view-post .post-box {
   /* border: 1px solid darkgrey; */
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   padding: 30px;
   margin-bottom: 30px;
 }
 
-.bookmark {
+#page-view-post .bookmark {
   text-align: right;
   font-size: 20px;
   cursor: pointer;
 }
 
-.bookmark i {
+#page-view-post .bookmark i {
   color: var(--color-brown);
 }
 
-.bookmark i:hover {
+#page-view-post .bookmark i:hover {
   color: var(--color-orange);
   transition: 200ms;
 }
 
-.post-container {
+#page-view-post .post-container {
   display: flex;
   flex-direction: row;
 }
 
-.post-img {
+#page-view-post .post-img {
   width: 300px;
   margin-right: 30px;
 }
 
-.title {
+#page-view-post .title {
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 16px;
 }
 
-.description {
+#page-view-post .description {
   font-size: 18px;
   line-height: 2.2;
 }
 
-.post-buttons {
+#page-view-post .post-buttons {
   text-align: right;
 }
 
-.comment-wrapper {
+#page-view-post .comment-wrapper {
   width: 960px;
   /* padding: 20px; */
   margin: auto;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
-.comments {
+#page-view-post .comments {
   width: 800px;
   margin: auto;
   padding: 30px 20px 20px 20px;
 }
 
-.comment-row {
+#page-view-post .comment-row {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding-bottom: 10px;
 }
 
-.comment-user {
+#page-view-post .comment-user {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-right: 20px;
 }
 
-.comment-profile-img {
+#page-view-post .comment-profile-img {
   width: 40px;
   margin-right: 10px;
 }
 
-.comment-user-name {
+#page-view-post .comment-user-name {
   width: 100px;
 }
 
-.comment-description {
+#page-view-post .comment-description {
   margin-right: 20px;
 }
 
-.comment-create-date {
+#page-view-post .comment-create-date {
   margin-right: 25px;
 }
 
-.new-comment {
+#page-view-post .new-comment {
   padding: 0 4px;
   font-size: 16px;
   width: 500px;

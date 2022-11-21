@@ -3,172 +3,50 @@
     - 플레이스홀더로 대체
   2. 로그인 / 회원가입 레이아웃 분리
  -->
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>로그인/회원가입</title>
-    <script
-      src="https://kit.fontawesome.com/60d598cd3f.js"
-      crossorigin="anonymous"></script>
-    <!-- CSS -->
-    <style>
-      * {
-        padding: 0;
-        margin: 0;
-        border: none;
-      }
+<script src="https://kit.fontawesome.com/60d598cd3f.js" crossorigin="anonymous"></script>
+<div id="page-login">
+  <!-- 로그인 & 가입창 -->
+  <div id="authPage">
+    <div id="authWrapper">
+      <h1 id="authTitle">
+        <i class="fa-solid fa-mug-hot fa-lg"></i>
+      </h1>
+      <form onsubmit="handleAuth(event)">
+        <!-- 이메일 입력창 -->
+        <div class="authInput">
+          <input id="email" type="text" placeholder="이메일" />
+        </div>
+        <!-- 비밀번호 입력창 -->
+        <div class="authInput">
+          <input id="pw" type="password" placeholder="비밀번호" />
+        </div>
+        <!-- 아이디 저장 체크박스 -->
+        <div id="rememberIdArea">
+          <label for="rememberId"> <input type="checkbox" id="rememberId" /> 아이디 기억하기 </label>
+        </div>
 
-      #authPage {
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      #authWrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        width: 450px;
-        padding: 30px;
-        box-sizing: border-box;
-        border-radius: 5px;
-        background-color: #cdb292;
-      }
-
-      #authTitle {
-        text-align: center;
-        font-size: 24px;
-        margin-bottom: 15px;
-      }
-
-      i {
-        font-size: 20px;
-      }
-
-      #email,
-      #pw {
-        width: 330px;
-        height: 30px;
-        padding: 0 10px;
-        box-sizing: border-box;
-        margin-top: 10px;
-        border-radius: 5px;
-        background-color: #f8f8f8;
-      }
-
-      #rememberIdArea {
-        margin-top: 10px;
-        margin-bottom: 25px;
-        display: flex;
-        justify-content: flex-end;
-        font-size: 12px;
-        color: rgb(80, 79, 79);
-      }
-
-      #authBtn {
-        width: 100%;
-        height: 50px;
-        border-radius: 5px;
-        font-size: 20px;
-        font-weight: bolder;
-        color: white;
-        background-color: black;
-        cursor: pointer;
-      }
-
-      .joinSection {
-        margin-top: 20px;
-        text-align: center;
-        color: #ffffff;
-        cursor: pointer;
-      }
-
-      .joinSection:hover {
-        font-weight: bolder;
-      }
-
-      .line {
-        margin-top: 20px;
-        width: 100%;
-        border: 0.2px solid black;
-      }
-
-      .socialBtns {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 20px;
-      }
-
-      /* .socialArea {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      } */
-
-      #googleIco {
-        margin-top: 20px;
-        width: 45px;
-        background-color: rgb(0, 0, 0);
-        color: rgb(255, 255, 255);
-        cursor: pointer;
-        padding: 10px;
-        border-radius: 50%;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- 로그인 & 가입창 -->
-    <div id="authPage">
-      <div id="authWrapper">
-        <h1 id="authTitle">
-          <i class="fa-solid fa-mug-hot fa-lg"></i>
-        </h1>
-        <form onsubmit="handleAuth(event)">
-          <!-- 이메일 입력창 -->
-          <div class="authInput">
-            <input id="email" type="text" placeholder="이메일" />
+        <section id="authBtnSection">
+          <!-- 로그인 / 아이디 저장 -->
+          <div class="loginSection">
+            <button type="submit" id="authBtn">로그인</button>
           </div>
-          <!-- 비밀번호 입력창 -->
-          <div class="authInput">
-            <input id="pw" type="password" placeholder="비밀번호" />
+          <!-- <hr class="line" /> -->
+          <!-- 가입 -->
+          <div class="joinSection">
+            <p id="authToggle" onclick="onToggle()">이메일로 가입하기</p>
           </div>
-          <!-- 아이디 저장 체크박스 -->
-          <div id="rememberIdArea">
-            <label for="rememberId">
-              <input type="checkbox" id="rememberId" /> 아이디 기억하기
-            </label>
-          </div>
-
-          <section id="authBtnSection">
-            <!-- 로그인 / 아이디 저장 -->
-            <div class="loginSection">
-              <button type="submit" id="authBtn">로그인</button>
-            </div>
-            <!-- <hr class="line" /> -->
-            <!-- 가입 -->
-            <div class="joinSection">
-              <p id="authToggle" onclick="onToggle()">이메일로 가입하기</p>
-            </div>
-          </section>
-          <hr class="line" />
-        </form>
-        <!-- 구글 로그인 -->
-        <section class="socialBtns">
-          <div class="socialDesc">구글 계정으로 시작하기</div>
-          <button id="googleIco" name="google" onclick="socialLogin(event)">
-            <span>
-              <i class="fa-brands fa-google"></i>
-            </span>
-          </button>
         </section>
-      </div>
+        <hr class="line" />
+      </form>
+      <!-- 구글 로그인 -->
+      <section class="socialBtns">
+        <div class="socialDesc">구글 계정으로 시작하기</div>
+        <button id="googleIco" name="google" onclick="socialLogin(event)">
+          <span>
+            <i class="fa-brands fa-google"></i>
+          </span>
+        </button>
+      </section>
     </div>
-  </body>
-</html>
+  </div>
+</div>
