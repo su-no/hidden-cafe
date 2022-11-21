@@ -15,6 +15,7 @@ const routes = {
   '/mypage': '/pages/mypage.html',
   '/login': '/pages/login.html',
   '/bookmark': '/pages/bookmark.html',
+  '/view-post': '/pages/view-post.html',
   404: '/pages/404.html',
 };
 
