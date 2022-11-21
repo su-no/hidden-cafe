@@ -1,0 +1,111 @@
+:root {
+  --color-orange: #ec5e39;
+  --color-brown: #ceb292;
+}
+
+#page-bookmark * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#page-bookmark button {
+  border: none;
+  background-color: transparent;
+  padding: 5px;
+  font-size: 16px;
+  color: lightgrey;
+  cursor: pointer;
+}
+
+#page-bookmark button:hover {
+  color: var(--color-orange);
+  transition: 200ms;
+}
+
+#page-bookmark .container {
+  background-color: white;
+  width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+#page-bookmark .post {
+  margin: 20px;
+  width: 960px;
+}
+
+#page-bookmark .post-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#page-bookmark .post-user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#page-bookmark .post-profile-img {
+  width: 60px;
+  margin-right: 10px;
+}
+
+#page-bookmark .post-user-name {
+  font-size: 32px;
+}
+
+#page-bookmark .post-create-date {
+  color: darkgrey;
+  font-size: 20px;
+}
+
+#page-bookmark .post-box {
+  /* border: 1px solid darkgrey; */
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
+#page-bookmark .bookmark {
+  text-align: right;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#page-bookmark .bookmark i {
+  color: var(--color-brown);
+}
+
+#page-bookmark .bookmark i:hover {
+  color: var(--color-orange);
+  transition: 200ms;
+}
+
+#page-bookmark .post-container {
+  display: flex;
+  flex-direction: row;
+}
+
+#page-bookmark .post-img {
+  width: 300px;
+  margin-right: 30px;
+}
+
+#page-bookmark .title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+#page-bookmark .description {
+  font-size: 18px;
+  line-height: 2.2;
+}
+
+#page-bookmark .post-buttons {
+  text-align: right;
+}

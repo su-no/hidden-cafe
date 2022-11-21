@@ -14,7 +14,7 @@ const routes = {
   '/create-post': '/pages/create-post.html',
   '/mypage': '/pages/mypage.html',
   '/login': '/pages/login.html',
-  '/bookmark': '/pages/main.html',
+  '/bookmark': '/pages/bookmark.html',
   404: '/pages/404.html',
 };
 
