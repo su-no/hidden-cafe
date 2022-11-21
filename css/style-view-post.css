@@ -78,6 +78,7 @@
 
 #page-view-post .bookmark i {
   color: var(--color-brown);
+  cursor: pointer;
 }
 
 #page-view-post .bookmark i:hover {

@@ -137,11 +137,11 @@
 #page-main .bookmark {
   text-align: right;
   font-size: 20px;
-  cursor: pointer;
 }
 
 #page-main .bookmark i {
   color: var(--color-brown);
+  cursor: pointer;
 }
 
 #page-main .bookmark i:hover {
