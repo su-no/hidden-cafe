@@ -1,48 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="../css/style-create-post.css" rel="stylesheet" />
-    <title>Document</title>
-  </head>
-  <body>
-    <div id="outer">
-      <div id="create-top">
-        <span id="member-id"
-          ><img src="../img/profile-img.png" />아이디 들어갈 곳
-        </span>
-        <sapn id="date">자동으로 날짜 들어갈 곳</sapn>
-      </div>
-      <div id="box">
-        <div id="create-div">
-          <div id="box-top">
-            <select id="local-select">
-              <option value="서울">서울</option>
-              <option value="대전">대전</option>
-              <option value="대구">대구</option>
-              <option value="부산">부산</option>
-            </select>
-            <input id="input-title" placeholder="제목" />
-          </div>
-          <div id="contents">
-            <div class="image-container">
-              <img id="preview-image" src="../img/upload.png" />
-              <input style="display: none" type="file" id="input-image" />
-            </div>
-            <textarea
-              col="50"
-              rows="10"
-              spellcheck="false"
-              id="input-post"
-              placeholder="포스트 할 내용을 입력하세요"
-            ></textarea>
-          </div>
-        </div>
-        <button id="post">포스트</button>
-      </div>
+<link href="../css/style-create-post.css" rel="stylesheet" />
+<div id="page-create-post">
+  <div id="outer">
+    <div id="create-top">
+      <span id="member-id"><img src="/img/profile-img.png" />아이디 들어갈 곳 </span>
+      <sapn id="date">자동으로 날짜 들어갈 곳</sapn>
     </div>
-    <script type="text/javascript" src="/js/script-create-post.js"></script>
-  </body>
-</html>
+    <div id="box">
+      <div id="create-div">
+        <div id="box-top">
+          <select id="local-select">
+            <option value="서울">서울</option>
+            <option value="대전">대전</option>
+            <option value="대구">대구</option>
+            <option value="부산">부산</option>
+          </select>
+          <input id="input-title" placeholder="제목" />
+        </div>
+        <div id="contents">
+          <div class="image-container">
+            <img id="preview-image" src="/img/upload.png" />
+            <input style="display: none" type="file" id="input-image" />
+          </div>
+          <input id="input-post" placeholder="포스트 할 내용을 입력하세요" />
+        </div>
+      </div>
+      <button id="post">포스트</button>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="/js/script-create-post.js"></script>
