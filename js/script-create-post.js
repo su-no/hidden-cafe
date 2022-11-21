@@ -9,7 +9,6 @@ document.getElementById("date").innerHTML = `${year}. ${month}. ${day}`;
 //참고: https://iamiet.tistory.com/m/68
 //참고: https://dahanweb.tistory.com/58
 //출처: http://yoonbumtae.com/?p=3304
-
 const realUpload = document.querySelector("#input-image");
 const upload = document.querySelector(".image-container");
 
