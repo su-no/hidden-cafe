@@ -6,10 +6,17 @@
   font-weight: 400;
   font-style: normal;
 }
+* {
+  font-family: "Pretendard-Regular", sans-serif;
+}
 
 body {
   font-family: "Pretendard-Regular", sans-serif;
   font-size: 1rem;
+}
+
+li {
+  list-style: none;
 }
 
 #outer {
@@ -28,11 +35,12 @@ body {
 }
 #box {
   text-align: center;
+  background-color: #faeee9;
   border-radius: 10px;
   margin-top: 1rem;
   /* border: 1px solid gray;
   border-radius: 10px; */
-  box-shadow: 1.2em 0.5em 0.4em #f79466, -1em -0.5em 0.4em #ffdac9;
+  /* box-shadow: 1.2em 0.5em 0.4em #f79466, -1em -0.5em 0.4em #ffdac9; */
   /* box-shadow: https://developer.mozilla.org/ko/docs/Web/CSS/box-shadow */
   padding: 1.5rem;
 }
@@ -43,13 +51,17 @@ body {
 }
 #local-select {
   width: 9.5rem;
-  height: 1.6rem;
+  height: 2.5rem;
   border-radius: 3px;
-  margin: auto 1rem;
+  border: 0;
+  margin: auto 1.1rem;
 }
 #input-title {
   width: 30rem;
-  height: 1.3rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 5px;
+  padding: 3px 10px;
 }
 
 #contents {
@@ -64,14 +76,22 @@ body {
   width: 10rem;
   margin: auto 1rem;
   object-fit: contain;
+  border-radius: 35px;
+  box-shadow: 0.3rem 0.3rem 0.4rem gray;
   /*object-fit: https://nykim.work/86 */
 }
 
+/* 게시글 내용 */
 #input-post {
   width: 30rem;
   height: 10rem;
+  padding: 10px;
+  border: 0;
+  border-radius: 5px;
+  font-family: "Pretendard-Regular";
 }
 
+/* 포스트 버튼 */
 #post {
   width: 10rem;
   height: 2.5rem;
@@ -83,8 +103,4 @@ body {
 
 #post:hover {
   background-color: #f79466;
-}
-
-li {
-  list-style: none;
 }
