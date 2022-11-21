@@ -21,7 +21,7 @@ header {
   font-style: normal;
 }
 /* 주황 첫 번째 라인 */
-.title {
+header .title {
   display: flex;
   height: 43px;
   line-height: 43px;
@@ -34,30 +34,30 @@ header {
 }
 
 /* HELLO WORLD! */
-h2 {
+header h2 {
   display: block;
   font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
   color: black;
   font: bolder;
 }
-.login a {
+header .login a {
   color: black;
   text-decoration: none;
   letter-spacing: 3px;
   font-weight: 800;
   font-size: 15px;
 }
-.login a:hover {
+header .login a:hover {
   color: #cdb292;
   transition: 200ms;
 }
-.login li {
+header .login li {
   list-style: none;
 }
 
 /* 베이지 두 번째 라인 */
 
-.navi {
+header .navi {
   display: flex;
   align-items: center;
   height: 65px;
@@ -66,13 +66,13 @@ h2 {
   padding: 5px 30px;
 }
 
-.navi-logo {
+header .navi-logo {
   display: flex;
   text-decoration: none;
 }
 
 /* 커피잔 로고 */
-.coffeecup {
+header .coffeecup {
   display: inline-flex;
   padding-right: 5px;
 }
@@ -84,7 +84,7 @@ h2 {
   font-weight: 700;
   font-style: normal;
 }
-.navi h2 {
+header .navi h2 {
   display: block;
   font-size: 25px;
   font-family: 'PyeongChangPeace-Bold';
@@ -95,7 +95,7 @@ h2 {
   font-size: 40px;
   margin: 0;
 }
-.nav-links {
+header .nav-links {
   display: flex;
   justify-content: space-between;
   width: 30%;
@@ -107,7 +107,7 @@ h2 {
   font-size: 20px;
   list-style: none;
 }
-.nav-links a {
+header .nav-links a {
   color: black;
   text-decoration: none;
   letter-spacing: 3px;
@@ -118,7 +118,7 @@ h2 {
   color: rgb(255, 81, 38);
   transition: 200ms;
 }
-.nav-links li {
+header .nav-links li {
   padding: 8px 12px;
 }
 
@@ -143,28 +143,28 @@ body[data-darkmode='on'] {
 }
 
 /* Darkmode Toggle */
-#toggle {
+header #toggle {
   display: inline-flex;
   padding: 5px;
   border-radius: 1.5em;
   /* background-color: #666; */
 }
-#toggle i {
+header #toggle i {
   font-size: 1em;
   padding: 5px;
   background-color: #cdb292;
   color: #666;
 }
-#light-mode {
+header #light-mode {
   border-radius: 50% 0 0 50%;
 }
-#dark-mode {
+header #dark-mode {
   border-radius: 0 50% 50% 0;
 }
-#toggle input {
+header #toggle input {
   display: none;
 }
-#toggle input[type='radio']:checked + label > i {
+header #toggle input[type='radio']:checked + label > i {
   background-color: rgb(255, 81, 38);
   color: #cdb292;
   transition: all 0.3s ease-in-out;
