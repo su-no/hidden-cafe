@@ -16,6 +16,16 @@
         margin: 0;
         border: none;
       }
+      .leftside {
+        margin: 20px;
+        height: 250px;
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
       #profilePage {
         height: 100vh;
         display: flex;
@@ -23,8 +33,8 @@
         align-items: center;
       }
       #profileWrapper {
-        width: 550px;
-        padding: 50px;
+        width: 450px;
+        padding: 20px;
         box-sizing: border-box;
         border-radius: 5px;
         background-color: #cdb292;
@@ -34,7 +44,6 @@
       }
       #profileForm {
         display: flex;
-        /* flex-direction: column; */
         justify-content: space-around;
         align-items: center;
         text-align: center;
@@ -52,6 +61,20 @@
         border-radius: 50%;
       }
 
+      .rightside {
+        margin: 20px;
+        height: 250px;
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .infoLabel {
+        width: 200px;
+        margin-bottom: 20px;
+      }
+
       #profileImgUpBtn,
       #profileConfirm,
       #cancelBtn {
@@ -64,17 +87,16 @@
         font-size: 13px;
       }
 
+      #cancelBtn {
+        margin-left: 10px;
+      }
+
       #profileImgUpBtn:hover,
       #profileConfirm:hover,
       #cancelBtn:hover {
         color: #000000;
         background-color: white;
         border: 1px solid black;
-      }
-
-      .in {
-        display: flex;
-        flex-direction: column;
       }
 
       #profileNickname,
@@ -88,9 +110,9 @@
       }
 
       #infoBtns {
-        position: absolute;
-        bottom: 290px;
-        right: 543px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
       }
     </style>
   </head>
@@ -105,28 +127,36 @@
               <img id="profileView" src="/assets/blankProfile.webp" />
             </div>
             <!-- 프사 바꾸기 버튼 -->
-            <label id="profileImgUpBtn" for="imgInput">이미지 업로드</label>
-            <!-- 인풋은 disply none -->
-            <input
-              onchange="onFileChange(event)"
-              id="imgInput"
-              type="file"
-              accept="images/*" />
+            <div>
+              <label id="profileImgUpBtn" for="imgInput">이미지 업로드</label>
+              <!-- 인풋은 disply none -->
+              <input
+                onchange="onFileChange(event)"
+                id="imgInput"
+                type="file"
+                accept="images/*" />
+            </div>
           </div>
           <!-- 마이페이지 오른쪽 사이드 -->
           <div class="rightside">
-            <input
-              id="profileNickname"
-              type="text"
-              placeholder="성견린치"
-              value="" />
-            <input
-              disabled
-              id="profileEmail"
-              type="text"
-              placeholder="mkdavdi123@gmail.com"
-              value="" />
-            <input id="profileBtn" type="submit" value="수정 완료하기" />
+            <!-- 닉네임 홀더 -->
+            <div class="infoLabel">
+              <div class="holder">
+                <input
+                  id="profileNickname"
+                  type="text"
+                  placeholder="닉네임"
+                  value="" />
+                <!-- 이메일 홀더 -->
+                <input
+                  disabled
+                  id="profileEmail"
+                  type="text"
+                  placeholder="test@gmail.com"
+                  value="" />
+              </div>
+            </div>
+            <!-- <input id="profileBtn" type="submit" value="수정 완료하기" /> -->
             <div id="infoBtns">
               <label id="profileConfirm" for="profileBtn">완료</label>
               <label id="cancelBtn" for="">취소</label>
