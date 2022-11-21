@@ -1,25 +1,30 @@
+:root {
+  --color-orange: #ec5e39;
+  --color-brown: #ceb292;
+}
+
 #page-main * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-#page-main ul {
-  width: 300px;
-  height: 990px;
 
-  list-style-type: none;
-
-  padding: 0px;
-  margin-left: 50px;
-
-  background: #ff6347;
-
-  overflow: auto;
-
-  float: left;
+#page-main #main {
+  display: flex;
+  flex-direction: row;
 }
 
-#page-main li a {
+#page-main #sidebar {
+  width: 300px;
+  min-width: 200px;
+  height: 220px;
+  list-style-type: none;
+  padding: 0px;
+  margin-right: 30px;
+  background: #ff6347;
+}
+
+#page-main #sidebar li a {
   text-decoration: none;
   padding: 10px;
   display: block;
@@ -28,12 +33,12 @@
   text-align: center;
 }
 
-#page-main li a:hover {
+#page-main #sidebar li a:hover {
   background: #333;
   color: #fff;
 }
 
-#page-main li a.home {
+#page-main #sidebar li a.home {
   background: #333;
   color: #fff;
 }
@@ -61,4 +66,105 @@
   background-repeat: no-repeat;
   background-position: 5% 50%;
   background-size: 30% 70%;
+}
+
+#page-main button {
+  border: none;
+  background-color: transparent;
+  padding: 5px;
+  font-size: 16px;
+  color: lightgrey;
+  cursor: pointer;
+}
+
+#page-main button:hover {
+  color: var(--color-orange);
+  transition: 200ms;
+}
+
+#page-main .container {
+  background-color: white;
+  width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+#page-main .post {
+  margin: 20px;
+  width: 960px;
+}
+
+#page-main .post-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#page-main .post-user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#page-main .post-profile-img {
+  width: 60px;
+  margin-right: 10px;
+}
+
+#page-main .post-user-name {
+  font-size: 32px;
+}
+
+#page-main .post-create-date {
+  color: darkgrey;
+  font-size: 20px;
+}
+
+#page-main .post-box {
+  /* border: 1px solid darkgrey; */
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
+#page-main .bookmark {
+  text-align: right;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#page-main .bookmark i {
+  color: var(--color-brown);
+}
+
+#page-main .bookmark i:hover {
+  color: var(--color-orange);
+  transition: 200ms;
+}
+
+#page-main .post-container {
+  display: flex;
+  flex-direction: row;
+}
+
+#page-main .post-img {
+  width: 300px;
+  margin-right: 30px;
+}
+
+#page-main .title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+#page-main .description {
+  font-size: 18px;
+  line-height: 2.2;
+}
+
+#page-main .post-buttons {
+  text-align: right;
 }
