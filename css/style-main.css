@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ul {
+  width: 300px;
+  height: 990px;
+
+  list-style-type: none;
+
+  padding: 0px;
+  margin-left: 50px;
+
+  background: #ff6347;
+
+  overflow: auto;
+
+  float: left;
+}
+
+li a {
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+}
+
+li a:hover {
+  background: #333;
+  color: #fff;
+}
+
+li a.home {
+  background: #333;
+  color: #fff;
+}
+#container {
+  width: 1200px;
+  margin: 20px auto;
+}
+
+#contents {
+  width: 900px;
+  height: 300px;
+
+  margin: 40px;
+
+  background-color: #f7f7f7;
+  color: red;
+
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid black;
+
+  background-image: url("/css/city.jpg");
+  background-repeat: no-repeat;
+  background-position: 5% 50%;
+  background-size: 30% 70%;
+}
