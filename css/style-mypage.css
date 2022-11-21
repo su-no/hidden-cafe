@@ -3,6 +3,16 @@
   margin: 0;
   border: none;
 }
+#page-mypage .leftside {
+  margin: 20px;
+  height: 250px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #page-mypage #profilePage {
   height: 100vh;
   display: flex;
@@ -10,8 +20,8 @@
   align-items: center;
 }
 #page-mypage #profileWrapper {
-  width: 550px;
-  padding: 50px;
+  width: 450px;
+  padding: 20px;
   box-sizing: border-box;
   border-radius: 5px;
   background-color: #cdb292;
@@ -21,7 +31,6 @@
 }
 #page-mypage #profileForm {
   display: flex;
-  /* flex-direction: column; */
   justify-content: space-around;
   align-items: center;
   text-align: center;
@@ -39,6 +48,20 @@
   border-radius: 50%;
 }
 
+#page-mypage .rightside {
+  margin: 20px;
+  height: 250px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#page-mypage .infoLabel {
+  width: 200px;
+  margin-bottom: 20px;
+}
+
 #page-mypage #profileImgUpBtn,
 #profileConfirm,
 #cancelBtn {
@@ -47,8 +70,12 @@
   border-radius: 5px;
   color: rgb(255, 255, 255);
   cursor: pointer;
-  width: 0px;
+  width: 30px;
   font-size: 13px;
+}
+
+#page-mypage #cancelBtn {
+  margin-left: 10px;
 }
 
 #page-mypage #profileImgUpBtn:hover,
@@ -57,11 +84,6 @@
   color: #000000;
   background-color: white;
   border: 1px solid black;
-}
-
-#page-mypage .in {
-  display: flex;
-  flex-direction: column;
 }
 
 #page-mypage #profileNickname,
@@ -75,7 +97,7 @@
 }
 
 #page-mypage #infoBtns {
-  position: absolute;
-  bottom: 290px;
-  right: 543px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
