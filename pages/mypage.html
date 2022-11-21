@@ -15,12 +15,25 @@
           <!-- 프사 바꾸기 버튼 -->
           <label id="profileImgUpBtn" for="imgInput">이미지 업로드</label>
           <!-- 인풋은 disply none -->
-          <input onchange="onFileChange(event)" id="imgInput" type="file" accept="images/*" />
+          <input
+            onchange="onFileChange(event)"
+            id="imgInput"
+            type="file"
+            accept="images/*" />
         </div>
         <!-- 마이페이지 오른쪽 사이드 -->
         <div class="rightside">
-          <input id="profileNickname" type="text" placeholder="성견린치" value="" />
-          <input disabled id="profileEmail" type="text" placeholder="mkdavdi123@gmail.com" value="" />
+          <input
+            id="profileNickname"
+            type="text"
+            placeholder="성견린치"
+            value="" />
+          <input
+            disabled
+            id="profileEmail"
+            type="text"
+            placeholder="mkdavdi123@gmail.com"
+            value="" />
           <input id="profileBtn" type="submit" value="수정 완료하기" />
           <div id="infoBtns">
             <label id="profileConfirm" for="profileBtn">완료</label>
