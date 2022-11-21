@@ -1,8 +1,9 @@
-#page-mypage * {
+#main-page * {
   padding: 0;
   margin: 0;
   border: none;
 }
+
 #page-mypage .leftside {
   margin: 20px;
   height: 250px;
@@ -14,14 +15,15 @@
 }
 
 #page-mypage #profilePage {
-  height: 100vh;
+  margin-top: 45px;
+  height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 #page-mypage #profileWrapper {
-  width: 450px;
-  padding: 20px;
+  width: 500px;
+  padding: 35px;
   box-sizing: border-box;
   border-radius: 5px;
   background-color: #cdb292;
@@ -70,7 +72,6 @@
   border-radius: 5px;
   color: rgb(255, 255, 255);
   cursor: pointer;
-  width: 30px;
   font-size: 13px;
 }
 
@@ -94,9 +95,11 @@
   box-sizing: border-box;
   margin-top: 10px;
   border-radius: 5px;
+  font-size: 14px;
 }
 
 #page-mypage #infoBtns {
+  margin-top: 10px;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
