@@ -1,80 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <!-- 다크모드 구현 css -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.0/css/all.css">
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.0/css/all.css"
+    />
     <!-- CSS 파일 -->
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/style-create-post.css">
-    <link rel="stylesheet" href="/css/style-login.css">
-    <link rel="stylesheet" href="/css/style-main.css">
-    <link rel="stylesheet" href="/css/style-mypage.css">
-    <link rel="stylesheet" href="/css/style-view-post.css">
-    <link rel="stylesheet" href="/css/style-bookmark.css">
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/style-create-post.css" />
+    <link rel="stylesheet" href="/css/style-login.css" />
+    <link rel="stylesheet" href="/css/style-main.css" />
+    <link rel="stylesheet" href="/css/style-mypage.css" />
+    <link rel="stylesheet" href="/css/style-view-post.css" />
+    <link rel="stylesheet" href="/css/style-bookmark.css" />
     <title>Hidden Cafe</title>
     <script defer src="/js/main.js" type="module"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <div class="title">
-            <h2>HELLO WORLD!</h2>
-            <div class="single_word">
-                <p>집 근처에서 커피콩을 볶을 때면, 나는 서둘러 창문을 열어 그 향기를 모두 받아들인다. - 장 자크 루소-</p>
+      <div class="title">
+        <h2>HELLO WORLD!</h2>
+        <div class="single_word">
+          <p>
+            집 근처에서 커피콩을 볶을 때면, 나는 서둘러 창문을 열어 그 향기를
+            모두 받아들인다. - 장 자크 루소-
+          </p>
+        </div>
+        <!-- 시간 지나면서 여러가지 명언이 슬라이드되면 좋겠다. -->
+        <ul class="login">
+          <li>
+            <a href="#login">로그인</a>
+          </li>
+        </ul>
+        <!-- js addeventListener click 로그인눌러서 로그인 성공하면 없어지게 하고싶다  -->
+      </div>
+
+      <div class="navi">
+        <a class="navi-logo" href="#main">
+          <img
+            class="coffeecup"
+            src="https://img.icons8.com/ios-filled/50/null/cafe.png"
+          />
+          <!-- https://icons8.com/icons/set/coffee -->
+          <h2>히든카페</h2>
+          <!-- 폰트만 적용해? 아님 이미지를 넣어? -->
+        </a>
+
+        <ul class="nav-links">
+          <li>
+            <!-- <a href="#">다크모드</a> -->
+            <div id="toggle">
+              <input
+                type="radio"
+                name="toggle"
+                id="toggle-radio-light"
+                checked
+              />
+              <label for="toggle-radio-light">
+                <i id="light-mode" class="fas fa-sun"> </i>
+              </label>
+              <input type="radio" name="toggle" id="toggle-radio-dark" />
+              <label for="toggle-radio-dark">
+                <i id="dark-mode" class="fas fa-moon"> </i>
+              </label>
             </div>
-            <!-- 시간 지나면서 여러가지 명언이 슬라이드되면 좋겠다. -->
-            <ul class="login">
-                <li>
-                    <a href="#login">로그인</a>
-                </li>
-            </ul>
-            <!-- js addeventListener click 로그인눌러서 로그인 성공하면 없어지게 하고싶다  -->
-        </div>
-
-        <div class="navi">
-          <a class="navi-logo" href="#main">
-            <img class="coffeecup" src="https://img.icons8.com/ios-filled/50/null/cafe.png"/>
-            <!-- https://icons8.com/icons/set/coffee -->
-            <h2>히든카페</h2>
-            <!-- 폰트만 적용해? 아님 이미지를 넣어? -->
-          </a>
-
-            <ul class="nav-links">
-                <li>
-                <!-- <a href="#">다크모드</a> -->
-                    <div id="toggle">
-                        <input type="radio" name="toggle" id="toggle-radio-light" checked>
-                        <label for="toggle-radio-light">
-                            <i id="light-mode" class="fas fa-sun">
-                            </i>
-                        </label>
-                        <input type="radio" name="toggle" id="toggle-radio-dark">
-                        <label for="toggle-radio-dark">
-                            <i id="dark-mode" class="fas fa-moon">
-                            </i>
-                        </label>
-                    </div>
-                </li>
-                <li>
-                    <a href="#create-post">글쓰기</a>
-                </li>
-                <li>
-                    <a href="#mypage">마이페이지</a>
-                </li>
-                <li>
-                    <a href="#bookmark">북마크</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+          </li>
+          <li>
+            <a href="#create-post">글쓰기</a>
+          </li>
+          <li>
+            <a href="#mypage">마이페이지</a>
+          </li>
+          <li>
+            <a href="#bookmark">북마크</a>
+          </li>
+        </ul>
+      </div>
     </header>
     <div id="main-page"></div>
-</body>
+  </body>
+</html>

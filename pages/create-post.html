@@ -1,7 +1,9 @@
 <div id="page-create-post">
   <div id="outer">
     <div id="create-top">
-      <span id="member-id"><img src="/img/profile-img.png" />아이디 들어갈 곳 </span>
+      <span id="member-id"
+        ><img src="/img/profile-img.png" />아이디 들어갈 곳
+      </span>
       <sapn id="date">자동으로 날짜 들어갈 곳</sapn>
     </div>
     <div id="box">
@@ -20,11 +22,16 @@
             <img id="preview-image" src="/img/upload.png" />
             <input style="display: none" type="file" id="input-image" />
           </div>
-          <input id="input-post" placeholder="포스트 할 내용을 입력하세요" />
+          <textarea
+            col="50"
+            rows="10"
+            spellcheck="false"
+            id="input-post"
+            placeholder="포스트 할 내용을 입력하세요"
+          ></textarea>
         </div>
       </div>
-      <button id="post">포스트</button>
+      <button id="post" onclick="postUpload(event)">포스트</button>
     </div>
   </div>
 </div>
-<script type="text/javascript" src="/js/script-create-post.js"></script>
