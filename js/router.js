@@ -30,4 +30,13 @@ export const handleLocation = async () => {
 
   const mainPage = document.querySelector("#main-page");
   mainPage.innerHTML = html;
+
+  //글 쓰기 화면 렌더링 되자마자 DOM조작 처리(날짜, 아이디 띄우기)
+  if (path == "/create-post") {
+    const date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    document.getElementById("date").innerHTML = `${year}. ${month}. ${day}`;
+  }
 };
