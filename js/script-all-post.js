@@ -55,7 +55,9 @@ export const getpostList = async () => {
         <img class="post-img" src=${postObj.postImg} alt="post-img" />
         <div class="post-content">
           <!-- 제목 -->
-          <a href="#view-post"><h2 class="title">${postObj.title}</h2></a>
+          <a href="#view-post-${postObj.postId}"><h2 class="title">${
+      postObj.title
+    }</h2></a>
           <!-- 설명 -->
           <div class="description">
             ${postObj.contents}
