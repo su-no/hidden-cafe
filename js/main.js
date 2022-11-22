@@ -8,6 +8,7 @@ window.addEventListener("hashchange", handleLocation);
 //
 window.onToggle = onToggle;
 window.handleAuth = handleAuth;
+window.socialLogin = socialLogin;
 window.postUpload = postUpload;
 window.onFileChange = onFileChange;
 window.onLoginButton = onLoginButton;
