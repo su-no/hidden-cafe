@@ -24,6 +24,10 @@ export const handleLocation = async () => {
   const mainPage = document.querySelector("#main-page");
   mainPage.innerHTML = html;
 
+  if (path == "/main") {
+    getpostList();
+  }
+
   if (path == "/create-post") {
     console.log(authService.currentUser);
     //왜인진 모르겠으나 메인을 통해 글쓰기로 와야만 currentUser 데이터를 받아 올 수 있음

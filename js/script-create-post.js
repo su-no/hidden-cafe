@@ -24,7 +24,8 @@ export const postUpload = async (event) => {
   const day = date.getDate();
   const hour = date.getHours();
   const minuites = date.getMinutes();
-  const { uid, email } = authService.currentUser;
+  const tmpProfilImg = "";
+  const { uid, email, photoURL } = authService.currentUser;
   const imgRef = ref(
     storageService,
     `${authService.currentUser.uid}/${uuidv4()}`
@@ -49,9 +50,12 @@ export const postUpload = async (event) => {
       creatorId: uid, //사용자 uid
       email: email, //닉네임없어서 이메일로 대체함
       localname: localname.value, //카테고리 분류시 사용
-      postId: `${uuidv4()}`, //postID 겹치지 않도록 uuid사용
-      profileImg: downloadUrl, //이미지 url
+      // postId: `${uuidv4()}`, //postID 겹치지 않도록 uuid사용
+      postImg: downloadUrl, //이미지 url
+      profilImg: null,
       title: title.value, //게시물 제목
+      nickname: null,
+      bookmark: 0,
       //작성할 땐 북마크 개수 0 그래도 여기서 0으로 정의 해야하나?
     });
     alert("포스트 완료!");
