@@ -31,12 +31,12 @@
 }
 #page-create-post #box {
   text-align: center;
-  background-color: #faeee9;
+  background-color: rgb(225, 210, 191);
   border-radius: 10px;
   margin-top: 1rem;
   /* border: 1px solid gray;
   border-radius: 10px; */
-  /* box-shadow: 1.2em 0.5em 0.4em #f79466, -1em -0.5em 0.4em #ffdac9; */
+  /* box-shadow: 1.2em 0.5em 0.4em rgb(255,81,38), -1em -0.5em 0.4em #ffdac9; */
   /* box-shadow: https://developer.mozilla.org/ko/docs/Web/CSS/box-shadow */
   padding: 1.5rem;
 }
@@ -94,11 +94,12 @@
   margin: 2rem 0 0 10rem;
   border: 0;
   border-radius: 4rem;
-  background-color: #ffdac9;
+  background-color: rgb(255, 81, 38);
 }
 
 #page-create-post #post:hover {
-  background-color: #f79466;
+  background-color: rgb(40, 40, 40);
+  color: white;
 }
 
 #page-create-post li {
