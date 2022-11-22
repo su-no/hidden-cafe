@@ -2,6 +2,7 @@ import { handleLocation } from "./router.js";
 import { onToggle, handleAuth, onLoginButton, socialLogin } from "./login.js";
 import { postUpload, onFileChange } from "./script-create-post.js";
 import { getpostList } from "./script-all-post.js";
+import { changeProfile } from './mypage.js';
 
 window.addEventListener("DOMContentLoaded", handleLocation);
 window.addEventListener("hashchange", handleLocation);
@@ -13,3 +14,4 @@ window.postUpload = postUpload;
 window.onFileChange = onFileChange;
 window.onLoginButton = onLoginButton;
 window.getpostList = getpostList;
+window.changeProfile = changeProfile;
