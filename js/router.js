@@ -8,6 +8,7 @@
 //   }
 // };
 
+<<<<<<< HEAD
 export const routes = {
   "/": "/pages/main.html",
   "/main": "/pages/main.html",
@@ -16,6 +17,17 @@ export const routes = {
   "/login": "/pages/login.html",
   "/bookmark": "/pages/bookmark.html",
   404: "/pages/404.html",
+=======
+const routes = {
+  '/': '/pages/main.html',
+  '/main': '/pages/main.html',
+  '/create-post': '/pages/create-post.html',
+  '/mypage': '/pages/mypage.html',
+  '/login': '/pages/login.html',
+  '/bookmark': '/pages/bookmark.html',
+  '/view-post': '/pages/view-post.html',
+  404: '/pages/404.html',
+>>>>>>> d8473eb8f10e6784954d08999d9a4215bf509cb1
 };
 
 export const handleLocation = async () => {

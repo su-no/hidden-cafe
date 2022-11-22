@@ -23,6 +23,7 @@ header {
 }
 /* 주황 첫 번째 라인 */
 header .title {
+  align-items: center;
   display: flex;
   height: 43px;
   line-height: 43px;
@@ -36,10 +37,17 @@ header .title {
 
 /* HELLO WORLD! */
 header h2 {
+  margin: 0;
   display: block;
   font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
   color: black;
   font: bolder;
+}
+header p {
+  margin: 0;
+}
+header .login {
+  margin: 0;
 }
 header .login a {
   color: black;
@@ -99,7 +107,6 @@ header .navi h2 {
 header .nav-links {
   display: flex;
   justify-content: space-between;
-  width: 30%;
   margin-left: auto;
   margin-bottom: 0;
   padding-left: 0;
