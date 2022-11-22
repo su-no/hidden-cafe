@@ -1,20 +1,20 @@
 import {
   addDoc,
   collection,
-} from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
-import { dbService, authService, storageService } from "./firebase.js";
+} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import { dbService, authService, storageService } from './firebase.js';
 
 import {
   ref,
   uploadString,
   getDownloadURL,
-} from "https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js";
-import { v4 as uuidv4 } from "https://jspm.dev/uuid";
+} from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js';
+import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
 // 포스트 버튼 클릭시 내용 전달 코드
-export const postUpload = async (event) => {
+export const postUpload = async event => {
   event.preventDefault();
-
+  
   const post = document.getElementById("input-post");
   const title = document.getElementById("input-title");
   const localname = document.getElementById("local-select");
@@ -27,14 +27,14 @@ export const postUpload = async (event) => {
   const { uid, email } = authService.currentUser;
   const imgRef = ref(
     storageService,
-    `${authService.currentUser.uid}/${uuidv4()}`
+    `${authService.currentUser.uid}/${uuidv4()}`,
   );
 
   // 프로필 이미지 dataUrl을 Storage에 업로드 후 다운로드 링크를 받아서 photoURL에 저장.
-  const imgDataUrl = localStorage.getItem("imgDataUrl");
+  const imgDataUrl = localStorage.getItem('imgDataUrl');
   let downloadUrl;
   if (imgDataUrl) {
-    const response = await uploadString(imgRef, imgDataUrl, "data_url");
+    const response = await uploadString(imgRef, imgDataUrl, 'data_url');
     downloadUrl = await getDownloadURL(response.ref);
   }
   // console.log(downloadUrl);
@@ -57,10 +57,10 @@ export const postUpload = async (event) => {
     alert("포스트 완료!");
     window.location.hash = "#main";
 
-    post.value = "";
+    post.value = '';
   } catch (error) {
     alert(error);
-    console.log("error in addDoc:", error);
+    console.log('error in addDoc:', error);
   }
 };
 
