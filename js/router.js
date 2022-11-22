@@ -1,12 +1,3 @@
-// import { authService } from './firebase.js';
-
-// export const route = event => {
-//   // 사용자 정보 없으면 a tag의 href 이동 비활성화
-//   const user = authService.currentUser;
-//   if (!user) {
-//     event.preventDefault();
-//   }
-// };
 
 const routes = {
   "/": "/pages/main.html",
@@ -32,21 +23,4 @@ export const handleLocation = async () => {
   const mainPage = document.querySelector("#main-page");
   mainPage.innerHTML = html;
 
-  document.getElementById("root"), innerHTML = html;
-  // mypage 화면 렌더링 되자마자 DOM 조작 처리
-  if (path === "fanLog") {
-    //로그인한 회원의 프로필사진과 닉네임을 화면에 표시해줌.
-    console. log ("authService.currentUser:", authService. currentUser); document. getElementById ("nickname"), textContent = authService.currentUser.displayName?? "4 8";
-    document. getElementById("profileImg").sc =
-    authService.currentUser.photoURL??"../assets/blankProfile.webp"
-    getCommentList();
-    }
-    if (path === "profile") {
-    //프로필 관리 화면 일 때 현재 프로필• 사진과 닉네임 할당
-    document. getElementById("profileview").sc = authService.currentUser.photoURL ?? "/assets/blankProfile.webp" document. getElementById("profileNickname").placeholder authService.currentUser.displayName 7? "48 8";
-    }
-};
-
-export const goToProfile = () => {
-  window. location.hash = "#profile";
 };
