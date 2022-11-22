@@ -17,7 +17,9 @@ a:hover {
   padding: 0;
   box-sizing: border-box;
 }
-
+#pate-main article {
+  margin-bottom: 10px;
+}
 #page-main #main-container {
   display: flex;
   flex-direction: row;
@@ -76,7 +78,7 @@ a:hover {
 
   border: 1px solid black;
 
-  background-image: url('/css/city.jpg');
+  background-image: url("/css/city.jpg");
   background-repeat: no-repeat;
   background-position: 5% 50%;
   background-size: 30% 70%;
@@ -123,12 +125,12 @@ a:hover {
 }
 
 #page-main .post-profile-img {
-  width: 60px;
+  width: 30px;
   margin-right: 10px;
 }
 
 #page-main .post-user-name {
-  font-size: 32px;
+  font-size: 1.2rem;
 }
 
 #page-main .post-create-date {
@@ -138,7 +140,8 @@ a:hover {
 
 #page-main .post-box {
   /* border: 1px solid darkgrey; */
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   padding: 30px;
   margin-bottom: 30px;
 }
@@ -185,4 +188,7 @@ a:hover {
 
 #page-main .post-buttons {
   text-align: right;
+}
+#page-main .noDisplay {
+  display: none;
 }
