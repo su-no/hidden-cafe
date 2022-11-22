@@ -24,12 +24,12 @@
         <section id="authBtnSection">
           <!-- 로그인 / 아이디 저장 -->
           <div class="loginSection">
-            <button type="submit" id="authBtn">로그인</button>
+            <button type="submit" id="authBtn" value="로그인">로그인</button>
           </div>
           <!-- <hr class="line" /> -->
           <!-- 가입 -->
           <div class="joinSection">
-            <p id="authToggle" onclick="onToggle()">이메일로 가입하기</p>
+            <p id="authToggle" onclick="onToggle()">지금 이메일로 가입하기</p>
           </div>
         </section>
         <hr class="line" />
@@ -37,11 +37,15 @@
       <!-- 구글 로그인 -->
       <section class="socialBtns">
         <div class="socialDesc">구글 계정으로 시작하기</div>
-        <button id="googleIco" name="google" onclick="socialLogin(event)">
-          <span>
-            <i class="fa-brands fa-google"></i>
-          </span>
-        </button>
+        <button
+          id="googleIco"
+          name="google"
+          onclick="socialLogin(event)"></button>
+        <div id="icoLabel">
+          <label for="googleIco">
+            <i id="i-google" class="fa-brands fa-google"></i>
+          </label>
+        </div>
       </section>
     </div>
   </div>
