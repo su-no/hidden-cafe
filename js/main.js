@@ -1,5 +1,4 @@
 import { handleLocation } from "./router.js";
-//
 import { onToggle, handleAuth, onLoginButton } from "./login.js";
 import { postUpload, onFileChange } from "./script-create-post.js";
 
