@@ -1,36 +1,80 @@
-// //오늘 날짜 https://www.delftstack.com/ko/howto/html/html-todays-date/
-// date = new Date();
-// year = date.getFullYear();
-// month = date.getMonth() + 1;
-// day = date.getDate();
-// document.getElementById("date").innerHTML = `${year}. ${month}. ${day}`;
+import {
+  addDoc,
+  collection,
+} from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
+import { dbService, authService, storageService } from "./firebase.js";
 
-// //이미지 변경
-// //참고: https://iamiet.tistory.com/m/68
-// //참고: https://dahanweb.tistory.com/58
-// //출처: http://yoonbumtae.com/?p=3304
-// const realUpload = document.querySelector("#input-image");
-// const upload = document.querySelector(".image-container");
+import {
+  ref,
+  uploadString,
+  getDownloadURL,
+} from "https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js";
+import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 
-// upload.addEventListener("click", () => realUpload.click());
+// 포스트 버튼 클릭시 내용 전달 코드
+export const postUpload = async (event) => {
+  event.preventDefault();
+  // document.getElementById("profileBtn").disabled = true;
+  const post = document.getElementById("input-post");
+  const title = document.getElementById("input-title");
+  const localname = document.getElementById("local-select");
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const { uid } = authService.currentUser;
+  const imgRef = ref(
+    storageService,
+    `${authService.currentUser.uid}/${uuidv4()}`
+  );
 
-// function readImage(input) {
-//   // 인풋 태그에 파일이 있는 경우
-//   if (input.files && input.files[0]) {
-//     // 이미지 파일인지 검사 (생략)
-//     // FileReader 인스턴스 생성
-//     const reader = new FileReader();
-//     // 이미지가 로드가 된 경우
-//     reader.onload = (e) => {
-//       const previewImage = document.getElementById("preview-image");
-//       previewImage.src = e.target.result;
-//     };
-//     // reader가 이미지 읽도록 하기
-//     reader.readAsDataURL(input.files[0]);
-//   }
-// }
-// // input file에 change 이벤트 부여
-// const inputImage = document.getElementById("input-image");
-// inputImage.addEventListener("change", (e) => {
-//   readImage(e.target);
-// });
+  // 프로필 이미지 dataUrl을 Storage에 업로드 후 다운로드 링크를 받아서 photoURL에 저장.
+  const imgDataUrl = localStorage.getItem("imgDataUrl");
+  let downloadUrl;
+  if (imgDataUrl) {
+    const response = await uploadString(imgRef, imgDataUrl, "data_url");
+    downloadUrl = await getDownloadURL(response.ref);
+  }
+  // console.log(downloadUrl);
+
+  try {
+    await addDoc(collection(dbService, "post"), {
+      postId: `${year}${month}${day}001`, //지역번호를 쓰면 더 구분하기 쉬운가?
+      title: title.value,
+      contents: post.value,
+      createdAt: `${year}. ${month}. ${day}`,
+      creatorId: uid,
+      profileImg: downloadUrl,
+      // https://simsimjae.tistory.com/405
+      nickname: "nickname",
+      localname: localname.value,
+      //작성할 땐 북마크 개수 0 그래도 여기서 0으로 정의 해야하나?
+    });
+
+    post.value = "";
+  } catch (error) {
+    alert(error);
+    console.log("error in addDoc:", error);
+  }
+};
+
+//Uncaught TypeError: Failed to execute 'readAsDataURL' on 'FileReader': parameter 1 is not of type 'Blob'.오류해결
+//https://stackoverflow.com/questions/32508191/uncaught-typeerror-failed-to-execute-readasdataurl-on-filereader-parameter
+//실시간으로 이미지 변경 안되고 한번더 이미지 버튼 눌러야 변경됨...why??
+export const onFileChange = (event) => {
+  if (window.FileReader) {
+    const theFile = event.target.files[0]; // file 객체
+    const reader = new FileReader();
+    if (theFile && theFile.type.match("image.*")) {
+      reader.readAsDataURL(theFile); // file 객체를 브라우저가 읽을 수 있는 data URL로 읽음.
+    }
+
+    reader.onload = (finishedEvent) => {
+      // 파일리더가 파일객체를 data URL로 변환 작업을 끝났을 때
+      const imgDataUrl = finishedEvent.currentTarget.result;
+      console.log(imgDataUrl);
+      localStorage.setItem("imgDataUrl", imgDataUrl);
+      document.getElementById("preview-image").src = imgDataUrl;
+    };
+  }
+};
