@@ -1,5 +1,5 @@
 import { handleLocation } from "./router.js";
-import { onToggle, handleAuth, onLoginButton } from "./login.js";
+import { onToggle, handleAuth, onLoginButton, socialLogin } from "./login.js";
 import { postUpload, onFileChange } from "./script-create-post.js";
 
 window.addEventListener("DOMContentLoaded", handleLocation);
