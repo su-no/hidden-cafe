@@ -1,4 +1,14 @@
 import { authService } from "./firebase.js";
+import { authService } from './firebase.js';
+import { viewPost } from './view-post.js';
+
+// export const route = event => {
+//   // 사용자 정보 없으면 a tag의 href 이동 비활성화
+//   const user = authService.currentUser;
+//   if (!user) {
+//     event.preventDefault();
+//   }
+// };
 
 const routes = {
   "/": "/pages/main.html",
