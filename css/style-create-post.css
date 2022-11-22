@@ -1,17 +1,12 @@
 /* https://velog.io/@jehjong/CSS%EC%97%90-%ED%8F%B0%ED%8A%B8-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-%EC%9B%B9%ED%8F%B0%ED%8A%B8-%ED%8F%B0%ED%8A%B8-%ED%8C%8C%EC%9D%BC */
-@font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-}
-* {
-  font-family: "Pretendard-Regular", sans-serif;
-}
 
 #page-create-post {
-  font-family: 'Pretendard-Regular', sans-serif;
+  font-family: "Pretendard-Regular", sans-serif;
   font-size: 1rem;
+}
+
+#page-create-post li {
+  list-style: none;
 }
 
 #page-create-post #outer {
@@ -53,7 +48,7 @@
 }
 #page-create-post #input-title {
   width: 30rem;
-  height: 2rem;
+  height: 2.5rem;
   border: 0;
   border-radius: 5px;
   padding: 3px 10px;
@@ -76,12 +71,8 @@
   /*object-fit: https://nykim.work/86 */
 }
 
-<<<<<<< HEAD
 /* 게시글 내용 */
-#input-post {
-=======
 #page-create-post #input-post {
->>>>>>> 488b9ee (Fix: 페이지 css 분리)
   width: 30rem;
   height: 10rem;
   padding: 10px;
@@ -90,12 +81,8 @@
   font-family: "Pretendard-Regular";
 }
 
-<<<<<<< HEAD
 /* 포스트 버튼 */
-#post {
-=======
 #page-create-post #post {
->>>>>>> 488b9ee (Fix: 페이지 css 분리)
   width: 10rem;
   height: 2.5rem;
   margin: 2rem 0 0 10rem;
@@ -107,10 +94,3 @@
 #page-create-post #post:hover {
   background-color: #f79466;
 }
-<<<<<<< HEAD
-=======
-
-#page-create-post li {
-  list-style: none;
-}
->>>>>>> 488b9ee (Fix: 페이지 css 분리)
