@@ -17,7 +17,7 @@
             <option value="대전">대전</option>
             <option value="대구">대구</option>
           </select>
-          <input id="input-title" placeholder="제목" />
+          <input id="input-title" placeholder="제목" maxlength="22" />
         </div>
         <div id="contents">
           <form id="profileForm">
@@ -33,8 +33,9 @@
             </label>
           </form>
           <textarea
-            col="50"
-            rows="10"
+            col="10"
+            rows="1"
+            maxlength="220"
             spellcheck="false"
             id="input-post"
             placeholder="포스트 할 내용을 입력하세요"
@@ -45,4 +46,3 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="/js/script-create-post.js"></script>
