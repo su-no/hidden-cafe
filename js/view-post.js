@@ -1,22 +1,38 @@
-import { dbService, authService } from './firebase.js';
-import { query } from 'https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js';
+import { dbService, authService } from "./firebase.js";
+import {
+  query,
+  collection,
+  where,
+  getDocs,
+} from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 
 export const viewPost = async path => {
-  const html = await fetch('/pages/view-post.html').then(data => data.text());
-  const mainPage = document.querySelector('#main-page');
+  // 비어 있는 view-post.html 페이지를 불러온다.
+  // 게시글 정보를 저장한 tempHtml을 생성하고 view-post.html 페이지에 추가한다.
+
+  const html = await fetch("/pages/view-post.html").then(data => data.text());
+  const mainPage = document.querySelector("#main-page");
   mainPage.innerHTML = html;
 
-  const postNum = path.replace('/view-post-', '');
-  console.log('postNum: ' + postNum);
-  const nickname = '닉네임';
-  const profileImg = '/img/profile-img.png';
-  const date = '2022-11-22 13:30';
-  const bookmarks = '200';
-  const postImg = '/img/cafe.png';
-  const title = '제목';
-  const description = '내용';
+  // 게시글 번호 저장
+  const postId = path.replace("/view-post-", "");
+  console.log("postId :", postId);
 
-  const tempHtml = `
+  // Firebase에서 게시글 번호와 일치하는 글 불러오기
+  const q = query(collection(dbService, "post"), where("postId", "==", postId));
+  const querySnapshot = await getDocs(q);
+
+  querySnapshot.forEach(doc => {
+    const data = doc.data();
+    const nickname = data["nickname"] ?? data["email"].split("@")[0];
+    const profileImg = data["profileImg"] ?? "img/profile-img.png";
+    const date = data["createdAt"];
+    const bookmarks = data["bookmark"];
+    const postImg = data["postImg"];
+    const title = data["title"];
+    const description = data["contents"];
+
+    const tempHtml = `
     <div class="post-header">
       <div class="post-user">
         <img class="post-profile-img" src=${profileImg} alt="profile-img"/>
@@ -39,10 +55,12 @@ export const viewPost = async path => {
       </div>
     </div>`;
 
-  const article = document.createElement('article');
-  article.classList.add('post');
-  article.innerHTML = tempHtml;
+    // article 태그에 담아서 container에 추가
+    const article = document.createElement("article");
+    article.classList.add("post");
+    article.innerHTML = tempHtml;
 
-  const container = document.querySelector('.container');
-  container.appendChild(article);
+    const container = document.querySelector(".container");
+    container.appendChild(article);
+  });
 };
