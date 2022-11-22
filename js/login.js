@@ -1,3 +1,11 @@
+// * 추가사항
+// * 1. 회원가입 시, 로그인 성공 및 메인 페이지 이동 (83)
+// * 2. 구글 계정으로 가입하기 기능 구현
+
+// TODO :
+// 2. 유효성 검사 만들기
+// 4. 회원가입 시, 닉네임 설정 추가 구현
+
 import { authService } from "./firebase.js";
 
 import {
@@ -5,10 +13,11 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
 
-// 로그인 성공 시 팬명록 화면으로 이동
+// 로그인 / 회원가입 (로그인 성공 시 메인 화면으로 이동)
 export const handleAuth = (event) => {
   event.preventDefault();
   const email = document.getElementById("email");
@@ -69,7 +78,8 @@ export const handleAuth = (event) => {
       .then((userCredential) => {
         // Signed in
         console.log("회원가입 성공!");
-        // const user = userCredential.user;
+        const user = userCredential.user;
+        window.location.hash = "#main";
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -79,6 +89,27 @@ export const handleAuth = (event) => {
         }
       });
   }
+};
+
+// 구글 로그인
+export const socialLogin = (event) => {
+  const { name } = event.target;
+  let provider;
+  if (name === "google") {
+    provider = new GoogleAuthProvider();
+  }
+  signInWithPopup(authService, provider)
+    .then((result) => {
+      // const credential = GoogleAuthProvider.credentialFromResult(result);
+      // const token = credential.accessToken;
+      const user = result.user;
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      console.log("error:", error);
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
 };
 
 // 로그인 <-> 회원가입 토글 기능 구현
