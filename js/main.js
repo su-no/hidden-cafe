@@ -1,6 +1,6 @@
 import { handleLocation } from "./router.js";
 //
-import { onToggle, handleAuth } from "./login.js";
+import { onToggle, handleAuth, onLoginButton } from "./login.js";
 import { postUpload, onFileChange } from "./script-create-post.js";
 
 window.addEventListener("DOMContentLoaded", handleLocation);
@@ -11,3 +11,4 @@ window.onToggle = onToggle;
 window.handleAuth = handleAuth;
 window.postUpload = postUpload;
 window.onFileChange = onFileChange;
+window.onLoginButton = onLoginButton;
