@@ -1,7 +1,7 @@
 <div id="page-view-post">
   <div class="container">
-    <!-- 댓글 박스-->
     <article class="post">
+      <!-- DB 데이터 받아오는 부분 시작 -->
       <div class="post-header">
         <div class="post-user">
           <img
@@ -27,7 +27,33 @@
           <button class="post-delete-btn"></button>
         </div>
       </div>
+      <!-- DB 데이터 받아오는 부분 끝 -->
     </article>
+  </div>
+  <div class="comment-wrapper">
+    <div class="comments">
+      <div class="comment-row">
+        <div class="comment-user">
+          <img
+            class="comment-profile-img"
+            src="/img/profile-img.png"
+            alt="profile-img"
+          />
+          <div class="comment-user-name">닉네임</div>
+        </div>
+        <input
+          type="text"
+          class="new-comment"
+          placeholder="댓글을 입력하세요."
+          maxlength="35"
+        />
+        <div class="comment-buttons">
+          <button class="comment-post-btn" onclick="createComment(event)">
+            등록
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

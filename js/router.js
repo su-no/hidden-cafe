@@ -1,5 +1,6 @@
 import { authService } from "./firebase.js";
-import { viewPost } from "./script-view-post.js";
+import { viewPost } from "./view-post.js";
+import { viewComments } from "./comments.js";
 
 // export const route = event => {
 //   // 사용자 정보 없으면 a tag의 href 이동 비활성화
@@ -28,7 +29,9 @@ export const handleLocation = async () => {
   console.log("handleLocation:", path);
 
   if (path.startsWith("/view-post-")) {
-    viewPost(path);
+    viewPost(path).then(() => {
+      viewComments(path);
+    });
     return;
   }
 
