@@ -63,4 +63,18 @@ export const handleLocation = async () => {
       window.location.hash = "#main";
     }
   }
+
+  if (path === "/mypage") {
+    const user = authService.currentUser;
+    const userProfileURL = user.photoURL ?? "/img/profile-img.png";
+    const profileImg = document.querySelector("#profileView");
+    profileImg.setAttribute("src", userProfileURL);
+
+    const userNickname = user.displayName || user.email.split("@")[0];
+    const nickName = document.querySelector("#profileNickname");
+    nickName.setAttribute("placeholder", userNickname);
+
+    const email = document.querySelector("#profileEmail");
+    email.setAttribute("placeholder", user.email);
+  }
 };
