@@ -27,8 +27,9 @@ export const viewPost = async path => {
   const querySnapshot = await getDocs(q);
 
   querySnapshot.forEach(doc => {
-    const { id, nickname, profileImg, createdAt, creatorId, bookmark, postImg, title, contents } =
+    const { nickname, profileImg, createdAt, creatorId, bookmark, postImg, title, contents } =
       doc.data();
+    const id = doc.id;
     const currentUid = authService.currentUser.uid;
     const isOwner = currentUid === creatorId;
 
@@ -68,7 +69,7 @@ export const viewPost = async path => {
         <button name="${id}" onclick="deletePost(event)" class="post-delete-btn">삭제</button>
       </div>
     </div>
-    <button name="${id}" id="${postId}" onclick="updatePost(event)" class="post-modify-done-btn">
+    <button name="${postId}" id="${id}" onclick="updatePost(event)" class="post-modify-done-btn">
       완료
     </button>`;
 
