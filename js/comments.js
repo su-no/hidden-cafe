@@ -102,3 +102,18 @@ const createComment = async path => {
     })
     .catch(console.error);
 };
+
+// 댓글창 수정하기 
+// 수정 버튼 누르면 댓글창 다시 활성화 & 저장 버튼으로 변경 
+// 저장 누르면 alert(저장하시겠습니까?) -> 저장 -> alert(저장되었습니다.)
+// 저장된 댓글 다시 불러오기 & 수정 삭제 버튼 복귀
+const editComment = async path => {
+  event.preventDefault();
+
+  const edit = document.getElementById("comment-modify-btn");
+  await 변수((인수), {내용물}).then(() => {}).catch();
+  
+};
+
+// 댓글창 삭제하기
+// 삭제 버튼 누르면 alert(삭제하시겠습니까?) -> 삭제 -> alert(삭제되었습니다.)
