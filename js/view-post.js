@@ -27,17 +27,10 @@ export const viewPost = async path => {
   const querySnapshot = await getDocs(q);
 
   querySnapshot.forEach(doc => {
-    const data = doc.data();
-    const nickname = data["nickname"] ?? data["email"].split("@")[0];
-    const profileImg = data["profileImg"] ?? "img/profile-img.png";
-    const date = data["createdAt"];
-    const bookmarks = data["bookmark"];
-    const postImg = data["postImg"];
-    const title = data["title"];
-    const description = data["contents"];
-    const id = doc.id;
+    const { id, nickname, profileImg, createdAt, creatorId, bookmark, postImg, title, contents } =
+      doc.data();
     const currentUid = authService.currentUser.uid;
-    const isOwner = currentUid === data["creatorId"];
+    const isOwner = currentUid === creatorId;
 
     const tempHtml = `
     <div class="post-header">
@@ -45,7 +38,7 @@ export const viewPost = async path => {
         <img class="post-profile-img" src="${profileImg}" alt="profile-img" />
         <div class="post-user-name">${nickname}</div>
       </div>
-      <div class="post-create-date">${date}</div>
+      <div class="post-create-date">${createdAt}</div>
     </div>
     <div class="post-box">
       <div class="post-container">
@@ -55,7 +48,7 @@ export const viewPost = async path => {
           <div class="input" style="display: none">
             <input id="input-title" maxlength="22" type="text" placeholder="${title}" />
           </div>
-          <div class="description">${description}</div>
+          <div class="description">${contents}</div>
           <div class="input" style="display: none">
             <textarea
               col="10"
@@ -63,13 +56,13 @@ export const viewPost = async path => {
               maxlength="220"
               spellcheck="false"
               id="input-post"
-              placeholder="${description}"
+              placeholder="${contents}"
             ></textarea>
           </div>
         </div>
       </div>
       <div class="alignBookBtn">
-        <div class="bookmark"><i class="fas fa-mug-hot"></i>${bookmarks}</div>
+        <div class="bookmark"><i class="fas fa-mug-hot"></i>${bookmark}</div>
         <div class="${isOwner ? "post-buttons" : "noDisplay"}">
         <button onclick="onEditing(event)" class="post-modify-btn">수정</button>
         <button name="${id}" onclick="deletePost(event)" class="post-delete-btn">삭제</button>
