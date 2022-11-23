@@ -17,38 +17,35 @@ a:hover {
   padding: 0;
   box-sizing: border-box;
 }
-#pate-main article {
-  margin-bottom: 10px;
-}
+
 #page-main #main-container {
   display: flex;
   flex-direction: row;
 }
 
 #page-main #sidebar {
-  width: 250px;
-  min-width: 200px;
-  padding: 0px;
-  margin-right: 30px;
+  width: 15.625rem;
+  min-width: 12.5rem;
+  padding: 0;
+  margin-right: 1.875rem;
 }
 
 #page-main #sidebar ul {
-  margin-top: 20px;
+  margin-top: 1.25rem;
   list-style: none;
   background: var(--color-orange);
   position: sticky;
-  top: 50px;
+  top: 3.125rem;
 }
 
 #page-main #sidebar li a {
   text-decoration: none;
-  padding: 10px;
+  padding: 0.625rem;
   display: block;
   color: black;
   font-weight: bold;
   text-align: center;
 }
-
 #page-main #sidebar li a:hover {
   background: #333;
   color: #fff;
@@ -58,56 +55,19 @@ a:hover {
   background: #333;
   color: #fff;
 }
+
 #page-main #container {
-  width: 1200px;
-  margin: 20px auto;
-}
-
-#page-main #contents {
-  width: 900px;
-  height: 300px;
-
-  margin: 40px;
-
-  background-color: #f7f7f7;
-  color: red;
-
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid black;
-
-  background-image: url("/css/city.jpg");
-  background-repeat: no-repeat;
-  background-position: 5% 50%;
-  background-size: 30% 70%;
-}
-
-#page-main button {
-  border: none;
-  background-color: transparent;
-  padding: 5px;
-  font-size: 16px;
-  color: lightgrey;
-  cursor: pointer;
-}
-
-#page-main button:hover {
-  color: var(--color-orange);
-  transition: 200ms;
-}
-
-#page-main .container {
+  display: flex;
+  flex-direction: column;
   background-color: white;
-  width: 1000px;
+  width: 62.5rem;
   margin: auto;
-  padding: 20px;
+  padding: 1.25rem;
 }
 
 #page-main .post {
-  margin: 1.25rem auto;
-  width: 55rem;
+  margin: 1.25rem 0;
+  width: 60rem;
 }
 
 #page-main .post-header {
@@ -115,7 +75,7 @@ a:hover {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 #page-main .post-user {
@@ -125,40 +85,39 @@ a:hover {
 }
 
 #page-main .post-profile-img {
-  width: 30px;
-  margin-right: 10px;
+  width: 1.875rem;
+  height: 1.875rem;
+  object-fit: cover;
+  margin-right: 0.625rem;
 }
 
 #page-main .post-user-name {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
 }
 
 #page-main .post-create-date {
   color: darkgrey;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
 }
 
 #page-main .post-box {
-  /* border: 1px solid darkgrey; */
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-  padding: 1rem;
-  margin-bottom: 2rem;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  padding: 1.875rem;
+  margin-bottom: 1.875rem;
 }
 
 #page-main .bookmark {
   text-align: right;
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
 #page-main .bookmark i {
   color: var(--color-brown);
   cursor: pointer;
+  padding-right: 0.5rem;
 }
-
 #page-main .bookmark i:hover {
   color: var(--color-orange);
   transition: 200ms;
@@ -170,20 +129,16 @@ a:hover {
 }
 
 #page-main .post-img {
-  width: 18rem;
-  /* height: 18rem; */
-  object-fit: contain;
-  margin: 1.5rem 1.875rem 1.5rem 0;
-}
-
-#page-main .post-content {
-  margin: 1.5rem 0 1.5rem 0;
+  width: 15.625rem;
+  height: 15.625rem;
+  object-fit: cover;
+  margin-right: 1.875rem;
 }
 
 #page-main .title {
-  font-size: 32px;
+  font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 #page-main .title:hover {
   color: var(--color-orange);
@@ -191,10 +146,10 @@ a:hover {
 }
 
 #page-main .description {
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 2.2;
 }
-/* 
+
 #page-main .post-buttons {
-  /* justify-content: flex-end
-} */
+  text-align: right;
+}
