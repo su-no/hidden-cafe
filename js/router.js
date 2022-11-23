@@ -2,6 +2,7 @@ import { authService } from "./firebase.js";
 import { viewPost } from "./view-post.js";
 import { viewComments } from "./comments.js";
 import { getPostByLocal } from "./all-post.js";
+import { getDate } from "./util.js";
 
 // export const route = event => {
 //   // 사용자 정보 없으면 a tag의 href 이동 비활성화
@@ -62,15 +63,12 @@ export const handleLocation = async () => {
     // 추후 새로고침 해도 currentUser값 받아 올 수 있도록 수정 필요
     try {
       const user = authService.currentUser;
-      const date = new Date();
-      const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      document.getElementById("date").innerHTML = `${year}. ${month}. ${day}`;
+      document.getElementById("date").innerHTML = getDate().split(" ")[0];
       document.getElementById("member-id").innerHTML =
         `<img src="${
           user.photoURL ?? "/img/profile-img.png"
-        }" style="width:1.5rem; margin-right:0.3rem;"/>` + user.displayName;
+        }" style="width:2rem; height:2rem; margin-right:1rem; border-radius:50%;"/>` +
+        user.displayName;
     } catch {
       window.location.hash = "#main";
     }
