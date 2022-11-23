@@ -1,12 +1,16 @@
-import { dbService, authService, storageService } from "./firebase.js";
+import { dbService, authService } from "./firebase.js";
 import {
   addDoc,
   collection,
+  query,
+  where,
+  getDocs,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 import { getDate } from "./util.js";
 
-export const viewComments = path => {
+export const viewComments = async path => {
+  const postId = path.split("/view-post-")[1];
   // 댓글 작성자 프로필이미지, 닉네임 가져오기
   const user = authService.currentUser;
   const userProfile = document.querySelector(".comment-profile-img");
@@ -17,14 +21,53 @@ export const viewComments = path => {
   // 댓글 등록 버튼 이벤트 등록
   const btn = document.querySelector(".comment-post-btn");
   btn.addEventListener("click", () => createComment(path));
+
+  // Firebase에서 해당 게시글의 댓글 받아오기
+  const q = query(collection(dbService, "comment"), where("postId", "==", postId));
+  const querySnapshot = await getDocs(q);
+  const commentObjList = [];
+  querySnapshot.forEach(doc => {
+    const commentObj = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    commentObjList.push(commentObj);
+  });
+
+  const commentList = document.querySelector(".comment-list");
+  commentList.innerHTML = "";
+  commentObjList.forEach(commentObj => {
+    const isOwner = user.uid === commentObj["creatorId"];
+    const tempHtml = `
+    <div class="comment-user">
+    <img
+    class="comment-profile-img"
+    src="${commentObj.profileUrl ?? "/img/profile-img.png"}"
+    alt="profile-img"
+    />
+    <div class="comment-user-name">${commentObj.nickname}</div>
+    </div>
+    <div class="comment-description">
+    ${commentObj.contents}
+    </div>
+    <div class="comment-create-date">${commentObj.createdAt}</div>
+    <div class="comment-buttons">
+    <button class="${isOwner ? "comment-modify-btn" : "noDisplay"}">수정</button>
+    <button class="${isOwner ? "comment-delete-btn" : "noDisplay"}">삭제</button>
+    </div>`;
+
+    const commentRow = document.createElement("div");
+    commentRow.classList.add("comment-row");
+    commentRow.innerHTML = tempHtml;
+    commentList.appendChild(commentRow);
+  });
 };
 
 const createComment = async path => {
   const postId = path.split("/view-post-")[1];
   const user = authService.currentUser;
 
-  const comments = document.querySelector(".comments");
-  const newComment = comments.querySelector(".new-comment");
+  const newComment = document.querySelector(".new-comment");
   const newCommentValue = newComment.value;
 
   if (!newCommentValue) {
