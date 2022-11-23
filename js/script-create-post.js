@@ -78,7 +78,7 @@ export const onFileChange = (event) => {
     // 파일리더가 파일객체를 data URL로 변환 작업을 끝났을 때
     const imgDataUrl = finishedEvent.currentTarget.result;
     console.log(imgDataUrl);
-    localStorage.setItem("imgDataUrl", imgDataUrl);
+    localStorage.setItem("imgDataUrlPost", imgDataUrl);
     document.getElementById("preview-image").src = imgDataUrl;
   };
 };
