@@ -80,7 +80,9 @@ export const handleAuth = event => {
     createUserWithEmailAndPassword(authService, emailVal, pwVal)
       .then(userCredential => {
         // Signed in
+        // 초기 닉네임, 프로필사진 설정
         authService.currentUser.displayName = emailVal.split("@")[0];
+        authService.currentUser.photoURL = "/img/profile-img.png";
         console.log("회원가입 성공!");
         const user = userCredential.user;
         window.location.hash = "main";
