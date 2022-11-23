@@ -42,6 +42,13 @@
   display: none;
 }
 
+#page-mypage #profileView {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 #page-mypage #imgLabel {
   background-color: rgb(136, 130, 130);
   width: 150px;
