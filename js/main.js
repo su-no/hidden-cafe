@@ -4,8 +4,6 @@ import { postUpload, onFileChange } from "./create-post.js";
 import { changeProfile, onFileChangeProfile } from "./mypage.js";
 import { getpostList } from "./all-post.js";
 import { deletePost, onEditing, updatePost } from "./view-post.js";
-import { changeProfile } from "./mypage.js";
-
 
 window.addEventListener("DOMContentLoaded", handleLocation);
 window.addEventListener("hashchange", handleLocation);
