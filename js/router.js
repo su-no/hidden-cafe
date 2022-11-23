@@ -37,7 +37,7 @@ export const handleLocation = async () => {
   }
 
   if (path.startsWith("/main-")) {
-    const html = await fetch("/pages/main.html").then(data => data.text());
+    const html = await fetch("/pages/main.html").then((data) => data.text());
     const mainPage = document.querySelector("#main-page");
     mainPage.innerHTML = html;
     const local = decodeURI(path.replace("/main-", ""));
@@ -46,7 +46,7 @@ export const handleLocation = async () => {
   }
 
   const route = routes[path] || routes[404];
-  const html = await fetch(route).then(data => data.text());
+  const html = await fetch(route).then((data) => data.text());
 
   const mainPage = document.querySelector("#main-page");
   mainPage.innerHTML = html;
@@ -61,14 +61,16 @@ export const handleLocation = async () => {
     // 따라서 email값이 없으면 메인으로 보내도록 예외처리함
     // 추후 새로고침 해도 currentUser값 받아 올 수 있도록 수정 필요
     try {
-      const email = authService.currentUser.email;
+      const user = authService.currentUser;
       const date = new Date();
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let day = date.getDate();
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
       document.getElementById("date").innerHTML = `${year}. ${month}. ${day}`;
       document.getElementById("member-id").innerHTML =
-        `<img src="/img/profile-img.png" style="width:1rem; margin-right:0.3rem;"/>` + email;
+        `<img src="${
+          user.photoURL ?? "/img/profile-img.png"
+        }" style="width:1.5rem; margin-right:0.3rem;"/>` + user.displayName;
     } catch {
       window.location.hash = "#main";
     }
