@@ -6,6 +6,7 @@ import {
   doc,
   getDocs,
   deleteDoc,
+  updateDoc,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 
 export const viewPost = async (path) => {
@@ -18,7 +19,7 @@ export const viewPost = async (path) => {
 
   // 게시글 번호 저장
   const postId = path.replace("/view-post-", "");
-  console.log("postId :", postId);
+  // console.log("postId :", postId);
 
   // Firebase에서 게시글 번호와 일치하는 글 불러오기
   const q = query(collection(dbService, "post"), where("postId", "==", postId));
@@ -36,29 +37,54 @@ export const viewPost = async (path) => {
     const id = doc.id;
     const currentUid = authService.currentUser.uid;
     const isOwner = currentUid === data["creatorId"];
-    console.log(isOwner);
 
     const tempHtml = `
     <div class="post-header">
-      <div class="post-user">
-        <img class="post-profile-img" src=${profileImg} alt="profile-img"/>
-        <div class="post-user-name">${nickname}</div>
+  <div class="post-user">
+    <img class="post-profile-img" src="${profileImg}" alt="profile-img" />
+    <div class="post-user-name">${nickname}</div>
+  </div>
+  <div class="post-create-date">${date}</div>
+</div>
+<div class="post-box">
+  <div class="post-container">
+    <img class="post-img" src="${postImg}" alt="post-img" />
+    <div class="post-content">
+      <div id="title">${title}</div>
+      <div class="input" style="display: none">
+        <input
+          id="input-title"
+          maxlength="22"
+          type="text"
+          placeholder="${title}"
+        />
       </div>
-      <div class="post-create-date">${date}</div>
+      <div class="description">${description}</div>
+      <div class="input" style="display: none">
+        <textarea
+          col="10"
+          rows="1"
+          maxlength="220"
+          spellcheck="false"
+          id="input-post"
+          placeholder="${description}"
+        ></textarea>
+      </div>
     </div>
-    <div class="post-box">
-      <div class="bookmark"><i class="fas fa-mug-hot"></i>${bookmarks}</div>
-      <div class="post-container">
-        <img class="post-img" src=${postImg} alt="post-img" />
-        <div class="post-content">
-          <div class="title">${title}</div>
-          <div class="description">${description}</div>
-        </div>
-      </div>
-      <div class="${isOwner ? "post-buttons" : "noDisplay"}">
-      <button class="post-modify-btn">수정</button>
-      <button name="${id}" onclick="deletePost(event)" class="post-delete-btn">삭제</button>
-    </div>`;
+  </div>
+  <div class="alignBookBtn">
+    <div class="bookmark"><i class="fas fa-mug-hot"></i>${bookmarks}</div>
+    <div class="${isOwner ? "post-buttons" : "noDisplay"}">
+    <button onclick="onEditing(event)" class="post-modify-btn">수정</button>
+    <button name="${id}" onclick="deletePost(event)" class="post-delete-btn">
+      삭제
+    </button>
+  </div>
+</div>
+<button name="${id}" onclick="updatePost(event)" class="post-modify-done-btn">완료</button>
+
+    
+`;
 
     // article 태그에 담아서 container에 추가
     const article = document.querySelector(".post");
@@ -68,7 +94,7 @@ export const viewPost = async (path) => {
 
 export const deletePost = async (event) => {
   event.preventDefault();
-  console.log(event.target.name);
+  console.log(event.target);
   const id = event.target.name;
   const ok = window.confirm("정말 삭제하시겠습니까?");
   if (ok) {
@@ -86,56 +112,71 @@ export const deletePost = async (event) => {
 export const onEditing = (event) => {
   // 수정버튼 클릭
   event.preventDefault();
-  const udBtns = document.querySelectorAll(
-    ".post-modify-btn, .post-delete-btn"
-  );
-  udBtns.forEach((udBtn) => (udBtn.disabled = "true"));
-
-  const cardBody = event.target.parentNode.parentNode;
-  const postText = cardBody.children[0].children[0];
-  const postInputP = cardBody.children[0].children[1];
-
-  postText.classList.add("noDisplay");
-  postInputP.classList.add("d-flex");
-  postInputP.classList.remove("noDisplay");
-  postInputP.children[0].focus();
+  const udBtns = document.querySelectorAll(".alignBookBtn");
+  const doneBtn = document.querySelectorAll(".post-modify-done-btn");
+  const title = document.querySelectorAll("#title");
+  const modifyTitle = document.querySelectorAll(".input"); //수정용 제목, 내용
+  const description = document.querySelectorAll(".description");
+  // udBtns.forEach((udBtn) => (udBtn.disabled = "true"));
+  //수정버튼 누르면 수정, 삭제 버튼 안보이고 완료버튼 보임
+  udBtns.forEach((udBtn) => (udBtn.style.display = "none"));
+  doneBtn.forEach((doneBtn) => (doneBtn.style.display = "flex"));
+  title.forEach((udBtn) => (udBtn.style.display = "none"));
+  modifyTitle.forEach((udBtn) => (udBtn.style.display = ""));
+  description.forEach((udBtn) => (udBtn.style.display = "none"));
 };
 
-// export const updatePost = async (event) => {
-//   event.preventDefault();
-//   const newPost = event.target.parentNode.children[0].value;
-//   const id = event.target.parentNode.id;
+//수정완료 버튼
+export const updatePost = async (event) => {
+  event.preventDefault();
 
-//   const parentNode = event.target.parentNode.parentNode;
-//   const postText = parentNode.children[0];
-//   postText.classList.remove("noDisplay");
-//   const postInputP = parentNode.children[1];
-//   postInputP.classList.remove("d-flex");
-//   postInputP.classList.add("noDisplay");
+  //input 삽입 제목
+  const modifiedTitle =
+    event.target.parentNode.children[0].children[1].children[1].children[0]
+      .value;
+  //textarea 삽입 내용
+  const modifiedPost =
+    event.target.parentNode.children[0].children[1].children[3].children[0]
+      .value;
+  const id = event.target.name;
 
-//   const commentRef = doc(dbService, "comments", id);
-//   try {
-//     await updateDoc(commentRef, { text: newPost });
-//     getCommentList();
-//   } catch (error) {
-//     alert(error);
-//   }
-// };
+  // const inputs = document.querySelectorAll(".input");
+  // const doneBtn = document.querySelectorAll(".post-modify-done-btn");
+  // const title = document.querySelectorAll("#title");
+  // const modifyTitle = document.querySelectorAll(".input"); //수정용 제목, 내용
+  // const description = document.querySelectorAll(".description");
+  // udBtns.forEach((udBtn) => (udBtn.disabled = "true"));
+  //완료버튼 누르면 수정, 삭제 버튼 보이고 완료버튼 안보임
+  // inputs.forEach((udBtn) => (udBtn.style.display = "none"));
+  // doneBtn.forEach((doneBtn) => (doneBtn.style.display = "none"));
+  // title.forEach((udBtn) => (udBtn.style.display = "none"));
+  // modifyTitle.forEach((udBtn) => (udBtn.style.display = ""));
+  // description.forEach((udBtn) => (udBtn.style.display = "none"));
+
+  const postRef = doc(dbService, "post", id);
+  try {
+    await updateDoc(postRef, { title: modifiedTitle, contents: modifiedPost });
+
+    window.location.reload();
+  } catch (error) {
+    alert(error);
+  }
+};
 
 // export const savePost = async (event) => {
 //   event.preventDefault();
-//   const comment = document.getElementById("comment");
+//   const post = document.getElementById("post");
 //   const { uid, photoURL, displayName } = authService.currentUser;
 //   try {
 //     await addDoc(collection(dbService, "comments"), {
-//       text: comment.value,
+//       text: post.value,
 //       createdAt: Date.now(),
 //       creatorId: uid,
 //       profileImg: photoURL,
 //       nickname: displayName,
 //     });
-//     comment.value = "";
-//     getCommentList();
+//     post.value = "";
+//     getpostList();
 //   } catch (error) {
 //     alert(error);
 //     console.log("error in addDoc:", error);

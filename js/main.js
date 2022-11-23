@@ -3,7 +3,9 @@ import { onToggle, handleAuth, onLoginButton, socialLogin } from "./login.js";
 import { postUpload, onFileChange } from "./create-post.js";
 import { changeProfile, onFileChangeProfile } from "./mypage.js";
 import { getpostList } from "./all-post.js";
-import { deletePost, onEditing } from "./view-post.js";
+import { deletePost, onEditing, updatePost } from "./view-post.js";
+import { changeProfile } from "./mypage.js";
+
 
 window.addEventListener("DOMContentLoaded", handleLocation);
 window.addEventListener("hashchange", handleLocation);
@@ -24,3 +26,4 @@ window.getpostList = getpostList;
 // view-post.js
 window.deletePost = deletePost;
 window.onEditing = onEditing;
+window.updatePost = updatePost;
