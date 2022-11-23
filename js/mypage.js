@@ -15,7 +15,7 @@ export const changeProfile = async event => {
 
   const newNickname = document.getElementById("profileNickname").value;
   // 프로필 이미지 dataUrl을 Storage에 업로드 후 다운로드 링크를 받아서 photoURL에 저장.
-  const imgProfileUrl = localStorage.getItem("imgDataUrlPost");
+  const imgProfileUrl = localStorage.getItem("imgDataUrl");
   // imgDataUrl이 script-create-post.js 게시글 사진과 변수가 겹쳐서 imgProfileUrl로 변경할까 함...
   let downloadUrl;
   if (imgProfileUrl) {
@@ -23,7 +23,7 @@ export const changeProfile = async event => {
     downloadUrl = await getDownloadURL(response.ref);
   }
   console.log("updateProfile");
-  console.log(authService);
+  // console.log(authService);
   await updateProfile(authService.currentUser, {
     //if문 shortcut - 변수 반환
     displayName: newNickname ? newNickname : null,
@@ -51,7 +51,7 @@ export const onFileChangeProfile = event => {
   reader.onloadend = finishedEvent => {
     const imgDataUrl = finishedEvent.currentTarget.result;
     // console.log(imgDataUrl);
-    localStorage.setItem("imgDataUrlPost", imgDataUrl);
+    localStorage.setItem("imgDataUrl", imgDataUrl);
     document.getElementById("profileView").src = imgDataUrl;
   };
 };
