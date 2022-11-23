@@ -27,8 +27,17 @@ export const viewPost = async path => {
   const querySnapshot = await getDocs(q);
 
   querySnapshot.forEach(doc => {
-    const { nickname, profileImg, createdAt, creatorId, bookmark, postImg, title, contents } =
-      doc.data();
+    const {
+      nickname,
+      profileImg,
+      createdAt,
+      creatorId,
+      email,
+      bookmark,
+      postImg,
+      title,
+      contents,
+    } = doc.data();
     const id = doc.id;
     const currentUid = authService.currentUser.uid;
     const isOwner = currentUid === creatorId;
@@ -36,8 +45,10 @@ export const viewPost = async path => {
     const tempHtml = `
     <div class="post-header">
       <div class="post-user">
-        <img class="post-profile-img" src="${profileImg}" alt="profile-img" />
-        <div class="post-user-name">${nickname}</div>
+        <img class="post-profile-img" src="${
+          profileImg ?? "/img/profile-img.png"
+        }" alt="profile-img" />
+        <div class="post-user-name">${nickname ?? email.split("@")[0]}</div>
       </div>
       <div class="post-create-date">${createdAt}</div>
     </div>
