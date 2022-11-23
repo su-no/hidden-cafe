@@ -28,13 +28,15 @@
   flex-direction: column;
   background-color: white;
   width: 1000px;
-  margin: auto;
+  margin: 20px auto 0 auto;
   padding: 20px;
+  height: auto;
 }
 
 #page-view-post .post {
-  margin: 20px 0;
+  margin: 20px auto 0;
   width: 960px;
+  height: auto;
 }
 
 #page-view-post .post-header {
@@ -52,24 +54,26 @@
 }
 
 #page-view-post .post-profile-img {
-  width: 60px;
+  width: 30px;
   margin-right: 10px;
 }
 
 #page-view-post .post-user-name {
-  font-size: 32px;
+  font-size: 1.2rem;
 }
 
 #page-view-post .post-create-date {
   color: darkgrey;
-  font-size: 20px;
+  font-size: 1.2rem;
 }
 
 #page-view-post .post-box {
   /* border: 1px solid darkgrey; */
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   padding: 30px;
-  margin-bottom: 30px;
+
+  height: auto;
 }
 
 #page-view-post .bookmark {
@@ -96,7 +100,7 @@
 #page-view-post .post-img {
   width: 300px;
   height: 300px;
-  object-fit: cover;
+  object-fit: contain;
   margin-right: 30px;
 }
 
@@ -118,12 +122,13 @@
 #page-view-post .comment-wrapper {
   width: 960px;
   /* padding: 20px; */
-  margin: auto;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  margin: 0 auto 10px auto;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 #page-view-post .comments {
   width: 90%;
-  margin: auto;
+  margin: 10px auto;
   padding: 30px 20px 20px 20px;
 }
 
