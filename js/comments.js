@@ -21,16 +21,14 @@ export const viewComments = async path => {
 
   // 댓글 등록 버튼에 이벤트 등록
   const btn = document.querySelector(".comment-post-btn");
-  btn.addEventListener("click", () => createComment(path));
-
-  // 입력창에서 Enter 입력하면 댓글 등록
-  const newComment = document.querySelector(".new-comment");
-  newComment.addEventListener("keypress", event => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      btn.click();
+  btn.onclick = () => {
+    const value = document.querySelector(".new-comment").value;
+    if (!value) {
+      alert("댓글을 입력하세요.");
+      return;
     }
-  });
+    createComment(path);
+  };
 
   // Firebase에서 해당 게시글의 댓글 받아오기
   const q = query(collection(dbService, "comment"), where("postId", "==", postId));
@@ -82,13 +80,8 @@ const createComment = async path => {
   const newComment = document.querySelector(".new-comment");
   const newCommentValue = newComment.value;
 
-  if (!newCommentValue) {
-    alert("댓글을 입력하세요.");
-    return;
-  }
-
   await addDoc(collection(dbService, "comment"), {
-    commentID: uuidv4(),
+    commentID: Date.now(),
     contents: newCommentValue,
     createdAt: getDate(),
     creatorId: user.uid,
@@ -100,6 +93,7 @@ const createComment = async path => {
     .then(() => {
       console.log("댓글 작성 완료");
       newComment.value = "";
+      viewComments(path);
     })
     .catch(console.error);
 };
