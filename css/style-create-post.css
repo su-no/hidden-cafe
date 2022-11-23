@@ -88,7 +88,7 @@
 }
 
 /* 포스트 버튼 */
-#page-create-post #post {
+#page-create-post #postBtn {
   width: 10rem;
   height: 2.5rem;
   margin: 2rem 0 0 10rem;
@@ -97,7 +97,7 @@
   background-color: rgb(255, 81, 38);
 }
 
-#page-create-post #post:hover {
+#page-create-post #postBtn:hover {
   background-color: rgb(40, 40, 40);
   color: white;
 }
