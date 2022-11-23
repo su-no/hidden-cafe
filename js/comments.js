@@ -10,7 +10,7 @@ import {
 import { getDate } from "./util.js";
 
 // Firebase DB에서 댓글 불러와서 보여주는 함수
-export const viewComments = async path => {
+export const viewComments = async (path) => {
   const postId = path.split("/view-post-")[1];
   // 댓글 작성자 프로필이미지, 닉네임 가져오기
   const user = authService.currentUser;
@@ -34,11 +34,11 @@ export const viewComments = async path => {
   const q = query(
     collection(dbService, "comment"),
     where("postId", "==", postId),
-    orderBy("createdAt"),
+    orderBy("createdAt")
   );
   const querySnapshot = await getDocs(q);
   const commentObjList = [];
-  querySnapshot.forEach(doc => {
+  querySnapshot.forEach((doc) => {
     const commentObj = {
       id: doc.id,
       ...doc.data(),
@@ -49,7 +49,7 @@ export const viewComments = async path => {
   // 댓글 목록을 비우고 하나씩 추가
   const commentList = document.querySelector(".comment-list");
   commentList.innerHTML = "";
-  commentObjList.forEach(commentObj => {
+  commentObjList.forEach((commentObj) => {
     const isOwner = user.uid === commentObj["creatorId"];
     const tempHtml = `
     <div class="comment-user">
@@ -65,8 +65,12 @@ export const viewComments = async path => {
     </div>
     <div class="comment-create-date">${commentObj.createdAt}</div>
     <div class="comment-buttons">
-    <button class="${isOwner ? "comment-modify-btn" : "noDisplay"}">수정</button>
-    <button class="${isOwner ? "comment-delete-btn" : "noDisplay"}">삭제</button>
+    <button class="${
+      isOwner ? "comment-modify-btn" : "noDisplay"
+    }">수정</button>
+    <button class="${
+      isOwner ? "comment-delete-btn" : "noDisplay"
+    }">삭제</button>
     </div>`;
 
     const commentRow = document.createElement("div");
@@ -77,7 +81,7 @@ export const viewComments = async path => {
 };
 
 // 댓글 작성 함수
-const createComment = async path => {
+const createComment = async (path) => {
   const postId = path.split("/view-post-")[1];
   const user = authService.currentUser;
 

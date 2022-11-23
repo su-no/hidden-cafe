@@ -76,13 +76,12 @@ export const viewPost = async (path) => {
     <div class="bookmark"><i class="fas fa-mug-hot"></i>${bookmarks}</div>
     <div class="${isOwner ? "post-buttons" : "noDisplay"}">
     <button onclick="onEditing(event)" class="post-modify-btn">수정</button>
-    <button name="${id}" onclick="deletePost(event)" class="post-delete-btn">
+    <button name="${id}"  onclick="deletePost(event)" class="post-delete-btn">
       삭제
     </button>
   </div>
 </div>
-<button name="${id}" onclick="updatePost(event)" class="post-modify-done-btn">완료</button>
-
+<button name="${id}" id="${postId}" onclick="updatePost(event)" class="post-modify-done-btn">완료</button>
     
 `;
 
@@ -140,27 +139,36 @@ export const updatePost = async (event) => {
       .value;
   const id = event.target.name;
 
-  // const inputs = document.querySelectorAll(".input");
-  // const doneBtn = document.querySelectorAll(".post-modify-done-btn");
-  // const title = document.querySelectorAll("#title");
-  // const modifyTitle = document.querySelectorAll(".input"); //수정용 제목, 내용
-  // const description = document.querySelectorAll(".description");
-  // udBtns.forEach((udBtn) => (udBtn.disabled = "true"));
-  //완료버튼 누르면 수정, 삭제 버튼 보이고 완료버튼 안보임
-  // inputs.forEach((udBtn) => (udBtn.style.display = "none"));
-  // doneBtn.forEach((doneBtn) => (doneBtn.style.display = "none"));
-  // title.forEach((udBtn) => (udBtn.style.display = "none"));
-  // modifyTitle.forEach((udBtn) => (udBtn.style.display = ""));
-  // description.forEach((udBtn) => (udBtn.style.display = "none"));
+  const parentNode = event.target.parentNode.children[0].children[1];
+  console.log(parentNode);
+  const postId = event.target.id;
+  const TitleInput = parentNode.children[1];
+  const PostInput = parentNode.children[3];
+  const udBtns = document.querySelectorAll(".alignBookBtn");
+  const doneBtn = document.querySelectorAll(".post-modify-done-btn");
+  udBtns.forEach((udBtn) => (udBtn.style.display = "flex"));
+  doneBtn.forEach((doneBtn) => (doneBtn.style.display = "none"));
+
+  console.log(PostInput);
+  // commentText.classList.remove("noDisplay");
+  // const commentInputP = parentNode.children[1];
+
+  PostInput.classList.add("noDisplay");
+  TitleInput.classList.add("noDisplay");
 
   const postRef = doc(dbService, "post", id);
   try {
     await updateDoc(postRef, { title: modifiedTitle, contents: modifiedPost });
-
-    window.location.reload();
+    const postId = event.target.id;
+    viewPost(`/view-post-${postId}`);
+    // window.location.reload();
   } catch (error) {
     alert(error);
   }
+  const newPost = parentNode.children[2];
+  const newTitle = parentNode.children[0];
+  newTitle.classList.add("d-flex");
+  newPost.classList.add("d-flex");
 };
 
 // export const savePost = async (event) => {
