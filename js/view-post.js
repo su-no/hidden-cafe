@@ -8,12 +8,13 @@ import {
   deleteDoc,
   updateDoc,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
+import { viewComments } from "./comments.js";
 
-export const viewPost = async (path) => {
+export const viewPost = async path => {
   // 비어 있는 view-post.html 페이지를 불러온다.
   // 게시글 정보를 저장한 tempHtml을 생성하고 view-post.html 페이지에 추가한다.
 
-  const html = await fetch("/pages/view-post.html").then((data) => data.text());
+  const html = await fetch("/pages/view-post.html").then(data => data.text());
   const mainPage = document.querySelector("#main-page");
   mainPage.innerHTML = html;
 
@@ -25,7 +26,7 @@ export const viewPost = async (path) => {
   const q = query(collection(dbService, "post"), where("postId", "==", postId));
   const querySnapshot = await getDocs(q);
 
-  querySnapshot.forEach((doc) => {
+  querySnapshot.forEach(doc => {
     const data = doc.data();
     const nickname = data["nickname"] ?? data["email"].split("@")[0];
     const profileImg = data["profileImg"] ?? "img/profile-img.png";
@@ -40,50 +41,43 @@ export const viewPost = async (path) => {
 
     const tempHtml = `
     <div class="post-header">
-  <div class="post-user">
-    <img class="post-profile-img" src="${profileImg}" alt="profile-img" />
-    <div class="post-user-name">${nickname}</div>
-  </div>
-  <div class="post-create-date">${date}</div>
-</div>
-<div class="post-box">
-  <div class="post-container">
-    <img class="post-img" src="${postImg}" alt="post-img" />
-    <div class="post-content">
-      <div id="title">${title}</div>
-      <div class="input" style="display: none">
-        <input
-          id="input-title"
-          maxlength="22"
-          type="text"
-          placeholder="${title}"
-        />
+      <div class="post-user">
+        <img class="post-profile-img" src="${profileImg}" alt="profile-img" />
+        <div class="post-user-name">${nickname}</div>
       </div>
-      <div class="description">${description}</div>
-      <div class="input" style="display: none">
-        <textarea
-          col="10"
-          rows="1"
-          maxlength="220"
-          spellcheck="false"
-          id="input-post"
-          placeholder="${description}"
-        ></textarea>
+      <div class="post-create-date">${date}</div>
+    </div>
+    <div class="post-box">
+      <div class="post-container">
+        <img class="post-img" src="${postImg}" alt="post-img" />
+        <div class="post-content">
+          <div id="title">${title}</div>
+          <div class="input" style="display: none">
+            <input id="input-title" maxlength="22" type="text" placeholder="${title}" />
+          </div>
+          <div class="description">${description}</div>
+          <div class="input" style="display: none">
+            <textarea
+              col="10"
+              rows="1"
+              maxlength="220"
+              spellcheck="false"
+              id="input-post"
+              placeholder="${description}"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="alignBookBtn">
+        <div class="bookmark"><i class="fas fa-mug-hot"></i>${bookmarks}</div>
+        <div class="${isOwner ? "post-buttons" : "noDisplay"}">
+        <button onclick="onEditing(event)" class="post-modify-btn">수정</button>
+        <button name="${id}" onclick="deletePost(event)" class="post-delete-btn">삭제</button>
       </div>
     </div>
-  </div>
-  <div class="alignBookBtn">
-    <div class="bookmark"><i class="fas fa-mug-hot"></i>${bookmarks}</div>
-    <div class="${isOwner ? "post-buttons" : "noDisplay"}">
-    <button onclick="onEditing(event)" class="post-modify-btn">수정</button>
-    <button name="${id}"  onclick="deletePost(event)" class="post-delete-btn">
-      삭제
-    </button>
-  </div>
-</div>
-<button name="${id}" id="${postId}" onclick="updatePost(event)" class="post-modify-done-btn">완료</button>
-    
-`;
+    <button name="${id}" id="${postId}" onclick="updatePost(event)" class="post-modify-done-btn">
+      완료
+    </button>`;
 
     // article 태그에 담아서 container에 추가
     const article = document.querySelector(".post");
@@ -91,7 +85,7 @@ export const viewPost = async (path) => {
   });
 };
 
-export const deletePost = async (event) => {
+export const deletePost = async event => {
   event.preventDefault();
   console.log(event.target);
   const id = event.target.name;
@@ -108,7 +102,7 @@ export const deletePost = async (event) => {
   }
 };
 
-export const onEditing = (event) => {
+export const onEditing = event => {
   // 수정버튼 클릭
   event.preventDefault();
   const udBtns = document.querySelectorAll(".alignBookBtn");
@@ -118,43 +112,24 @@ export const onEditing = (event) => {
   const description = document.querySelectorAll(".description");
   // udBtns.forEach((udBtn) => (udBtn.disabled = "true"));
   //수정버튼 누르면 수정, 삭제 버튼 안보이고 완료버튼 보임
-  udBtns.forEach((udBtn) => (udBtn.style.display = "none"));
-  doneBtn.forEach((doneBtn) => (doneBtn.style.display = "flex"));
-  title.forEach((udBtn) => (udBtn.style.display = "none"));
-  modifyTitle.forEach((udBtn) => (udBtn.style.display = ""));
-  description.forEach((udBtn) => (udBtn.style.display = "none"));
+  udBtns.forEach(udBtn => (udBtn.style.display = "none"));
+  doneBtn.forEach(doneBtn => (doneBtn.style.display = "flex"));
+  title.forEach(udBtn => (udBtn.style.display = "none"));
+  modifyTitle.forEach(udBtn => (udBtn.style.display = ""));
+  description.forEach(udBtn => (udBtn.style.display = "none"));
 };
 
 //수정완료 버튼
-export const updatePost = async (event) => {
+export const updatePost = async event => {
   event.preventDefault();
 
   //input 삽입 제목
   const modifiedTitle =
-    event.target.parentNode.children[0].children[1].children[1].children[0]
-      .value;
+    event.target.parentNode.children[0].children[1].children[1].children[0].value;
   //textarea 삽입 내용
   const modifiedPost =
-    event.target.parentNode.children[0].children[1].children[3].children[0]
-      .value;
+    event.target.parentNode.children[0].children[1].children[3].children[0].value;
   const id = event.target.name;
-
-  const parentNode = event.target.parentNode.children[0].children[1];
-  console.log(parentNode);
-  const postId = event.target.id;
-  const TitleInput = parentNode.children[1];
-  const PostInput = parentNode.children[3];
-  const udBtns = document.querySelectorAll(".alignBookBtn");
-  const doneBtn = document.querySelectorAll(".post-modify-done-btn");
-  udBtns.forEach((udBtn) => (udBtn.style.display = "flex"));
-  doneBtn.forEach((doneBtn) => (doneBtn.style.display = "none"));
-
-  console.log(PostInput);
-  // commentText.classList.remove("noDisplay");
-  // const commentInputP = parentNode.children[1];
-
-  PostInput.classList.add("noDisplay");
-  TitleInput.classList.add("noDisplay");
 
   const postRef = doc(dbService, "post", id);
   try {
@@ -165,10 +140,11 @@ export const updatePost = async (event) => {
   } catch (error) {
     alert(error);
   }
-  const newPost = parentNode.children[2];
-  const newTitle = parentNode.children[0];
-  newTitle.classList.add("d-flex");
-  newPost.classList.add("d-flex");
+
+  const path = window.location.hash.replace("#", "/");
+  viewPost(path).then(() => {
+    viewComments(path);
+  });
 };
 
 // export const savePost = async (event) => {
