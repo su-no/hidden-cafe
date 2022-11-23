@@ -9,7 +9,7 @@ import { dbService } from "./firebase.js";
 
 // 모든 게시글 가져오기
 export const getpostList = async () => {
-  const q = query(collection(dbService, "post"), orderBy("createdAt"));
+  const q = query(collection(dbService, "post"), orderBy("createdAt", "desc"));
   getFirebaseDocs(q);
 };
 
@@ -17,7 +17,7 @@ export const getpostList = async () => {
 export const getPostByLocal = async local => {
   const q = query(
     collection(dbService, "post"),
-    orderBy("createdAt"),
+    orderBy("createdAt", "desc"),
     where("localname", "==", local),
   );
   getFirebaseDocs(q);
@@ -69,6 +69,6 @@ const getFirebaseDocs = async q => {
     const div = document.createElement("div");
     div.classList.add("mycards");
     div.innerHTML = temp_html;
-    postList.appendChild(div);
+    postList.append(div);
   });
 };
