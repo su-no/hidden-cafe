@@ -9,6 +9,7 @@ import {
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 import { getDate } from "./util.js";
 
+// Firebase DB에서 댓글 불러와서 보여주는 함수
 export const viewComments = async path => {
   const postId = path.split("/view-post-")[1];
   // 댓글 작성자 프로필이미지, 닉네임 가져오기
@@ -18,9 +19,18 @@ export const viewComments = async path => {
   const userNickname = document.querySelector(".comment-user-name");
   userNickname.textContent = user.displayName ?? user.email.split("@")[0];
 
-  // 댓글 등록 버튼 이벤트 등록
+  // 댓글 등록 버튼에 이벤트 등록
   const btn = document.querySelector(".comment-post-btn");
   btn.addEventListener("click", () => createComment(path));
+
+  // 입력창에서 Enter 입력하면 댓글 등록
+  const newComment = document.querySelector(".new-comment");
+  newComment.addEventListener("keypress", event => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      btn.click();
+    }
+  });
 
   // Firebase에서 해당 게시글의 댓글 받아오기
   const q = query(collection(dbService, "comment"), where("postId", "==", postId));
@@ -34,6 +44,7 @@ export const viewComments = async path => {
     commentObjList.push(commentObj);
   });
 
+  // 댓글 목록을 비우고 하나씩 추가
   const commentList = document.querySelector(".comment-list");
   commentList.innerHTML = "";
   commentObjList.forEach(commentObj => {
@@ -63,6 +74,7 @@ export const viewComments = async path => {
   });
 };
 
+// 댓글 작성 함수
 const createComment = async path => {
   const postId = path.split("/view-post-")[1];
   const user = authService.currentUser;
