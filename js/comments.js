@@ -1,12 +1,12 @@
 import { dbService, authService } from "./firebase.js";
 import {
-  addDoc,
-  collection,
   query,
+  collection,
   where,
   getDocs,
+  orderBy,
+  addDoc,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
-import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 import { getDate } from "./util.js";
 
 // Firebase DB에서 댓글 불러와서 보여주는 함수
@@ -20,8 +20,8 @@ export const viewComments = async path => {
   userNickname.textContent = user.displayName ?? user.email.split("@")[0];
 
   // 댓글 등록 버튼에 이벤트 등록
-  const btn = document.querySelector(".comment-post-btn");
-  btn.onclick = () => {
+  const createBtn = document.querySelector(".comment-post-btn");
+  createBtn.onclick = () => {
     const value = document.querySelector(".new-comment").value;
     if (!value) {
       alert("댓글을 입력하세요.");
@@ -31,7 +31,11 @@ export const viewComments = async path => {
   };
 
   // Firebase에서 해당 게시글의 댓글 받아오기
-  const q = query(collection(dbService, "comment"), where("postId", "==", postId));
+  const q = query(
+    collection(dbService, "comment"),
+    where("postId", "==", postId),
+    orderBy("createdAt"),
+  );
   const querySnapshot = await getDocs(q);
   const commentObjList = [];
   querySnapshot.forEach(doc => {
@@ -93,6 +97,7 @@ const createComment = async path => {
     .then(() => {
       console.log("댓글 작성 완료");
       newComment.value = "";
+      newComment.focus();
       viewComments(path);
     })
     .catch(console.error);
