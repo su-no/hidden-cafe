@@ -41,7 +41,7 @@ export const handleLocation = async () => {
   const mainPage = document.querySelector("#main-page");
   mainPage.innerHTML = html;
 
-  if (path == "/main") {
+  if (path === "/" || path === "/main") {
     getpostList();
   }
 
@@ -58,8 +58,7 @@ export const handleLocation = async () => {
       let day = date.getDate();
       document.getElementById("date").innerHTML = `${year}. ${month}. ${day}`;
       document.getElementById("member-id").innerHTML =
-        `<img src="/img/profile-img.png" style="width:1rem; margin-right:0.3rem;"/>` +
-        email;
+        `<img src="/img/profile-img.png" style="width:1rem; margin-right:0.3rem;"/>` + email;
     } catch {
       window.location.hash = "#main";
     }
