@@ -61,12 +61,8 @@ export const viewPost = async (path) => {
     </div>`;
 
     // article 태그에 담아서 container에 추가
-    const article = document.createElement("article");
-    article.classList.add("post");
+    const article = document.querySelector(".post");
     article.innerHTML = tempHtml;
-
-    const container = document.querySelector(".container");
-    container.appendChild(article);
   });
 };
 

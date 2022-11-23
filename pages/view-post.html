@@ -1,6 +1,52 @@
 <div id="page-view-post">
   <div class="container">
-    <!-- 댓글 박스-->
+    <article class="post">
+      <div class="post-header">
+        <div class="post-user">
+          <img
+            class="post-profile-img"
+            src="/img/profile-img.png"
+            alt="profile-img"
+          />
+          <div class="post-user-name"></div>
+        </div>
+        <div class="post-create-date"></div>
+      </div>
+      <div class="post-box">
+        <div class="bookmark"><i class="fas fa-mug-hot"></i></div>
+        <div class="post-container">
+          <img class="post-img" src="/img/temp-img.png" alt="post-img" />
+          <div class="post-content">
+            <div class="title"></div>
+            <div class="description"></div>
+          </div>
+        </div>
+        <div class="noDisplay">
+      </div>
+    </article>
+  </div>
+  <div class="comment-wrapper">
+    <div class="comments">
+      <div class="comment-row">
+        <div class="comment-user">
+          <img
+            class="comment-profile-img"
+            src="/img/profile-img.png"
+            alt="profile-img"
+          />
+          <div class="comment-user-name"></div>
+        </div>
+        <input
+          type="text"
+          class="new-comment"
+          placeholder="댓글을 입력하세요."
+          maxlength="35"
+        />
+        <div class="comment-buttons">
+          <button class="comment-post-btn">등록</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
