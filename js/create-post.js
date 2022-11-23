@@ -51,7 +51,7 @@ export const postUpload = async (event) => {
       localname: localname.value, //카테고리 분류시 사용
       postId: `${Date.now()}`, //postID 겹치지 않도록 uuid사용
       postImg: downloadUrl, //이미지 url
-      profilImg: null,
+      profilImg: photoURL,
       title: title.value, //게시물 제목
       nickname: displayName,
       bookmark: 0,
