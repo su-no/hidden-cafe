@@ -28,7 +28,7 @@ export const postUpload = async (event) => {
   const { uid, email, photoURL, displayName } = authService.currentUser;
   const imgRef = ref(
     storageService,
-    `${authService.currentUser.uid}/img/${uuidv4}`
+    `${authService.currentUser.uid}/img/${uuidv4()}`
   );
 
   // 프로필 이미지 dataUrl을 Storage에 업로드 후 다운로드 링크를 받아서 photoURL에 저장.
@@ -39,35 +39,36 @@ export const postUpload = async (event) => {
     downloadUrl = await getDownloadURL(response.ref);
   }
   // console.log(downloadUrl);
-  document.getElementById("post").disabled = true;
-  if (title.value && post.value) {
-    try {
-      await addDoc(collection(dbService, "post"), {
-        contents: post.value, //게시물 내용
-        createdAt: `${year}-${month}-${day} ${hour}:${minuites}`, //메인에 띄울때 사용
-        creatorId: uid, //사용자 uid
-        email: email, //닉네임없어서 이메일로 대체함
-        localname: localname.value, //카테고리 분류시 사용
-        postId: `${Date.now()}`, //postID 겹치지 않도록 uuid사용
-        postImg: downloadUrl, //이미지 url
-        profilImg: null,
-        title: title.value, //게시물 제목
-        nickname: displayName,
-        bookmark: 0,
-        //작성할 땐 북마크 개수 0 그래도 여기서 0으로 정의 해야하나?
-      });
+  // document.getElementById("post").disabled = true;
 
-      alert("포스트 완료!");
-      window.location.hash = "#main";
+  // if (title.value && post.value && response) {
+  try {
+    await addDoc(collection(dbService, "post"), {
+      contents: post.value, //게시물 내용
+      createdAt: `${year}-${month}-${day} ${hour}:${minuites}`, //메인에 띄울때 사용
+      creatorId: uid, //사용자 uid
+      email: email, //닉네임없어서 이메일로 대체함
+      localname: localname.value, //카테고리 분류시 사용
+      postId: `${Date.now()}`, //postID 겹치지 않도록 uuid사용
+      postImg: downloadUrl, //이미지 url
+      profilImg: null,
+      title: title.value, //게시물 제목
+      nickname: displayName,
+      bookmark: 0,
+      //작성할 땐 북마크 개수 0 그래도 여기서 0으로 정의 해야하나?
+    });
 
-      post.value = "";
-    } catch (error) {
-      alert(error);
-      console.log("error in addDoc:", error);
-    }
-  } else {
-    alert("경고");
+    alert("포스트 완료!");
+    window.location.hash = "#main";
+
+    post.value = "";
+  } catch (error) {
+    alert(error);
+    console.log("error in addDoc:", error);
   }
+  // } else {
+  //   alert("경고");
+  // }
 };
 
 //Uncaught TypeError: Failed to execute 'readAsDataURL' on 'FileReader': parameter 1 is not of type 'Blob'.오류해결
