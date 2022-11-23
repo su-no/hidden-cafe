@@ -36,13 +36,16 @@ export const handleLocation = async () => {
   }
 
   const route = routes[path] || routes[404];
-  const html = await fetch(route).then(data => data.text());
+  const html = await fetch(route).then((data) => data.text());
 
   const mainPage = document.querySelector("#main-page");
   mainPage.innerHTML = html;
 
   if (path === "/" || path === "/main") {
-    getpostList();
+    getpostList().then(() => {
+      handleBookmark(path);
+    });
+    return;
   }
 
   if (path === "/create-post") {
@@ -58,7 +61,8 @@ export const handleLocation = async () => {
       let day = date.getDate();
       document.getElementById("date").innerHTML = `${year}. ${month}. ${day}`;
       document.getElementById("member-id").innerHTML =
-        `<img src="/img/profile-img.png" style="width:1rem; margin-right:0.3rem;"/>` + email;
+        `<img src="/img/profile-img.png" style="width:1rem; margin-right:0.3rem;"/>` +
+        email;
     } catch {
       window.location.hash = "#main";
     }
