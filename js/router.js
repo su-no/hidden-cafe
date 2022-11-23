@@ -28,7 +28,9 @@ export const handleLocation = async () => {
   console.log("handleLocation:", path);
 
   if (path.startsWith("/view-post-")) {
-    viewPost(path);
+    viewPost(path).then(() => {
+      viewPost(path);
+    });
     return;
   }
 
