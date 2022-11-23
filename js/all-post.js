@@ -47,7 +47,7 @@ const getFirebaseDocs = async q => {
         <div class="post-user">
           <img
             class="post-profile-img"
-            src=${postObj.profilImg ?? "/img/profile-img.png"}
+            src=${postObj.profileImg ?? "/img/profile-img.png"}
             alt="profile-img"
           />
           <div class="post-user-name">${postObj.nickname ?? postObj.email.split("@")[0]}</div>
