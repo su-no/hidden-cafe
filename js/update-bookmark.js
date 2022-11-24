@@ -44,10 +44,14 @@ import {
 export const handleBookmark = async (event) => {
   const querySnapshot = await getDocs(collection(dbService, "post"));
   console.log(event.target);
+  console.log(querySnapshot)
   querySnapshot.forEach((doc) => {
     // console.log(doc.id, " => ", doc.data());
+    console.log(doc.id);
   });
 };
+
+  // const = docRef 
 
 //firebase post query
 
@@ -58,3 +62,8 @@ export const handleBookmark = async (event) => {
 // );
 
 // constructor(...fieldNames: bookmark[]);
+
+
+// 1. 아이콘을 클릭한다
+// 2. 클릭 이벤트가 일어났을 때,
+// 3. 해당 게시글의 
