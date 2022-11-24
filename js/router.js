@@ -54,7 +54,7 @@ export const handleLocation = async () => {
 
   if (path === "/" || path === "/main") {
     getpostList().then(() => {
-      handleBookmark(path);
+      // handleBookmark(path);
     });
     return;
   }

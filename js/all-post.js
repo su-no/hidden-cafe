@@ -53,7 +53,7 @@ const getFirebaseDocs = async (q) => {
 
   // 게시글 데이터가 담겨 있는 배열을 돌면서, 컨테이너에 돔을 추가한다.
   postObjList.forEach((postObj) => {
-    console.log(postObj);
+    // console.log(postObj);
     const temp_html = `
     <article class="post">
     <div class="post-header">
