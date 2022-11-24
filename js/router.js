@@ -53,7 +53,10 @@ export const handleLocation = async () => {
   mainPage.innerHTML = html;
 
   if (path === "/" || path === "/main") {
-    getpostList();
+    getpostList().then(() => {
+      handleBookmark(path);
+    });
+    return;
   }
 
   if (path === "/create-post") {
