@@ -20,8 +20,6 @@ export const viewPost = async (path) => {
 
   // 게시글 번호 저장
   const postId = path.replace("/view-post-", "");
-  // console.log("postId :", postId);
-
   // Firebase에서 게시글 번호와 일치하는 글 불러오기
   const q = query(collection(dbService, "post"), where("postId", "==", postId));
   const querySnapshot = await getDocs(q);
@@ -76,8 +74,7 @@ export const viewPost = async (path) => {
               maxlength="220"
               spellcheck="false"
               id="input-post"
-              placeholder="${contents}"
-            ></textarea>
+            >${contents}</textarea>
           </div>
         </div>
         <p id="localname">#${localname}</p>
@@ -144,8 +141,7 @@ export const onEditing = (event) => {
   const modifying = document.querySelectorAll(".input"); //수정용 제목, 내용
   const localselect = document.getElementById("local-select");
   const localname = document.getElementById("localname"); //지역명
-
-  // const prePost = document.getElementById("description").value;
+  const preTitle = document.getElementById("input-title");
 
   udBtns.forEach((udBtn) => (udBtn.style.display = "none")); //수정,삭제 버튼 안보이게
   doneBtn.forEach((doneBtn) => (doneBtn.style.display = "flex")); //완료버튼 보이게
@@ -154,11 +150,9 @@ export const onEditing = (event) => {
   localname.style.display = "none";
   localselect.style.display = "flex";
   modifying.forEach((mod) => (mod.style.display = "flex"));
-  // modifying.forEach((mod) => mod.setAttribute(value, "flex"));
-  // modifying[0].children[0].setAttribute("value", preTitle); //제목 input 내부에 미리 이전 데이터 넣어놓기
-  // modifying[1].children[0].setAttribute("value", prePost);
-
-  // localname.style.display = "none";
+  preTitle.setAttribute("value", preTitle.placeholder);
+  //제목 input 내부에 미리 이전 데이터 넣어놓기 textarea는 미리설정이 되는데 input은 안돼서 여기서 설정함
+  console.log(modifying[1].children[0].placeholder);
 };
 
 //수정완료 버튼
@@ -171,6 +165,7 @@ export const updatePost = async (event) => {
   const id = event.target.id; //firebase "post"컬렉션의 문서 id
 
   const postRef = doc(dbService, "post", id);
+  console.log(postRef);
   try {
     await updateDoc(postRef, {
       title: modifiedTitle,
