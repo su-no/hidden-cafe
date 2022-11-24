@@ -38,7 +38,7 @@ export const handleLocation = async () => {
   }
 
   if (path.startsWith("/main-")) {
-    const html = await fetch("/pages/main.html").then(data => data.text());
+    const html = await fetch("/pages/main.html").then((data) => data.text());
     const mainPage = document.querySelector("#main-page");
     mainPage.innerHTML = html;
     const local = decodeURI(path.replace("/main-", ""));
