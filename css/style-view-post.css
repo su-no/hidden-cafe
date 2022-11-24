@@ -119,7 +119,7 @@
   margin-bottom: 16px;
 }
 
-#page-view-post .description {
+#page-view-post #description {
   font-size: 18px;
   line-height: 2.2;
 }
@@ -218,7 +218,7 @@
   flex-direction: column;
   justify-content: space-between;
 }
-#page-view-post .localname {
+#page-view-post #localname {
   color: rgb(146, 145, 145);
   font-size: 1.1rem;
   z-index: 0;
@@ -228,4 +228,12 @@
   flex-direction: column;
 
   /* align-items: center */
+}
+#page-view-post #local-select {
+  width: 30rem;
+  height: 2.5rem;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 3px 10px;
+  margin-top: 10px;
 }
