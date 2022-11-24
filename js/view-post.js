@@ -80,7 +80,7 @@ export const viewPost = async path => {
         <button name="${id}" onclick="deletePost(event)" class="post-delete-btn">삭제</button>
       </div>
     </div>
-    <button name="${postId}" id="${id}" onclick="updatePost(event)" class="post-modify-done-btn">
+    <button name="${id}" id="${postId}" onclick="updatePost(event)" class="post-modify-done-btn">
       완료
     </button>`;
 
