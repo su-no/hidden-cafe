@@ -89,7 +89,7 @@ deleteBtns.forEach(btn => {
 // 문서 있는 모든 수정 버튼에 이벤트 등록
 const modifyBtns = document.querySelectorAll(".comment-modify-btn");
 modifyBtns.forEach(btn => {
-  btn.addEventListener("click", deleteComment);
+  btn.addEventListener("click", modifyComment);
 });
 
 };
@@ -142,7 +142,7 @@ if (ok) {
 const modifyComment = async event => {
   const commentID = event.target.name;
   const user = authService.currentUser;
-  //   const newComment = document.querySelector(".new-comment");
+  const newComment = document.querySelector(".new-comment");
   const newCommentValue = newComment.value;
     await addDoc(collection(dbService, "comment"), {
     commentID: Date.now(),
@@ -167,3 +167,25 @@ const modifyComment = async event => {
 
 // 저장 버튼으로 변경 -> 저장 누르면 alert(저장하시겠습니까?) -> 저장 -> alert(저장되었습니다.)
 // 저장된 댓글 다시 불러오기 & 수정 삭제 버튼 복귀
+export const updatePost = async (event) => {
+  event.preventDefault();
+
+  const modifiedTitle = document.getElementById("input-title").value; //input 삽입, 수정 제목
+  const modifiedPost = document.getElementById("input-post").value; //textarea 삽입, 수정 내용
+  const id = event.target.id; //firebase "post"컬렉션의 문서 id
+
+  const postRef = doc(dbService, "post", id);
+  console.log(postRef);
+  try {
+    await updateDoc(postRef, {
+      title: modifiedTitle,
+      contents: modifiedPost,
+    });
+    const path = window.location.hash.replace("#", "/");
+    viewPost(path).then(() => {
+      viewComments(path);
+    });
+  } catch (error) {
+    alert(error);
+  }
+};
