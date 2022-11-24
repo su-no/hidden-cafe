@@ -28,12 +28,16 @@ export const handleLocation = async () => {
   if (path.length === 0) {
     path = "/";
   }
-  console.log("handleLocation:", path);
 
-  if (path.startsWith("/view-post-")) {
-    viewPost(path).then(() => viewComments(path));
-    return;
+  // 로그인 안 한 상태에서 페이지 이동 시 로그인 페이지로 강제 이동
+  // 메인 페이지는 조회 가능
+  if (!authService.currentUser) {
+    if (!path.startsWith("/main")) {
+      path = "/login";
+    }
   }
+
+  console.log("handleLocation:", path);
 
   if (path.startsWith("/main-")) {
     const html = await fetch("/pages/main.html").then(data => data.text());
@@ -41,6 +45,11 @@ export const handleLocation = async () => {
     mainPage.innerHTML = html;
     const local = decodeURI(path.replace("/main-", ""));
     getPostByLocal(local);
+    return;
+  }
+
+  if (path.startsWith("/view-post-")) {
+    viewPost(path).then(() => viewComments(path));
     return;
   }
 
