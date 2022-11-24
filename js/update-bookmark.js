@@ -22,29 +22,39 @@
 
 // 진행상황
 // 아이콘에 onclick="handleBookmark"까지는 달았음
-// 어떤 아이디를 가져와야 하는지 로직이 필요함
+
+// ? ....
+// 특정 게시글의 아이디를 어떻게 가져올지
+// 아이콘을 클릭했을 때, 해당 게시물(문서)의 북마크 필드를 가져와서 그것을 + 1하고 하고 싶은데..
 
 // * firestore = dbService
+// view-post-id 사용?
 
 import { dbService } from "./firebase.js";
 
 import {
   doc,
-  addDoc,
   updateDoc,
-  deleteDoc,
   collection,
-  orderBy,
   query,
   getDocs,
   where,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 
-export const handleBookmark = async () => {
+export const handleBookmark = async (event) => {
   const querySnapshot = await getDocs(collection(dbService, "post"));
+  console.log(event.target);
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
+    // console.log(doc.id, " => ", doc.data());
   });
 };
 
-  constructor(...fieldNames: bookmark[]);
+//firebase post query
+
+// const q = query(
+//   collection(dbService, "comment"),
+//   where("postId", "==", postId),
+//   orderBy("createdAt")
+// );
+
+// constructor(...fieldNames: bookmark[]);

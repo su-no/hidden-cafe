@@ -23,7 +23,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
 
 // 로그인 / 회원가입 (로그인 성공 시 메인 화면으로 이동)
-export const handleAuth = event => {
+export const handleAuth = (event) => {
   event.preventDefault();
   const email = document.getElementById("email");
   const emailVal = email.value;
@@ -46,12 +46,12 @@ export const handleAuth = event => {
   const authBtnText = document.querySelector("#authBtn").value;
   if (authBtnText === "로그인") {
     signInWithEmailAndPassword(authService, emailVal, pwVal)
-      .then(userCredential => {
+      .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
         window.location.hash = "main";
       })
-      .catch(error => {
+      .catch((error) => {
         const errorMessage = error.message;
         console.log("errorMessage:", errorMessage);
         if (errorMessage.includes("user-not-found")) {
@@ -72,13 +72,15 @@ export const handleAuth = event => {
       return;
     }
     if (matchedPw === null) {
-      alert("비밀번호는 10자리 이상이어야 하고 영문자, 숫자, 특수문자를 모두 포함해야 합니다.");
+      alert(
+        "비밀번호는 10자리 이상이어야 하고 영문자, 숫자, 특수문자를 모두 포함해야 합니다."
+      );
       pw.focus();
       return;
     }
     // 회원가입 버튼 클릭의 경우
     createUserWithEmailAndPassword(authService, emailVal, pwVal)
-      .then(userCredential => {
+      .then((userCredential) => {
         // Signed in
         // 초기 닉네임, 프로필사진 설정
         authService.currentUser.displayName = emailVal.split("@")[0];
@@ -87,7 +89,7 @@ export const handleAuth = event => {
         const user = userCredential.user;
         window.location.hash = "main";
       })
-      .catch(error => {
+      .catch((error) => {
         const errorMessage = error.message;
         console.log("errorMessage:", errorMessage);
         if (errorMessage.includes("email-already-in-use")) {
@@ -98,21 +100,21 @@ export const handleAuth = event => {
 };
 
 // 구글 로그인
-export const socialLogin = event => {
+export const socialLogin = (event) => {
   const { name } = event.target;
   let provider;
   if (name === "google") {
     provider = new GoogleAuthProvider();
   }
   signInWithPopup(authService, provider)
-    .then(result => {
+    .then((result) => {
       // const credential = GoogleAuthProvider.credentialFromResult(result);
       // const token = credential.accessToken;
       const user = result.user;
       console.log("로그인 성공!");
       window.location.hash = "main";
     })
-    .catch(error => {
+    .catch((error) => {
       // Handle Errors here.
       console.log("error:", error);
       const errorCode = error.code;
@@ -139,7 +141,7 @@ export const onToggle = () => {
 };
 
 // 로그인 상태에 따라 로그인, 로그아웃 버튼 구현
-onAuthStateChanged(authService, user => {
+onAuthStateChanged(authService, (user) => {
   const loginBtn = document.querySelector("header .btn-login");
   if (user) {
     loginBtn.textContent = "로그아웃";
@@ -149,7 +151,7 @@ onAuthStateChanged(authService, user => {
 });
 
 // 로그인, 로그아웃 버튼 클릭시 핸들 함수
-export const onLoginButton = event => {
+export const onLoginButton = (event) => {
   // 로그인 버튼일 경우, 페이지 이동
   if (event.target.textContent === "로그인") {
     window.location.hash = event.target.hash;

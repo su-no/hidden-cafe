@@ -62,7 +62,7 @@ export const getpostList = async () => {
         </div>
       </div>
       <!-- 북마크 버튼 -->
-      <div class="bookmark"><i class="fas fa-mug-hot" onclick="handleBookmark()"></i>${
+      <div class="bookmark"><i class="fas fa-mug-hot" onclick="handleBookmark(event)"></i>${
         postObj.bookmark
       }</div>
 

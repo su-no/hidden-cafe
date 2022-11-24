@@ -29,6 +29,6 @@ window.deletePost = deletePost;
 window.onEditing = onEditing;
 window.updatePost = updatePost;
 window.updatePost = updatePost;
+
 // ! 작업 중 : 북마크 기능
 window.handleBookmark = handleBookmark;
-
