@@ -31,14 +31,12 @@ export const handleLocation = async () => {
   console.log("handleLocation:", path);
 
   if (path.startsWith("/view-post-")) {
-    viewPost(path).then(() => {
-      viewComments(path);
-    });
+    viewPost(path).then(() => viewComments(path));
     return;
   }
 
   if (path.startsWith("/main-")) {
-    const html = await fetch("/pages/main.html").then((data) => data.text());
+    const html = await fetch("/pages/main.html").then(data => data.text());
     const mainPage = document.querySelector("#main-page");
     mainPage.innerHTML = html;
     const local = decodeURI(path.replace("/main-", ""));
@@ -47,7 +45,7 @@ export const handleLocation = async () => {
   }
 
   const route = routes[path] || routes[404];
-  const html = await fetch(route).then((data) => data.text());
+  const html = await fetch(route).then(data => data.text());
 
   const mainPage = document.querySelector("#main-page");
   mainPage.innerHTML = html;
