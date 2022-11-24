@@ -8,6 +8,7 @@ import {
   getDocs,
   where,
   FieldValue,
+  getDoc,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 
 // * 로직
@@ -19,15 +20,22 @@ import {
 // 문제1 클릭 안해도 업데이트가 됨. // ! 해결 router.js L57에서 실행되고 있었음
 // 문제2 필드값 변수를 어떻게 만들어야 되지? // ! 해결 : (이벤트에서 부모 노드로 접근)
 // 문제3 아이디로 변수화 해야 됨 //
+// 문제4 새로고침을 해야 결과가 반영됨.
+
+// * 너무 허무하게 해결되어 버렸다.. 올포스트에서 변수로 지정하고 그걸 가져오면 되는 거였어...
 
 export const handleBookmark = async (event) => {
-  document.querySelector(".post-container").childNodes[1].hash
-  console.log(event.currentTarget.parentNode);
-  // 변수 저장 (북마크 변수화, 업데이트값 변수화, 참조문서 변수화)
-  const docRef = doc(dbService, "post", "mmAz6CxZCKNISkWo5gFW");
+  // ! 최초 성공
+  // const docRef = doc(dbService, "post", "id");
+  // const bookmark = Number(event.currentTarget.parentNode.innerText);
+  // const data = { bookmark: bookmark + 1 };
+  const id = event.target.name;
+  console.log(id);
+  const docRef = doc(dbService, "post", id);
   const bookmark = Number(event.currentTarget.parentNode.innerText);
-  const data = { bookmark : bookmark + 1 };
-
+  const data = { bookmark: bookmark + 1 };
+  // 함수 기능 : 북마크 누르면 + 1
+  console.log(id);
   updateDoc(docRef, data)
     .then((docRef) => {
       console.log("북마크 성공");
@@ -35,12 +43,4 @@ export const handleBookmark = async (event) => {
     .catch((error) => {
       console.log("북마크 실패");
     });
-
-  // const querySnapshot = await getDocs(collection(dbService, "post"));
-  // console.log(event.target);
-  // console.log(querySnapshot)
-  // querySnapshot.forEach((doc) => {
-  //   console.log(doc.id, " => ", doc.data());
-  //   console.log(doc.id);
-  // });
 };
