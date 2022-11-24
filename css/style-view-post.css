@@ -171,7 +171,7 @@
 }
 
 #page-view-post .comment-create-date {
-  margin-right: 25px;
+  margin-right: 20px;
 }
 
 #page-view-post .new-comment {
@@ -184,6 +184,9 @@
 }
 #page-view-post .noDisplay {
   display: none;
+}
+#page-view-post .d-flex {
+  display: flex;
 }
 
 #page-view-post #input-title {

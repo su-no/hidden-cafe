@@ -97,6 +97,8 @@ header .coffeecup {
 
 footer {
   position: absolute;
+  z-index: 1;
+  width: 100%;
   bottom: 0;
   width: 100%;
   background-color: rgb(40, 40, 40);

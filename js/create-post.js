@@ -3,7 +3,7 @@ import {
   collection,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 import { dbService, authService, storageService } from "./firebase.js";
-
+import { getDate } from "./util.js";
 import {
   ref,
   uploadString,
@@ -18,18 +18,11 @@ export const postUpload = async event => {
   const post = document.getElementById("input-post");
   const title = document.getElementById("input-title");
   const localname = document.getElementById("local-select");
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hour = date.getHours();
-  const minuites = date.getMinutes();
-  const tmpProfilImg = "";
   const { uid, email, photoURL, displayName } = authService.currentUser;
   const imgRef = ref(storageService, `${authService.currentUser.uid}/img/${uuidv4()}`);
 
   // 프로필 이미지 dataUrl을 Storage에 업로드 후 다운로드 링크를 받아서 photoURL에 저장.
-  const imgDataUrl = localStorage.getItem("imgDataUrl");
+  const imgDataUrl = localStorage.getItem("imgDataUrlPost");
   let downloadUrl;
   if (imgDataUrl) {
     const response = await uploadString(imgRef, imgDataUrl, "data_url");
@@ -42,13 +35,13 @@ export const postUpload = async event => {
   try {
     await addDoc(collection(dbService, "post"), {
       contents: post.value, //게시물 내용
-      createdAt: `${year}-${month}-${day} ${hour}:${minuites}`, //메인에 띄울때 사용
+      createdAt: getDate(), //메인에 띄울때 사용
       creatorId: uid, //사용자 uid
       email: email, //닉네임없어서 이메일로 대체함
       localname: localname.value, //카테고리 분류시 사용
       postId: `${Date.now()}`, //postID 겹치지 않도록 uuid사용
       postImg: downloadUrl, //이미지 url
-      profilImg: photoURL,
+      profileImg: photoURL,
       title: title.value, //게시물 제목
       nickname: displayName,
       bookmark: 0,

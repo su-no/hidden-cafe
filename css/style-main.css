@@ -87,6 +87,7 @@ a:hover {
 #page-main .post-profile-img {
   width: 1.875rem;
   height: 1.875rem;
+  border-radius: 100px;
   object-fit: cover;
   margin-right: 0.625rem;
 }
@@ -103,7 +104,8 @@ a:hover {
 #page-main .post-box {
   display: flex;
   justify-content: space-between;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   padding: 1.875rem;
   margin-bottom: 1.875rem;
 }
