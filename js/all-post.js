@@ -21,6 +21,18 @@ export const getPostByLocal = async local => {
     where("localname", "==", local),
   );
   getFirebaseDocs(q);
+
+  // 사이드바 색상 토글
+  const sidebar = document.querySelector("#sidebar ul");
+  const sidebarList = [...sidebar.children];
+  sidebarList.forEach(li => {
+    const a = li.childNodes[0];
+    if (a.textContent === local) {
+      a.classList.add("clicked");
+    } else {
+      a.classList.remove("clicked");
+    }
+  });
 };
 
 // Firebase에서 모든 게시글 데이터 가져오기
