@@ -24,3 +24,4 @@ window.getpostList = getpostList;
 // view-post.js
 window.deletePost = deletePost;
 window.onEditing = onEditing;
+

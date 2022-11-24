@@ -6,6 +6,8 @@ import {
   getDocs,
   orderBy,
   addDoc,
+  deleteDoc,
+  doc,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 import { getDate } from "./util.js";
 
@@ -18,7 +20,7 @@ export const viewComments = async path => {
   userProfile.setAttribute("src", user.photoURL ?? "/img/profile-img.png");
   const userNickname = document.querySelector(".comment-user-name");
   userNickname.textContent = user.displayName ?? user.email.split("@")[0];
-
+  
   // 댓글 등록 버튼에 이벤트 등록
   const createBtn = document.querySelector(".comment-post-btn");
   createBtn.onclick = () => {
@@ -29,14 +31,14 @@ export const viewComments = async path => {
     }
     createComment(path);
   };
-
+  
   // Firebase에서 해당 게시글의 댓글 받아오기
   const q = query(
     collection(dbService, "comment"),
     where("postId", "==", postId),
     orderBy("createdAt"),
-  );
-  const querySnapshot = await getDocs(q);
+    );
+    const querySnapshot = await getDocs(q);
   const commentObjList = [];
   querySnapshot.forEach(doc => {
     const commentObj = {
@@ -45,7 +47,7 @@ export const viewComments = async path => {
     };
     commentObjList.push(commentObj);
   });
-
+  
   // 댓글 목록을 비우고 하나씩 추가
   const commentList = document.querySelector(".comment-list");
   commentList.innerHTML = "";
@@ -66,14 +68,36 @@ export const viewComments = async path => {
     <div class="comment-create-date">${commentObj.createdAt}</div>
     <div class="comment-buttons">
     <button class="${isOwner ? "comment-modify-btn" : "noDisplay"}">수정</button>
-    <button class="${isOwner ? "comment-delete-btn" : "noDisplay"}">삭제</button>
+    <button id=${commentObj.commentID} class="${isOwner ? "comment-delete-btn" : "noDisplay"}">삭제</button>
     </div>`;
-
+    
     const commentRow = document.createElement("div");
     commentRow.classList.add("comment-row");
     commentRow.innerHTML = tempHtml;
     commentList.appendChild(commentRow);
   });
+  // 댓글 삭제
+  const deleteBtn = document.querySelector(".comment-delete-btn");
+  console.log('if()')
+  deleteBtn.onclick = async (event) => {
+  
+    event.preventDefault();
+    console.log(event.target.id);
+    const id = event.target.id
+      console.log("comment")
+    const ok = window.confirm("정말 삭제하시겠습니까?");
+    if (ok) {
+      try {
+      console.log(id);
+      await deleteDoc(doc(dbService, "comment", id));
+      alert("삭제완료");
+      window.location.hash = "#comment-list";
+      // getCommentList();
+      } catch (error) {
+        alert(error);
+      }
+    }
+  }
 };
 
 // 댓글 작성 함수
@@ -106,7 +130,7 @@ const createComment = async path => {
 // 댓글창 수정하기 
 export const modifyComments = async path => {
 // 수정 버튼 누르면 댓글창 다시 활성화(썼던 내용 그대로!!)
-  const createBtn = document.querySelector(".comment-post-btn");
+  const createBtn = document.querySelector(".comment-modify-btn");
     createBtn.onclick = () => {
       const value = document.querySelector(".new-comment").value;
       if (!value) {
@@ -117,25 +141,17 @@ export const modifyComments = async path => {
     }
   //댓글창작성 다시 실행
 
-
+};
 // 저장 버튼으로 변경 -> 저장 누르면 alert(저장하시겠습니까?) -> 저장 -> alert(저장되었습니다.)
 // 저장된 댓글 다시 불러오기 & 수정 삭제 버튼 복귀
-// const editComment = async path => {
-//   event.preventDefault();
 
-//   const edit = document.getElementById("comment-modify-btn");
-//   await 변수((인수), {내용물}).then(() => {}).catch();
-  
-// };
+
 
 // 댓글창 삭제하기
 // 삭제 버튼 누르면 alert(삭제하시겠습니까?) -> 삭제 -> alert(삭제되었습니다.)
-// async delete(comment) {
-//   try {
-//     await this.commentObj.doc(comment).delete();
-//     console.log(id,'유저의 댓글이 삭제됨');
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
-};
+
+  //완료 될때까지 버튼 더 안눌리게
+  
+
+ 
+
