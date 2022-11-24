@@ -25,7 +25,7 @@ export const getPostByLocal = async (local) => {
   // 사이드바 색상 토글
   const sidebar = document.querySelector("#sidebar ul");
   const sidebarList = [...sidebar.children];
-  sidebarList.forEach(li => {
+  sidebarList.forEach((li) => {
     const a = li.childNodes[0];
     if (a.textContent === local) {
       a.classList.add("clicked");
@@ -80,7 +80,7 @@ const getFirebaseDocs = async (q) => {
             <p class="localname">#${postObj.localname}</p>
           </div>
       </div>
-      <div class="bookmark"><i class="fas fa-mug-hot"></i>${
+      <div class="bookmark"><i class="fas fa-mug-hot" onclick="handleBookmark(event)"></i>${
         postObj.bookmark
       }</div>
     </div>
