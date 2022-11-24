@@ -68,7 +68,7 @@ export const viewPost = async (path) => {
               placeholder="${title}"
             />
           </div>
-          <div class="description">${contents}</div>
+          <div id="description">${contents}</div>
           <div class="input" style="display: none">
             <textarea
               col="10"
@@ -80,7 +80,15 @@ export const viewPost = async (path) => {
             ></textarea>
           </div>
         </div>
-        <p class="localname">#${localname}</p>
+        <p id="localname">#${localname}</p>
+        <select id="local-select" style="display:none">
+            <option value="서울">서울</option>
+            <option value="경기">경기</option>
+            <option value="인천">인천</option>
+            <option value="부산">부산</option>
+            <option value="대전">대전</option>
+            <option value="대구">대구</option>
+          </select>
       </div>
       </div>
       <div class="alignBookBtn">
@@ -90,8 +98,8 @@ export const viewPost = async (path) => {
         <button name="${id}" onclick="deletePost(event)" class="post-delete-btn">
           삭제
         </button>
-      </div>
-    
+        </div>
+        </div>
     <button
       name="${postId}"
       id="${id}"
@@ -100,7 +108,7 @@ export const viewPost = async (path) => {
     >
       완료
     </button>
-  </div>
+  
    `;
 
     // article 태그에 담아서 container에 추가
@@ -129,48 +137,53 @@ export const deletePost = async (event) => {
 export const onEditing = (event) => {
   // 수정버튼 클릭
   event.preventDefault();
-  const udBtns = document.querySelectorAll(".alignBookBtn");
-  const doneBtn = document.querySelectorAll(".post-modify-done-btn");
-  const title = document.querySelectorAll("#title");
-  const modifyTitle = document.querySelectorAll(".input"); //수정용 제목, 내용
-  const description = document.querySelectorAll(".description");
-  // udBtns.forEach((udBtn) => (udBtn.disabled = "true"));
-  //수정버튼 누르면 수정, 삭제 버튼 안보이고 완료버튼 보임
-  udBtns.forEach((udBtn) => (udBtn.style.display = "none"));
-  doneBtn.forEach((doneBtn) => (doneBtn.style.display = "flex"));
-  title.forEach((udBtn) => (udBtn.style.display = "none"));
-  modifyTitle.forEach((udBtn) => (udBtn.style.display = ""));
-  description.forEach((udBtn) => (udBtn.style.display = "none"));
+  const udBtns = document.querySelectorAll(".alignBookBtn"); //수정, 삭제 버튼
+  const doneBtn = document.querySelectorAll(".post-modify-done-btn"); //완료버튼
+  const title = document.getElementById("title"); //기존 제목
+  const description = document.getElementById("description"); //기존 설명
+  const modifying = document.querySelectorAll(".input"); //수정용 제목, 내용
+  const localselect = document.getElementById("local-select");
+  const localname = document.getElementById("localname"); //지역명
+
+  // const prePost = document.getElementById("description").value;
+
+  udBtns.forEach((udBtn) => (udBtn.style.display = "none")); //수정,삭제 버튼 안보이게
+  doneBtn.forEach((doneBtn) => (doneBtn.style.display = "flex")); //완료버튼 보이게
+  title.style.display = "none";
+  description.style.display = "none";
+  localname.style.display = "none";
+  localselect.style.display = "flex";
+  modifying.forEach((mod) => (mod.style.display = "flex"));
+  // modifying.forEach((mod) => mod.setAttribute(value, "flex"));
+  // modifying[0].children[0].setAttribute("value", preTitle); //제목 input 내부에 미리 이전 데이터 넣어놓기
+  // modifying[1].children[0].setAttribute("value", prePost);
+
+  // localname.style.display = "none";
 };
 
 //수정완료 버튼
 export const updatePost = async (event) => {
   event.preventDefault();
 
-  //input 삽입 제목
-  const modifiedTitle =
-    event.target.parentNode.children[0].children[1].children[1].children[0]
-      .value;
-  //textarea 삽입 내용
-  const modifiedPost =
-    event.target.parentNode.children[0].children[1].children[3].children[0]
-      .value;
-  const id = event.target.name;
+  const modifiedTitle = document.getElementById("input-title").value; //input 삽입, 수정 제목
+  const modifiedPost = document.getElementById("input-post").value; //textarea 삽입, 수정 내용
+  const localname = document.getElementById("local-select").value; //기존 지역명
+  const id = event.target.id; //firebase "post"컬렉션의 문서 id
 
   const postRef = doc(dbService, "post", id);
   try {
-    await updateDoc(postRef, { title: modifiedTitle, contents: modifiedPost });
-    const postId = event.target.id;
-    viewPost(`/view-post-${postId}`);
-    // window.location.reload();
+    await updateDoc(postRef, {
+      title: modifiedTitle,
+      contents: modifiedPost,
+      localname: localname,
+    });
+    const path = window.location.hash.replace("#", "/");
+    viewPost(path).then(() => {
+      viewComments(path);
+    });
   } catch (error) {
     alert(error);
   }
-
-  const path = window.location.hash.replace("#", "/");
-  viewPost(path).then(() => {
-    viewComments(path);
-  });
 };
 
 // export const savePost = async (event) => {
