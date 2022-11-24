@@ -13,14 +13,14 @@ import { getDate } from "./util.js";
 import { viewPost } from "./view-post.js";
 
 // Firebase DB에서 댓글 불러와서 보여주는 함수
-export const viewComments = async path => {
-const postId = path.split("/view-post-")[1];
-// 댓글 작성자 프로필이미지, 닉네임 가져오기
-const user = authService.currentUser;
-const userProfile = document.querySelector(".comment-profile-img");
-userProfile.setAttribute("src", user.photoURL ?? "/img/profile-img.png");
-const userNickname = document.querySelector(".comment-user-name");
-userNickname.textContent = user.displayName ?? user.email.split("@")[0];
+export const viewComments = async (path) => {
+  const postId = path.split("/view-post-")[1];
+  // 댓글 작성자 프로필이미지, 닉네임 가져오기
+  const user = authService.currentUser;
+  const userProfile = document.querySelector(".comment-profile-img");
+  userProfile.setAttribute("src", user.photoURL ?? "/img/profile-img.png");
+  const userNickname = document.querySelector(".comment-user-name");
+  userNickname.textContent = user.displayName ?? user.email.split("@")[0];
 
 // 댓글 등록 버튼에 이벤트 등록
 const createBtn = document.querySelector(".comment-post-btn");
@@ -33,28 +33,29 @@ createBtn.onclick = () => {
   createComment(path);
 };
 
-// Firebase에서 해당 게시글의 댓글 받아오기
-const q = query(
-  collection(dbService, "comment"),
-  where("postId", "==", postId),
-  orderBy("createdAt"),
-);
-const querySnapshot = await getDocs(q);
-const commentObjList = [];
-querySnapshot.forEach(doc => {
-  const commentObj = {
-    id: doc.id,
-    ...doc.data(),
-  };
-  commentObjList.push(commentObj);
-});
-// 댓글 목록을 비우고 하나씩 추가
-const commentList = document.querySelector(".comment-list");
-commentList.innerHTML = "";
-commentObjList.forEach(commentObj => {
-  const isOwner = user.uid === commentObj["creatorId"];
-  const tempHtml = `
-  <div class="comment-user">
+  // Firebase에서 해당 게시글의 댓글 받아오기
+  const q = query(
+    collection(dbService, "comment"),
+    where("postId", "==", postId),
+    orderBy("createdAt")
+  );
+  const querySnapshot = await getDocs(q);
+  const commentObjList = [];
+  querySnapshot.forEach((doc) => {
+    const commentObj = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    commentObjList.push(commentObj);
+  });
+
+  // 댓글 목록을 비우고 하나씩 추가
+  const commentList = document.querySelector(".comment-list");
+  commentList.innerHTML = "";
+  commentObjList.forEach((commentObj) => {
+    const isOwner = user.uid === commentObj["creatorId"];
+    const tempHtml = `
+    <div class="comment-user">
     <img
       class="comment-profile-img"
       src="${commentObj.profileUrl ?? "/img/profile-img.png"}"

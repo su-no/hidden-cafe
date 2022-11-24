@@ -1,6 +1,7 @@
 :root {
   --color-orange: #ec5e39;
   --color-brown: #ceb292;
+  --color-dark-grey: #333;
 }
 
 a {
@@ -47,12 +48,11 @@ a:hover {
   text-align: center;
 }
 #page-main #sidebar li a:hover {
-  background: #333;
+  background: var(--color-dark-grey);
   color: #fff;
 }
-
-#page-main #sidebar li a.home {
-  background: #333;
+#page-main #sidebar .clicked {
+  background-color: var(--color-dark-grey);
   color: #fff;
 }
 
@@ -87,6 +87,7 @@ a:hover {
 #page-main .post-profile-img {
   width: 1.875rem;
   height: 1.875rem;
+  border-radius: 100px;
   object-fit: cover;
   margin-right: 0.625rem;
 }
@@ -103,12 +104,14 @@ a:hover {
 #page-main .post-box {
   display: flex;
   justify-content: space-between;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   padding: 1.875rem;
   margin-bottom: 1.875rem;
 }
 
 #page-main .bookmark {
+  width: 100px;
   text-align: right;
   font-size: 1.25rem;
 }
@@ -152,4 +155,21 @@ a:hover {
 
 #page-main .post-buttons {
   text-align: right;
+}
+
+#page-main .alignlocal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#page-main .localname {
+  color: rgb(146, 145, 145);
+  font-size: 1.1rem;
+  z-index: 0;
+}
+#page-main .post-content {
+  display: flex;
+  flex-direction: column;
+
+  /* align-items: center */
 }

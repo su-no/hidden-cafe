@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 export const changeProfile = async event => {
   event.preventDefault();
   document.getElementById("profileBtn").disabled = true;
+
   const imgRef = ref(storageService, `${authService.currentUser.uid}/${uuidv4()}`);
 
   const newNickname = document.getElementById("profileNickname").value;
@@ -22,7 +23,7 @@ export const changeProfile = async event => {
     downloadUrl = await getDownloadURL(response.ref);
   }
   console.log("updateProfile");
-  console.log(authService);
+  // console.log(authService);
   await updateProfile(authService.currentUser, {
     //if문 shortcut - 변수 반환
     displayName: newNickname ? newNickname : null,
@@ -38,6 +39,7 @@ export const changeProfile = async event => {
     });
 };
 //게시물과 같은 이름의 함수이면 안돼 바꿔!! 그리고 html과 연결
+
 export const onFileChangeProfile = event => {
   const theFile = event.target.files[0]; // file 객체
   const reader = new FileReader();
@@ -45,9 +47,10 @@ export const onFileChangeProfile = event => {
   //   reader.readAsDataURL(theFile); // file 객체를 브라우저가 읽을 수 있는 data URL로 읽음.
   // }
   reader.readAsDataURL(theFile);
+
   reader.onloadend = finishedEvent => {
     const imgDataUrl = finishedEvent.currentTarget.result;
-    console.log(imgDataUrl);
+    // console.log(imgDataUrl);
     localStorage.setItem("imgDataUrl", imgDataUrl);
     document.getElementById("profileView").src = imgDataUrl;
   };

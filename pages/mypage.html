@@ -10,7 +10,7 @@
         <div class="leftside">
           <!-- 프사 이미지 라벨 -->
           <div id="imgLabel">
-            <img id="profileView" src="/assets/blankProfile.webp" />
+            <img id="profileView" src="/img/temp-img.png" />
           </div>
           <!-- 프사 바꾸기 버튼 -->
           <label id="profileImgUpBtn" for="imgInput">이미지 업로드</label>
@@ -19,21 +19,13 @@
             onchange="onFileChangeProfile(event)"
             id="imgInput"
             type="file"
-            accept="images/*" />
+            accept="images/*"
+          />
         </div>
         <!-- 마이페이지 오른쪽 사이드 -->
         <div class="rightside">
-          <input
-            id="profileNickname"
-            type="text"
-            placeholder="성견린치"
-            value="" />
-          <input
-            disabled
-            id="profileEmail"
-            type="text"
-            placeholder="mkdavdi123@gmail.com"
-            value="" />
+          <input id="profileNickname" type="text" placeholder="" value="" maxlength="7" />
+          <input disabled id="profileEmail" type="text" placeholder="" value="" />
           <input id="profileBtn" type="submit" value="수정 완료하기" />
           <div id="infoBtns">
             <label id="profileConfirm" for="profileBtn">완료</label>
