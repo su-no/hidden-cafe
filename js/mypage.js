@@ -7,7 +7,7 @@ import {
 import { updateProfile } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 
-//닉네임 이미지 수정
+//닉네임, 이미지 수정
 export const changeProfile = async (event) => {
   event.preventDefault();
   document.getElementById("profileBtn").disabled = true;
@@ -16,8 +16,8 @@ export const changeProfile = async (event) => {
     storageService,
     `${authService.currentUser.uid}/${uuidv4()}`
   );
-
-  const newNickname = document.getElementById("profileNickname").value;
+  const preNickname = document.getElementById("profileNickname").placeholder; // 이전닉네임
+  const newNickname = document.getElementById("profileNickname").value; //새로운 닉네임
   // 프로필 이미지 dataUrl을 Storage에 업로드 후 다운로드 링크를 받아서 photoURL에 저장.
   const imgProfileUrl = localStorage.getItem("imgDataUrl");
   // imgDataUrl이 script-create-post.js 게시글 사진과 변수가 겹쳐서 imgProfileUrl로 변경할까 함...
@@ -26,13 +26,17 @@ export const changeProfile = async (event) => {
     const response = await uploadString(imgRef, imgProfileUrl, "data_url");
     downloadUrl = await getDownloadURL(response.ref);
   }
-  window.sessionStorage.setItem("userNickname", newNickname);
+  //닉네임이 빈칸이면 이전 닉네임으로 설정
+  window.sessionStorage.setItem(
+    "userNickname",
+    newNickname.length !== 0 ? newNickname : preNickname
+  );
   console.log(authService.currentUser);
   console.log("updateProfile");
   // console.log(authService);
   await updateProfile(authService.currentUser, {
     //if문 shortcut - 변수 반환
-    displayName: newNickname ? newNickname : null,
+    displayName: newNickname ? newNickname : preNickname,
     photoURL: downloadUrl ? downloadUrl : null,
   })
     .then(() => {
@@ -44,6 +48,7 @@ export const changeProfile = async (event) => {
       alert("프로필 수정 실패");
     });
 };
+// };
 //게시물과 같은 이름의 함수이면 안돼 바꿔!! 그리고 html과 연결
 
 export const onFileChangeProfile = (event) => {
@@ -58,6 +63,7 @@ export const onFileChangeProfile = (event) => {
     const imgDataUrl = finishedEvent.currentTarget.result;
     // console.log(imgDataUrl);
     localStorage.setItem("imgDataUrl", imgDataUrl);
+    window.sessionStorage.setItem("userProfile", imgDataUrl);
     document.getElementById("profileView").src = imgDataUrl;
   };
 };
