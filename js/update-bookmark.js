@@ -30,12 +30,10 @@ export const handleBookmark = async (event) => {
   // const bookmark = Number(event.currentTarget.parentNode.innerText);
   // const data = { bookmark: bookmark + 1 };
   const id = event.target.name;
-  console.log(id);
   const docRef = doc(dbService, "post", id);
   const bookmark = Number(event.currentTarget.parentNode.innerText);
   const data = { bookmark: bookmark + 1 };
   // 함수 기능 : 북마크 누르면 + 1
-  console.log(id);
   updateDoc(docRef, data)
     .then((docRef) => {
       console.log("북마크 성공");
