@@ -146,6 +146,7 @@
   flex-direction: row;
   align-items: center;
   padding-bottom: 20px;
+  justify-content: space-between;
 }
 
 #page-view-post .comment-user {
