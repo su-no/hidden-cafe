@@ -16,20 +16,25 @@ import { getBookmarkList } from "./view-bookmark.js";
 export const handleBookmark = async (event) => {
   event.preventDefault();
   const id = event.target.name;
+  const bookmarkcount =
+    event.currentTarget.parentNode.lastChild.previousSibling;
   const docRef = doc(dbService, "post", id);
   const bookmark = Number(event.currentTarget.parentNode.innerText);
   const data = { bookmark: bookmark + 1 };
   // 함수 기능 : 북마크 누르면 + 1
+
+  // ! 문제 1 : 첫번째 것만 숫자가 업데이트됨. -> 해결
   updateDoc(docRef, data)
     .then((docRef) => {
-      console.log("북마크 성공");
-      const q = document.querySelector("#bookmarkcount");
+      const q = bookmarkcount;
       const qcountnum = Number(q.innerText);
       q.innerText = qcountnum + 1;
+      console.log("북마크 성공");
     })
     .catch((error) => {
       console.log("북마크 실패");
     });
+
   addToBookmarkList(id);
 };
 
