@@ -49,6 +49,11 @@ export const handleAuth = (event) => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        console.log("user:", user);
+        window.sessionStorage.setItem("user", user.uid);
+        window.sessionStorage.setItem("userProfile", user.photoURL);
+        window.sessionStorage.setItem("userNickname", user.displayName);
+        window.sessionStorage.setItem("userEmail", user.email);
         window.location.hash = "main";
       })
       .catch((error) => {
