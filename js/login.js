@@ -50,6 +50,7 @@ export const handleAuth = (event) => {
         // Signed in
         const user = userCredential.user;
         console.log("user:", user);
+        //세션설정
         window.sessionStorage.setItem("user", user.uid);
         window.sessionStorage.setItem("userProfile", user.photoURL);
         window.sessionStorage.setItem("userNickname", user.displayName);
@@ -165,5 +166,10 @@ export const onLoginButton = (event) => {
     authService.signOut();
     window.location.hash = "main";
     console.log("로그아웃 성공!");
+    //세션초기화
+    window.sessionStorage.setItem("user", "");
+    window.sessionStorage.setItem("userProfile", "");
+    window.sessionStorage.setItem("userNickname", "");
+    window.sessionStorage.setItem("userEmail", "");
   }
 };
