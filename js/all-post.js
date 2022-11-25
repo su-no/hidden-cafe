@@ -91,11 +91,12 @@ const getFirebaseDocs = async (q) => {
             <p class="localname">#${postObj.localname}</p>
           </div>
       </div>
-      <div class-"bookmark">
-        <a name=${
+      <div class="bookmark">
+        <a id="test" name=${
           postObj.id
         }  class="fas fa-mug-hot" onclick="handleBookmark(event)">
-        </a>${postObj.bookmark}
+        </a>
+        <div id="bookmarkcount">${postObj.bookmark}</div>
       </div>
     </div>
 
