@@ -1,7 +1,29 @@
 :root {
   --color-orange: #ec5e39;
   --color-brown: #ceb292;
+  --color-dark-grey: #333;
 }
+
+a {
+  text-decoration: unset;
+  color: unset;
+}
+a:hover {
+  text-decoration: unset;
+  color: unset;
+}
+
+/* 시작점 : 북마크 아이콘 스타일링 */
+a.fas.fa-mug-hot {
+  font-size: 22px;
+  color: #ceb292;
+}
+
+a.fas.fa-mug-hot:hover {
+  color: #ec5e39;
+  cursor: pointer;
+}
+/* 종료점 : 북마크 아이콘 스타일링 */
 
 #page-bookmark * {
   margin: 0;
@@ -9,30 +31,18 @@
   box-sizing: border-box;
 }
 
-#page-bookmark button {
-  border: none;
-  background-color: transparent;
-  padding: 5px;
-  font-size: 16px;
-  color: lightgrey;
-  cursor: pointer;
-}
-
-#page-bookmark button:hover {
-  color: var(--color-orange);
-  transition: 200ms;
-}
-
-#page-bookmark .container {
+#page-bookmark #container {
+  display: flex;
+  flex-direction: column;
   background-color: white;
-  width: 1000px;
+  width: 62.5rem;
   margin: auto;
-  padding: 20px;
+  padding: 1.25rem;
 }
 
 #page-bookmark .post {
-  margin: 20px;
-  width: 960px;
+  margin: 1.25rem 0;
+  width: 60rem;
 }
 
 #page-bookmark .post-header {
@@ -40,7 +50,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 #page-bookmark .post-user {
@@ -50,36 +60,42 @@
 }
 
 #page-bookmark .post-profile-img {
-  width: 60px;
-  margin-right: 10px;
+  width: 1.875rem;
+  height: 1.875rem;
+  border-radius: 100px;
+  object-fit: cover;
+  margin-right: 0.625rem;
 }
 
 #page-bookmark .post-user-name {
-  font-size: 32px;
+  font-size: 1.25rem;
 }
 
 #page-bookmark .post-create-date {
   color: darkgrey;
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
 #page-bookmark .post-box {
-  /* border: 1px solid darkgrey; */
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-  padding: 30px;
-  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  padding: 1.875rem;
+  margin-bottom: 1.875rem;
 }
 
 #page-bookmark .bookmark {
+  width: 100px;
   text-align: right;
-  font-size: 20px;
-  cursor: pointer;
+  font-size: 1.25rem;
 }
 
 #page-bookmark .bookmark i {
   color: var(--color-brown);
+  cursor: pointer;
+  padding-right: 0.5rem;
 }
-
 #page-bookmark .bookmark i:hover {
   color: var(--color-orange);
   transition: 200ms;
@@ -91,21 +107,44 @@
 }
 
 #page-bookmark .post-img {
-  width: 300px;
-  margin-right: 30px;
+  width: 15.625rem;
+  height: 15.625rem;
+  object-fit: cover;
+  margin-right: 1.875rem;
 }
 
 #page-bookmark .title {
-  font-size: 32px;
+  font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
+}
+#page-bookmark .title:hover {
+  color: var(--color-orange);
+  transition: 200ms;
 }
 
 #page-bookmark .description {
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 2.2;
 }
 
 #page-bookmark .post-buttons {
   text-align: right;
+}
+
+#page-bookmark .alignlocal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#page-bookmark .localname {
+  color: rgb(146, 145, 145);
+  font-size: 1.1rem;
+  z-index: 0;
+}
+#page-bookmark .post-content {
+  display: flex;
+  flex-direction: column;
+
+  /* align-items: center */
 }

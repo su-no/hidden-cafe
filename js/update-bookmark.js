@@ -1,14 +1,9 @@
-import { dbService } from "./firebase.js";
+import { authService, dbService } from "./firebase.js";
 
 import {
   doc,
   updateDoc,
-  collection,
-  query,
-  getDocs,
-  where,
-  FieldValue,
-  getDoc,
+  arrayUnion,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 
 // * 로직
@@ -24,7 +19,7 @@ import {
 
 // * 너무 허무하게 해결되어 버렸다.. 올포스트에서 변수로 지정하고 그걸 가져오면 되는 거였어...
 
-export const handleBookmark = async (event) => {
+export const handleBookmark = async event => {
   // ! 최초 성공
   // const docRef = doc(dbService, "post", "id");
   // const bookmark = Number(event.currentTarget.parentNode.innerText);
@@ -35,10 +30,26 @@ export const handleBookmark = async (event) => {
   const data = { bookmark: bookmark + 1 };
   // 함수 기능 : 북마크 누르면 + 1
   updateDoc(docRef, data)
-    .then((docRef) => {
+    .then(docRef => {
       console.log("북마크 성공");
     })
-    .catch((error) => {
+    .catch(error => {
       console.log("북마크 실패");
     });
+  addToBookmarkList(id);
+};
+
+// 북마크 업데이트 시, 현재 사용자의 bookmark 컬렉션에 게시글을 추가한다.
+const addToBookmarkList = async postId => {
+  // 현재 사용자의 uid
+  // bookmark colletion의 uid문서를 찾고
+  // 그 안에 bookmark 배열에 현재 게시글 번호 추가
+  const userId = authService.currentUser.uid.toString();
+  const docRef = doc(dbService, "bookmark", userId);
+
+  await updateDoc(docRef, {
+    bookmarks: arrayUnion(postId),
+  }).then(() => {
+    console.log(`postId: ${postId} 북마크 성공!`);
+  });
 };
