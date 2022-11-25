@@ -105,3 +105,8 @@
 #page-create-post li {
   list-style: none;
 }
+
+#page-create-post #alert {
+  text-align: center;
+  color: red;
+}

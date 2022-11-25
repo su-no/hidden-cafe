@@ -89,7 +89,10 @@ export const viewPost = async (path) => {
       </div>
       </div>
       <div class="alignBookBtn">
-        <div class="bookmark"><i class="fas fa-mug-hot"></i>${bookmark}</div>
+        <div class-"bookmark">
+          <a name=${id}  class="fas fa-mug-hot" onclick="handleBookmark(event)">
+          </a>${bookmark}
+        </div>
         <div class="${isOwner ? "post-buttons" : "noDisplay"}">
         <button onclick="onEditing(event)" class="post-modify-btn">수정</button>
         <button name="${id}" onclick="deletePost(event)" class="post-delete-btn">
@@ -104,9 +107,7 @@ export const viewPost = async (path) => {
       class="post-modify-done-btn"
     >
       완료
-    </button>
-  
-   `;
+    </button>`;
 
     // article 태그에 담아서 container에 추가
     const article = document.querySelector(".post");
@@ -152,7 +153,7 @@ export const onEditing = (event) => {
   modifying.forEach((mod) => (mod.style.display = "flex"));
   preTitle.setAttribute("value", preTitle.placeholder);
   //제목 input 내부에 미리 이전 데이터 넣어놓기 textarea는 미리설정이 되는데 input은 안돼서 여기서 설정함
-  console.log(modifying[1].children[0].placeholder);
+  // console.log(modifying[1].children[0].placeholder);
 };
 
 //수정완료 버튼

@@ -24,6 +24,10 @@ const routes = {
 };
 
 export const handleLocation = async () => {
+  const sessionUser = sessionStorage.getItem("user");
+  const sessionUserProfile = sessionStorage.getItem("userProfile");
+  const sessionUserNickname = sessionStorage.getItem("userNickname");
+  const sessionUserEmail = sessionStorage.getItem("userEmail");
   let path = window.location.hash.replace("#", "/");
   if (path.length === 0) {
     path = "/";
@@ -31,7 +35,7 @@ export const handleLocation = async () => {
 
   // 로그인 안 한 상태에서 페이지 이동 시 로그인 페이지로 강제 이동
   // 메인 페이지는 조회 가능
-  if (!authService.currentUser) {
+  if (!sessionUser) {
     if (!path.startsWith("/main")) {
       path = "/login";
     }
@@ -40,7 +44,7 @@ export const handleLocation = async () => {
   console.log("handleLocation:", path);
 
   if (path.startsWith("/main-")) {
-    const html = await fetch("/pages/main.html").then(data => data.text());
+    const html = await fetch("/pages/main.html").then((data) => data.text());
     const mainPage = document.querySelector("#main-page");
     mainPage.innerHTML = html;
     const local = decodeURI(path.replace("/main-", ""));
@@ -54,46 +58,45 @@ export const handleLocation = async () => {
   }
 
   const route = routes[path] || routes[404];
-  const html = await fetch(route).then(data => data.text());
+  const html = await fetch(route).then((data) => data.text());
 
   const mainPage = document.querySelector("#main-page");
   mainPage.innerHTML = html;
 
   if (path === "/" || path === "/main") {
-    getpostList().then(() => {
-      // handleBookmark(path);
-    });
+    getpostList();
+    // .then(() => {
+    //   handleBookmark(path);
+    // });
     return;
   }
 
   if (path === "/create-post") {
     //왜인진 모르겠으나 메인을 통해 글쓰기로 와야만 currentUser 데이터를 받아 올 수 있음
     // 따라서 email값이 없으면 메인으로 보내도록 예외처리함
-    // 추후 새로고침 해도 currentUser값 받아 올 수 있도록 수정 필요
-    try {
-      const user = authService.currentUser;
-      document.getElementById("date").innerHTML = getDate().split(" ")[0];
-      document.getElementById("member-id").innerHTML =
-        `<img src="${
-          user.photoURL ?? "/img/profile-img.png"
-        }" style="width:2rem; height:2rem; margin-right:1rem; border-radius:50%;"/>` +
-        user.displayName;
-    } catch {
-      window.location.hash = "#main";
-    }
+    // 추후 새로고침 해도 currentUser값 받아 올 수 있도록 수정 필요 ==> sessionStorage로 해결
+    // const user = sessionUser;
+    document.getElementById("date").innerHTML = getDate().split(" ")[0];
+    document.getElementById("member-id").innerHTML =
+      `<img src="${
+        sessionUserProfile ?? "/img/profile-img.png"
+      }" style="width:2rem; height:2rem; margin-right:1rem; border-radius:50%;"/>` +
+      sessionUserNickname;
   }
 
   if (path === "/mypage") {
-    const user = authService.currentUser;
-    const userProfileURL = user.photoURL ?? "/img/profile-img.png";
+    // const user = authService.currentUser;
+    // const userProfileURL = user.photoURL ?? "/img/profile-img.png";
+    const user = sessionUser;
+    const userProfileURL = sessionUserProfile;
     const profileImg = document.querySelector("#profileView");
     profileImg.setAttribute("src", userProfileURL);
 
-    const userNickname = user.displayName || user.email.split("@")[0];
+    const userNickname = sessionUserNickname ?? user.email.split("@")[0];
     const nickName = document.querySelector("#profileNickname");
     nickName.setAttribute("placeholder", userNickname);
 
     const email = document.querySelector("#profileEmail");
-    email.setAttribute("placeholder", user.email);
+    email.setAttribute("placeholder", sessionUserEmail);
   }
 };

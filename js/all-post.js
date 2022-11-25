@@ -11,6 +11,7 @@ import { dbService } from "./firebase.js";
 export const getpostList = async () => {
   const q = query(collection(dbService, "post"), orderBy("createdAt", "desc"));
   getFirebaseDocs(q);
+  console.log(sessionStorage.getItem("user"));
 };
 
 // 지역별 게시글 가져오기
@@ -50,19 +51,29 @@ const getFirebaseDocs = async (q) => {
 
   // 게시글 DOM들을 추가할 컨테이너
   const postList = document.getElementById("container");
+  const sessionUser = sessionStorage.getItem("user");
+  const sessionUserProfile = sessionStorage.getItem("userProfile");
+  const sessionUserNickname = sessionStorage.getItem("userNickname");
 
   // 게시글 데이터가 담겨 있는 배열을 돌면서, 컨테이너에 돔을 추가한다.
   postObjList.forEach((postObj) => {
-    // console.log(postObj);
+    console.log(postObj.creatorId);
+    console.log("session:", sessionUser);
     const temp_html = `
     <article class="post">
     <div class="post-header">
       <div class="post-user">
         <img class="post-profile-img" src=${
-          postObj.profileImg ?? "/img/profile-img.png"
+          postObj.creatorId === sessionUser
+            ? sessionUserProfile
+            : postObj.profileImg ?? "/img/profile-img.png"
         } alt="profile-img" />
         <div class="post-user-name">
-          ${postObj.nickname ?? postObj.email.split("@")[0]}
+          ${
+            postObj.creatorId === sessionUser
+              ? sessionUserNickname
+              : postObj.nickname ?? postObj.email.split("@")[0]
+          }
         </div>
       </div>
       <div class="post-create-date">${postObj.createdAt}</div>
@@ -80,9 +91,12 @@ const getFirebaseDocs = async (q) => {
             <p class="localname">#${postObj.localname}</p>
           </div>
       </div>
-      <div class="bookmark"><i class="fas fa-mug-hot" onclick="handleBookmark(event)"></i>${
-        postObj.bookmark
-      }</div>
+      <div class-"bookmark">
+        <a name=${
+          postObj.id
+        }  class="fas fa-mug-hot" onclick="handleBookmark(event)">
+        </a>${postObj.bookmark}
+      </div>
     </div>
 
   </article>
