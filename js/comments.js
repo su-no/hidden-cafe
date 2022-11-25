@@ -1,13 +1,14 @@
 import { dbService, authService } from "./firebase.js";
 import {
-  query,
-  collection,
-  where,
-  getDocs,
-  orderBy,
-  addDoc,
-  deleteDoc,
-  doc,
+query,
+collection,
+where,
+getDocs,
+orderBy,
+addDoc,
+deleteDoc,
+doc,
+updateDoc
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 import { getDate } from "./util.js";
 import { viewPost } from "./view-post.js";
@@ -136,30 +137,45 @@ const deleteComment = async (event) => {
     }
   }
 };
-// 댓글창 수정하기
-// 수정 버튼 누르면 댓글창 다시 활성화(썼던 내용 그대로!!)
-const modifyComment = async (event) => {
-  const commentID = event.target.name;
-  const user = authService.currentUser;
-  const newComment = document.querySelector(".new-comment");
-  const newCommentValue = newComment.value;
-  await addDoc(collection(dbService, "comment"), {
-    commentID: Date.now(),
-    contents: newCommentValue,
-    createdAt: getDate(),
-    creatorId: user.uid,
-    email: user.email,
-    nickname: user.displayName ?? user.email.split("@")[0],
-    postId: postId,
-    profileUrl: user.photoURL,
-  })
-    .then(() => {
-      console.log("댓글 수정 완료");
-      newComment.value = "";
-      newComment.focus();
+
+
+export const modifyComment = (event) => {
+  // 수정버튼 클릭
+  event.preventDefault();
+  debugger
+  const udBtns = document.querySelectorAll(".comment-modify-btn"); //수정, 삭제 버튼
+  const doneBtn = document.querySelectorAll(".comment-modify-done-btn"); //완료버튼이 안보여!!!!!!
+  const content = document.getElementById(".comment-description"); //기존 내용
+  const modifying = document.querySelectorAll(".input"); //수정 내용
+
+  udBtns.forEach((udBtn) => (udBtn.style.display = "none")); //수정,삭제 버튼 안보이게
+  doneBtn.forEach((doneBtn) => (doneBtn.style.display = "flex")); //완료버튼 보이게 지금 안보여!!!!!!!
+  content.description.forEach((contents) => (contents.style.display = "flex"));
+  //제목 input 내부에 미리 이전 데이터 넣어놓기 textarea는 미리설정이 되는데 input은 안돼서 여기서 설정함
+  console.log(modifying[1].children[0].placeholder); 
+};
+
+
+//수정완료 버튼
+export const updateComment = async (event) => {
+  event.preventDefault();
+
+  const modifiedComment = document.getElementById(".comment-description").value; //textarea 삽입, 수정 내용
+  const id = event.target.id; //firebase "post"컬렉션의 문서 id
+
+  const commentRef = doc(dbService, "comment", id);
+  console.log(commentRef);
+  try {
+    await updateDoc(commentRef, {
+      contents: modifiedComment,
+    });
+    const path = window.location.hash.replace("#", "/");
+    viewPost(path).then(() => {
       viewComments(path);
-    })
-    .catch(console.error);
+    });
+  } catch (error) {
+    alert(error);
+  }
 };
 
 //댓글창작성 다시 실행
