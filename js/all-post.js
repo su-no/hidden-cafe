@@ -11,7 +11,7 @@ import { dbService } from "./firebase.js";
 export const getpostList = async () => {
   const q = query(collection(dbService, "post"), orderBy("createdAt", "desc"));
   getFirebaseDocs(q);
-  console.log(sessionStorage.getItem("user"));
+  // console.log(sessionStorage.getItem("user"));
 };
 
 // 지역별 게시글 가져오기
@@ -57,8 +57,8 @@ const getFirebaseDocs = async (q) => {
 
   // 게시글 데이터가 담겨 있는 배열을 돌면서, 컨테이너에 돔을 추가한다.
   postObjList.forEach((postObj) => {
-    console.log(postObj.creatorId);
-    console.log("session:", sessionUser);
+    // console.log(postObj.creatorId);
+    // console.log("session:", sessionUser);
     const temp_html = `
     <article class="post">
     <div class="post-header">
