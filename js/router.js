@@ -41,7 +41,7 @@ export const handleLocation = async () => {
     }
   }
 
-  console.log("handleLocation:", path);
+  // console.log("handleLocation:", path);
 
   if (path.startsWith("/main-")) {
     const html = await fetch("/pages/main.html").then((data) => data.text());
