@@ -80,11 +80,12 @@ const getFirebaseDocs = async (q) => {
             <p class="localname">#${postObj.localname}</p>
           </div>
       </div>
-      <div class-"bookmark"><a name=${
-        postObj.id
-      } style="background-color:black" class="fas fa-mug-hot" onclick="handleBookmark(event)"></a>${
-      postObj.bookmark
-    }</div>
+      <div class-"bookmark">
+        <a name=${
+          postObj.id
+        }  class="fas fa-mug-hot" onclick="handleBookmark(event)">
+        </a>${postObj.bookmark}
+      </div>
     </div>
 
   </article>

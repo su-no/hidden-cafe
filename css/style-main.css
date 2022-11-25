@@ -13,6 +13,18 @@ a:hover {
   color: unset;
 }
 
+/* 시작점 : 북마크 아이콘 스타일링 */
+a.fas.fa-mug-hot {
+  font-size: 22px;
+  color: #ceb292;
+}
+
+a.fas.fa-mug-hot:hover {
+  color: #ec5e39;
+  cursor: pointer;
+}
+/* 종료점 : 북마크 아이콘 스타일링 */
+
 #page-main * {
   margin: 0;
   padding: 0;
