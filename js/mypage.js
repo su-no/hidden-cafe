@@ -1,9 +1,18 @@
-import { authService, storageService } from "./firebase.js";
+import { dbService, authService, storageService } from "./firebase.js";
 import {
   ref,
   uploadString,
   getDownloadURL,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js";
+import {
+  query,
+  collection,
+  where,
+  doc,
+  getDocs,
+  deleteDoc,
+  updateDoc,
+} from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 import { updateProfile } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 
@@ -11,6 +20,21 @@ import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 export const changeProfile = async (event) => {
   event.preventDefault();
   document.getElementById("profileBtn").disabled = true;
+  const sessionUser = sessionStorage.getItem("user");
+  let postObjList = [];
+  const q = query(
+    collection(dbService, "post"),
+    where("creatorId", "==", authService.currentUser.uid)
+  );
+  const querySnapshot = await getDocs(q);
+
+  querySnapshot.forEach((doc) => {
+    const postObj = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    postObjList.push(postObj);
+  });
 
   const imgRef = ref(
     storageService,
@@ -18,24 +42,24 @@ export const changeProfile = async (event) => {
   );
   const preNickname = document.getElementById("profileNickname").placeholder; // 이전닉네임
   const newNickname = document.getElementById("profileNickname").value; //새로운 닉네임
-  // 프로필 이미지 dataUrl을 Storage에 업로드 후 다운로드 링크를 받아서 photoURL에 저장.
   const imgProfileUrl = localStorage.getItem("imgDataUrl");
-  // imgDataUrl이 script-create-post.js 게시글 사진과 변수가 겹쳐서 imgProfileUrl로 변경할까 함...
   let downloadUrl;
   if (imgProfileUrl) {
     const response = await uploadString(imgRef, imgProfileUrl, "data_url");
     downloadUrl = await getDownloadURL(response.ref);
   }
+  postObjList.forEach((postObj) => {
+    const docRef = doc(dbService, "post", postObj.id);
+    const data = { nickname: newNickname, profileImg: downloadUrl };
+    updateDoc(docRef, data).then(() => console.log("데이터 성공"));
+  });
   //닉네임이 빈칸이면 이전 닉네임으로 설정
   window.sessionStorage.setItem(
     "userNickname",
     newNickname.length !== 0 ? newNickname : preNickname
   );
-  console.log(authService.currentUser);
-  console.log("updateProfile");
-  // console.log(authService);
+
   await updateProfile(authService.currentUser, {
-    //if문 shortcut - 변수 반환
     displayName: newNickname ? newNickname : preNickname,
     photoURL: downloadUrl ? downloadUrl : null,
   })
@@ -48,7 +72,7 @@ export const changeProfile = async (event) => {
       alert("프로필 수정 실패");
     });
 };
-// };
+
 //게시물과 같은 이름의 함수이면 안돼 바꿔!! 그리고 html과 연결
 
 export const onFileChangeProfile = (event) => {

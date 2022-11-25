@@ -50,10 +50,17 @@ export const handleAuth = (event) => {
         // Signed in
         const user = userCredential.user;
         console.log("user:", user);
+        console.log(authService.currentUser);
         //세션설정
         window.sessionStorage.setItem("user", user.uid);
-        window.sessionStorage.setItem("userProfile", user.photoURL);
-        window.sessionStorage.setItem("userNickname", user.displayName);
+        window.sessionStorage.setItem(
+          "userProfile",
+          user.photoURL ?? "/img/profile-img.png"
+        );
+        window.sessionStorage.setItem(
+          "userNickname",
+          user.displayName ?? authService.currentUser.email.split("@")[0]
+        );
         window.sessionStorage.setItem("userEmail", user.email);
         window.location.hash = "main";
       })
@@ -114,9 +121,16 @@ export const socialLogin = (event) => {
   }
   signInWithPopup(authService, provider)
     .then((result) => {
-      // const credential = GoogleAuthProvider.credentialFromResult(result);
-      // const token = credential.accessToken;
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
       const user = result.user;
+      console.log(credential);
+      window.sessionStorage.setItem("user", user.uid);
+      window.sessionStorage.setItem("userProfile", user.photoURL);
+      window.sessionStorage.setItem("userNickname", user.displayName);
+      window.sessionStorage.setItem("userEmail", user.email ?? "구글로그인");
+
+      // console.log(user);
       console.log("로그인 성공!");
       window.location.hash = "main";
     })
