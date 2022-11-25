@@ -82,7 +82,7 @@ const getFirebaseDocs = async (q) => {
       </div>
       <div class-"bookmark"><a name=${
         postObj.id
-      } style="background-color:black" class="fas fa-mug-hot" onclick="handleBookmark(event)"></a>${
+      } style="color:rgb(124, 72, 37)" class="fas fa-mug-hot" onclick="handleBookmark(event)"></a>${
       postObj.bookmark
     }</div>
     </div>
