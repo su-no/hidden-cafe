@@ -19,29 +19,32 @@ export const handleBookmark = async (event) => {
   const data = { bookmark: bookmark + 1 };
   // 함수 기능 : 북마크 누르면 + 1
   updateDoc(docRef, data)
-    .then(docRef => {
+    .then((docRef) => {
       console.log("북마크 성공");
+      const q = document.querySelector("#bookmarkcount");
+      const qcountnum = Number(q.innerText);
+      q.innerText = qcountnum + 1;
     })
-    .catch(error => {
+    .catch((error) => {
       console.log("북마크 실패");
     });
   addToBookmarkList(id);
 };
 
 // 북마크 업데이트 시, 현재 사용자의 bookmark 컬렉션에 게시글을 추가한다.
-const addToBookmarkList = async postId => {
+const addToBookmarkList = async (postId) => {
   // 현재 사용자 uid
   const userId = authService.currentUser.uid.toString();
 
   // bookmark 컬렉션 문서에서 userId 필드의 값이 uid와 일치하는 문서 가져오기
   const q = query(
     collection(dbService, "bookmark"),
-    where("userId", "==", userId),
+    where("userId", "==", userId)
   );
   const querySnapshot = await getDocs(q);
   let userDataId; // bookmark 컬렉션에 저장된 유저 문서 id
   let userData; // 유저 문서의 데이터
-  querySnapshot.forEach(doc => {
+  querySnapshot.forEach((doc) => {
     userDataId = doc.id;
     userData = doc.data();
   });
@@ -63,4 +66,4 @@ const addToBookmarkList = async postId => {
   }
 };
 
-const removeFromBookmarkList = async postId => {};
+const removeFromBookmarkList = async (postId) => {};
