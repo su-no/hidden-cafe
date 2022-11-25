@@ -40,6 +40,7 @@ export const getBookmarkList = async () => {
 // 북마크 리스트에서 게시글 하나씩 DOM에 추가하기
 const getBookmarkPost = async bookmarkList => {
   const postList = document.getElementById("container");
+  postList.innerHTML = "";
   const sessionUser = sessionStorage.getItem("user");
   const sessionUserProfile = sessionStorage.getItem("userProfile");
   const sessionUserNickname = sessionStorage.getItem("userNickname");
