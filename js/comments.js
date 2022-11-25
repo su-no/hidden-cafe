@@ -1,14 +1,14 @@
 import { dbService, authService } from "./firebase.js";
 import {
-query,
-collection,
-where,
-getDocs,
-orderBy,
-addDoc,
-deleteDoc,
-doc,
-updateDoc
+  query,
+  collection,
+  where,
+  getDocs,
+  orderBy,
+  addDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 import { getDate } from "./util.js";
 import { viewPost } from "./view-post.js";
@@ -54,46 +54,51 @@ export const viewComments = async (path) => {
   const commentList = document.querySelector(".comment-list");
   commentList.innerHTML = "";
   commentObjList.forEach((commentObj) => {
+    console.log("comment", commentObj.id);
     const isOwner = user.uid === commentObj["creatorId"];
     const tempHtml = `
     <div class="comment-user">
-    <img
-      class="comment-profile-img"
-      src="${commentObj.profileUrl ?? "/img/profile-img.png"}"
-      alt="profile-img"
-    />
-    <div class="comment-user-name">${commentObj.nickname}</div>
-  </div>
-  <div class="comment-description">${commentObj.contents}</div>
-  <div class="comment-create-date">${commentObj.createdAt}</div>
-  <div class="comment-buttons">
-    <button id=${commentObj.commentID} name=${commentObj.id} class="${
-      isOwner ? "comment-modify-btn" : "noDisplay"
-    }">수정</button>
-    <button id=${commentObj.commentID} name=${commentObj.id}
-      class="${isOwner ? "comment-delete-btn" : "noDisplay"}">
-      삭제
-    </button>
-  </div>`;
+      <img
+        class="comment-profile-img"
+        src="${commentObj.profileUrl ?? "/img/profile-img.png"}"
+        alt="profile-img"
+      />
+      <div class="comment-user-name">${commentObj.nickname}</div>
+      <div id="preContent-${commentObj.id}" class="content">${
+      commentObj.contents
+    }</div>
+      <div class="modifyComment">
+        <input id="modifiedComment-${
+          commentObj.id
+        }" type="text" style="display: none" 
+        placeholder="${commentObj.contents}"/>
+      </div> 
+
+      <div class="comment-create-date">${commentObj.createdAt}</div>
+      <div class="comment-buttons"></div>
+    
+      <button onclick="modifyComment(event)" id=${commentObj.id} name=${
+      commentObj.id
+    } class="${isOwner ? "comment-modify-btn" : "noDisplay"}">수정</button>
+      <button onclick="deleteComment(event)" id=${commentObj.commentID} name=${
+      commentObj.id
+    } 
+      class="${isOwner ? "comment-delete-btn" : "noDisplay"}">삭제</button>
+
+      <button id="comment-modify-done-btn-${commentObj.id}"  name = "${
+      commentObj.id
+    }"style="display: none"  onclick="updateComment(event)">완료<button> 
+    </div>`;
+    //77줄 id값 바꿈!!
+
+    //댓글창이 인풋창이어야 하고 등록을 누르면 사라졌다가 수정을 누르면 다시 나타나게 한다
 
     const commentRow = document.createElement("div");
     commentRow.classList.add("comment-row");
     commentRow.innerHTML = tempHtml;
     commentList.appendChild(commentRow);
   });
-
-  // 문서에 있는 모든 삭제 버튼에 이벤트 등록
-  const deleteBtns = document.querySelectorAll(".comment-delete-btn");
-  deleteBtns.forEach((btn) => {
-    btn.addEventListener("click", deleteComment);
-  });
-  // 문서 있는 모든 수정 버튼에 이벤트 등록
-  const modifyBtns = document.querySelectorAll(".comment-modify-btn");
-  modifyBtns.forEach((btn) => {
-    btn.addEventListener("click", deleteComment);
-  });
 };
-
 // 댓글 작성 함수
 const createComment = async (path) => {
   const postId = path.split("/view-post-")[1];
@@ -121,7 +126,7 @@ const createComment = async (path) => {
     .catch(console.error);
 };
 //댓글 삭제
-const deleteComment = async (event) => {
+export const deleteComment = async (event) => {
   const commentID = event.target.name;
   const ok = window.confirm("정말 삭제하시겠습니까?");
   if (ok) {
@@ -138,30 +143,40 @@ const deleteComment = async (event) => {
   }
 };
 
-
+// 수정버튼 클릭
 export const modifyComment = (event) => {
-  // 수정버튼 클릭
+  // console.log(event.currentTarget.id);
+
   event.preventDefault();
-  debugger
+  const id = event.currentTarget.id;
+  console.log("modivyComment", id);
   const udBtns = document.querySelectorAll(".comment-modify-btn"); //수정, 삭제 버튼
-  const doneBtn = document.querySelectorAll(".comment-modify-done-btn"); //완료버튼이 안보여!!!!!!
-  const content = document.getElementById(".comment-description"); //기존 내용
-  const modifying = document.querySelectorAll(".input"); //수정 내용
+  const doneBtn = document.getElementById(`comment-modify-done-btn-${id}`); //완료버튼
+  console.log(doneBtn);
+  // const content = document.getElementById("content"); //기존 내용 class="content">${commentObj.contents}
+  const modifying = document.getElementById(`modifiedComment-${id}`); //수정 내용
+  const preContent = document.getElementById(`preContent-${id}`);
+  preContent.classList.add("noDisplay");
 
   udBtns.forEach((udBtn) => (udBtn.style.display = "none")); //수정,삭제 버튼 안보이게
-  doneBtn.forEach((doneBtn) => (doneBtn.style.display = "flex")); //완료버튼 보이게 지금 안보여!!!!!!!
-  content.description.forEach((contents) => (contents.style.display = "flex"));
+  doneBtn.style.display = "flex";
+  modifying.setAttribute("value", modifying.placeholder);
+  preContent.style.display = "none"; //기존 댓글 안보이게
+  modifying.style.display = "flex";
   //제목 input 내부에 미리 이전 데이터 넣어놓기 textarea는 미리설정이 되는데 input은 안돼서 여기서 설정함
-  console.log(modifying[1].children[0].placeholder); 
+  // console.log(modifying[1].children[0].placeholder);
 };
-
 
 //수정완료 버튼
 export const updateComment = async (event) => {
   event.preventDefault();
-
-  const modifiedComment = document.getElementById(".comment-description").value; //textarea 삽입, 수정 내용
-  const id = event.target.id; //firebase "post"컬렉션의 문서 id
+  const id = event.currentTarget.name;
+  console.log(id);
+  const modifiedComment = document.getElementById(
+    `modifiedComment-${id}`
+  ).value; //textarea 삽입, 수정 내용
+  const postId = event.target.id; //firebase "post"컬렉션의 문서 id --> 필요없음
+  console.log(modifiedComment);
 
   const commentRef = doc(dbService, "comment", id);
   console.log(commentRef);
@@ -177,8 +192,3 @@ export const updateComment = async (event) => {
     alert(error);
   }
 };
-
-//댓글창작성 다시 실행
-
-// 저장 버튼으로 변경 -> 저장 누르면 alert(저장하시겠습니까?) -> 저장 -> alert(저장되었습니다.)
-// 저장된 댓글 다시 불러오기 & 수정 삭제 버튼 복귀
