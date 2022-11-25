@@ -24,7 +24,7 @@ const routes = {
 };
 
 export const handleLocation = async () => {
-  const sessionUser = window.sessionStorage.getItem("user");
+  const sessionUser = sessionStorage.getItem("user");
   const sessionUserProfile = sessionStorage.getItem("userProfile");
   const sessionUserNickname = sessionStorage.getItem("userNickname");
   const sessionUserEmail = sessionStorage.getItem("userEmail");
@@ -75,7 +75,7 @@ export const handleLocation = async () => {
     //왜인진 모르겠으나 메인을 통해 글쓰기로 와야만 currentUser 데이터를 받아 올 수 있음
     // 따라서 email값이 없으면 메인으로 보내도록 예외처리함
     // 추후 새로고침 해도 currentUser값 받아 올 수 있도록 수정 필요 ==> sessionStorage로 해결
-    const user = sessionUser;
+    // const user = sessionUser;
     document.getElementById("date").innerHTML = getDate().split(" ")[0];
     document.getElementById("member-id").innerHTML =
       `<img src="${
