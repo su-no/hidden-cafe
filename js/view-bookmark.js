@@ -10,7 +10,7 @@ import { authService, dbService } from "./firebase.js";
 
 // 로그인한 사용자의 북마크 리스트 가져오기
 export const getBookmarkList = async () => {
-  const userId = authService.currentUser.uid;
+  const userId = sessionStorage.getItem("user");
 
   // bookmark 문서 중 userId 필드가 일치하는 문서 가져오기
   const q = query(
