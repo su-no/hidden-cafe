@@ -3,6 +3,7 @@ import { viewPost } from "./view-post.js";
 import { viewComments } from "./comments.js";
 import { getPostByLocal } from "./all-post.js";
 import { getDate } from "./util.js";
+import { getBookmarkList } from "./view-bookmark.js";
 
 // export const route = event => {
 //   // 사용자 정보 없으면 a tag의 href 이동 비활성화
@@ -44,7 +45,7 @@ export const handleLocation = async () => {
   // console.log("handleLocation:", path);
 
   if (path.startsWith("/main-")) {
-    const html = await fetch("/pages/main.html").then((data) => data.text());
+    const html = await fetch("/pages/main.html").then(data => data.text());
     const mainPage = document.querySelector("#main-page");
     mainPage.innerHTML = html;
     const local = decodeURI(path.replace("/main-", ""));
@@ -58,7 +59,7 @@ export const handleLocation = async () => {
   }
 
   const route = routes[path] || routes[404];
-  const html = await fetch(route).then((data) => data.text());
+  const html = await fetch(route).then(data => data.text());
 
   const mainPage = document.querySelector("#main-page");
   mainPage.innerHTML = html;
@@ -68,6 +69,11 @@ export const handleLocation = async () => {
     // .then(() => {
     //   handleBookmark(path);
     // });
+    return;
+  }
+
+  if (path === "/bookmark") {
+    getBookmarkList();
     return;
   }
 
