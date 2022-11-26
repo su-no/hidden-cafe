@@ -34,7 +34,7 @@
 }
 #page-create-post #box {
   text-align: center;
-  background-color: rgb(225, 210, 191);
+  background-color: #dbccb8;
   border-radius: 10px;
   margin-top: 1rem;
   /* border: 1px solid gray;
@@ -44,7 +44,7 @@
   padding: 1.5rem;
 }
 #page-create-post #box-top {
-  margin: 1rem auto;
+  margin: 1rem auto 1.5rem auto;
   display: flex;
   justify-content: center;
 }

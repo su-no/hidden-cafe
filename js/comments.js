@@ -14,7 +14,7 @@ import { getDate } from "./util.js";
 import { viewPost } from "./view-post.js";
 
 // Firebase DB에서 댓글 불러와서 보여주는 함수
-export const viewComments = async (path) => {
+export const viewComments = async path => {
   const postId = path.split("/view-post-")[1];
   // 댓글 작성자 프로필이미지, 닉네임 가져오기
   const user = authService.currentUser;
@@ -35,14 +35,10 @@ export const viewComments = async (path) => {
   };
 
   // Firebase에서 해당 게시글의 댓글 받아오기
-  const q = query(
-    collection(dbService, "comment"),
-    where("postId", "==", postId),
-    orderBy("createdAt")
-  );
+  const q = query(collection(dbService, "comment"), where("postId", "==", postId), orderBy("createdAt"));
   const querySnapshot = await getDocs(q);
   const commentObjList = [];
-  querySnapshot.forEach((doc) => {
+  querySnapshot.forEach(doc => {
     const commentObj = {
       id: doc.id,
       ...doc.data(),
@@ -57,34 +53,37 @@ export const viewComments = async (path) => {
     // console.log("comment", commentObj.id);
     const isOwner = user.uid === commentObj["creatorId"];
     const tempHtml = `
-      <div class="comment-user">
-        <img
-          class="comment-profile-img"
-          src="${commentObj.profileUrl ?? "/img/profile-img.png"}"
-          alt="profile-img"
-        />
-        <div class="comment-user-name">${commentObj.nickname}</div>
-        <div id="preContent-${commentObj.id}" class="content">
-        ${commentObj.contents}
-        </div>
-        <div class="modifyComment">
-          <input id="modifiedComment-${commentObj.id}" 
-          type="text" style="display: none" 
-          placeholder="${commentObj.contents}"/>
-        </div> 
-        <div class="comment-create-date">${commentObj.createdAt}</div>
-        <div class="comment-buttons"></div>
-        <button onclick="modifyComment(event)" id=${commentObj.id} name=${
-      commentObj.id
-    } class="${isOwner ? "comment-modify-btn" : "noDisplay"}">수정</button>
-      <button id="comment-modify-done-btn-${commentObj.id}"  name = "${
-      commentObj.id
-    }"style="display: none"  onclick="updateComment(event)">완료<button> 
-        <button onclick="deleteComment(event)" id=${
-          commentObj.commentID
-        } name=${commentObj.id} 
-        class="${isOwner ? "comment-delete-btn" : "noDisplay"}">삭제</button>
-      </div>`;
+    <div class="comment-user">
+      <img class="comment-profile-img" src="${commentObj.profileUrl ?? "/img/profile-img.png"}" alt="profile-img" />
+      <div class="comment-user-name">${commentObj.nickname}</div>
+    </div>
+    <div id="preContent-${commentObj.id}" class="comment-description">${commentObj.contents}</div>
+    <div class="modifyComment">
+      <input
+        id="modifiedComment-${commentObj.id}"
+        class="modifycomment-description"
+        type="text"
+        style="display: none"
+        placeholder="${commentObj.contents}"
+      />
+    </div>
+    <div class="comment-create-date">${commentObj.createdAt}</div>
+    <div class="comment-buttons"></div>
+    <button onclick="modifyComment(event)" id=${commentObj.id} name=${commentObj.id} class="${
+      isOwner ? "comment-modify-btn" : "noDisplay"
+    }">수정
+    <button
+      id="comment-modify-done-btn-${commentObj.id}"
+      name="${commentObj.id}"
+      style="display: none"
+      onclick="updateComment(event)"
+    >
+      완료<button>
+        <button onclick="deleteComment(event)" id=${commentObj.commentID} name=${commentObj.id} class="${
+      isOwner ? "comment-delete-btn" : "noDisplay"
+    }">삭제
+      </button>
+    </button>`;
     //77줄 id값 바꿈!!
 
     //댓글창이 인풋창이어야 하고 등록을 누르면 사라졌다가 수정을 누르면 다시 나타나게 한다
@@ -96,7 +95,7 @@ export const viewComments = async (path) => {
   });
 };
 // 댓글 작성 함수
-const createComment = async (path) => {
+const createComment = async path => {
   const postId = path.split("/view-post-")[1];
   const user = authService.currentUser;
 
@@ -122,7 +121,7 @@ const createComment = async (path) => {
     .catch(console.error);
 };
 //댓글 삭제
-export const deleteComment = async (event) => {
+export const deleteComment = async event => {
   const commentID = event.target.name;
   const ok = window.confirm("정말 삭제하시겠습니까?");
   if (ok) {
@@ -140,42 +139,41 @@ export const deleteComment = async (event) => {
 };
 
 // 수정버튼 클릭
-export const modifyComment = (event) => {
+export const modifyComment = event => {
   // console.log(event.currentTarget.id);
 
   event.preventDefault();
   const id = event.currentTarget.id;
-  console.log("modivyComment", id);
+  // console.log("modivyComment", id);
   const udBtns = document.querySelectorAll(".comment-modify-btn"); //수정, 삭제 버튼
   const doneBtn = document.getElementById(`comment-modify-done-btn-${id}`); //완료버튼
-  console.log(doneBtn);
+  // console.log(doneBtn);
   // const content = document.getElementById("content"); //기존 내용 class="content">${commentObj.contents}
   const modifying = document.getElementById(`modifiedComment-${id}`); //수정 내용
   const preContent = document.getElementById(`preContent-${id}`);
   preContent.classList.add("noDisplay");
 
-  udBtns.forEach((udBtn) => (udBtn.style.display = "none")); //수정,삭제 버튼 안보이게
+  udBtns.forEach(udBtn => (udBtn.style.display = "none")); //수정,삭제 버튼 안보이게
   doneBtn.style.display = "flex";
   modifying.setAttribute("value", modifying.placeholder);
   preContent.style.display = "none"; //기존 댓글 안보이게
   modifying.style.display = "flex";
+  modifying.focus();
   //제목 input 내부에 미리 이전 데이터 넣어놓기 textarea는 미리설정이 되는데 input은 안돼서 여기서 설정함
   // console.log(modifying[1].children[0].placeholder);
 };
 
 //수정완료 버튼
-export const updateComment = async (event) => {
+export const updateComment = async event => {
   event.preventDefault();
   const id = event.currentTarget.name;
-  console.log(id);
-  const modifiedComment = document.getElementById(
-    `modifiedComment-${id}`
-  ).value; //textarea 삽입, 수정 내용
+  // console.log(id);
+  const modifiedComment = document.getElementById(`modifiedComment-${id}`).value; //textarea 삽입, 수정 내용
   const postId = event.target.id; //firebase "post"컬렉션의 문서 id --> 필요없음
-  console.log(modifiedComment);
+  // console.log(modifiedComment);
 
   const commentRef = doc(dbService, "comment", id);
-  console.log(commentRef);
+  // console.log(commentRef);
   try {
     await updateDoc(commentRef, {
       contents: modifiedComment,
