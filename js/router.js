@@ -1,17 +1,8 @@
-import { authService } from "./firebase.js";
 import { viewPost } from "./view-post.js";
 import { viewComments } from "./comments.js";
 import { getPostByLocal } from "./all-post.js";
 import { getDate } from "./util.js";
 import { getBookmarkList } from "./view-bookmark.js";
-
-// export const route = event => {
-//   // 사용자 정보 없으면 a tag의 href 이동 비활성화
-//   const user = authService.currentUser;
-//   if (!user) {
-//     event.preventDefault();
-//   }
-// };
 
 const routes = {
   "/": "/pages/main.html",
@@ -42,7 +33,7 @@ export const handleLocation = async () => {
     }
   }
 
-  console.log("handleLocation:", path);
+  // console.log("handleLocation:", path);
 
   if (path.startsWith("/main-")) {
     const html = await fetch("/pages/main.html").then(data => data.text());
