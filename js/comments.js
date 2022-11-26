@@ -153,7 +153,7 @@ export const modifyComment = event => {
   const preContent = document.getElementById(`preContent-${id}`);
   preContent.classList.add("noDisplay");
 
-  udBtns.forEach(udBtn => (udBtn.style.display = "none")); //수정,삭제 버튼 안보이게
+  event.target.style.display = "none"; //수정,삭제 버튼 안보이게
   doneBtn.style.display = "flex";
   modifying.setAttribute("value", modifying.placeholder);
   preContent.style.display = "none"; //기존 댓글 안보이게
