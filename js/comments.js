@@ -88,25 +88,12 @@ export const viewComments = async path => {
 
     //댓글창이 인풋창이어야 하고 등록을 누르면 사라졌다가 수정을 누르면 다시 나타나게 한다
 
-
     const commentRow = document.createElement("div");
     commentRow.classList.add("comment-row");
     commentRow.innerHTML = tempHtml;
     commentList.appendChild(commentRow);
   });
-
-  // 문서에 있는 모든 삭제 버튼에 이벤트 등록
-  const deleteBtns = document.querySelectorAll(".comment-delete-btn");
-  deleteBtns.forEach((btn) => {
-    btn.addEventListener("click", deleteComment);
-  });
-  // 문서 있는 모든 수정 버튼에 이벤트 등록
-  const modifyBtns = document.querySelectorAll(".comment-modify-btn");
-  modifyBtns.forEach((btn) => {
-    btn.addEventListener("click", deleteComment);
-  });
 };
-
 // 댓글 작성 함수
 const createComment = async path => {
   const postId = path.split("/view-post-")[1];
@@ -167,11 +154,13 @@ export const modifyComment = event => {
   preContent.classList.add("noDisplay");
 
   udBtns.forEach(udBtn => (udBtn.style.display = "none")); //수정,삭제 버튼 안보이게
-  doneBtn.forEach((doneBtn) => (doneBtn.style.display = "flex")); //완료버튼 보이게 지금 안보여!!!!!!!
-  content.description.forEach((contents) => (contents.style.display = "flex"));
+  doneBtn.style.display = "flex";
+  modifying.setAttribute("value", modifying.placeholder);
+  preContent.style.display = "none"; //기존 댓글 안보이게
+  modifying.style.display = "flex";
   modifying.focus();
   //제목 input 내부에 미리 이전 데이터 넣어놓기 textarea는 미리설정이 되는데 input은 안돼서 여기서 설정함
-  console.log(modifying[1].children[0].placeholder); 
+  // console.log(modifying[1].children[0].placeholder);
 };
 
 //수정완료 버튼
@@ -197,8 +186,3 @@ export const updateComment = async event => {
     alert(error);
   }
 };
-
-//댓글창작성 다시 실행
-
-// 저장 버튼으로 변경 -> 저장 누르면 alert(저장하시겠습니까?) -> 저장 -> alert(저장되었습니다.)
-// 저장된 댓글 다시 불러오기 & 수정 삭제 버튼 복귀
