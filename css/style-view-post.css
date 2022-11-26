@@ -144,6 +144,7 @@
   flex-direction: row;
   align-items: center;
   padding-bottom: 20px;
+  justify-content: space-between;
 }
 
 #page-view-post .comment-user {
@@ -151,6 +152,7 @@
   flex-direction: row;
   align-items: center;
   margin-right: 20px;
+  justify-content: space-between;
 }
 
 #page-view-post .comment-profile-img {
@@ -163,8 +165,11 @@
 
 #page-view-post .comment-user-name {
   width: 100px;
+  margin-right: inherit;
+  white-space: nowrap;
 }
 
+/* 댓글내용에 여백을 주고싶다 */
 #page-view-post .comment-description {
   margin-right: 20px;
   width: 380px;
@@ -177,6 +182,8 @@
 
 #page-view-post .comment-create-date {
   margin-right: 20px;
+  margin: 0px 50px;
+  white-space: nowrap;
 }
 
 #page-view-post .new-comment {
