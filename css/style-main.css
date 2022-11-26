@@ -123,17 +123,17 @@ a.fas.fa-mug-hot:hover {
 }
 
 #page-main .bookmark {
-  width: 100px;
+  display: flex;
   text-align: right;
   font-size: 1.25rem;
 }
 
-#page-main .bookmark i {
+#page-main .bookmark a {
   color: var(--color-brown);
   cursor: pointer;
   padding-right: 0.5rem;
 }
-#page-main .bookmark i:hover {
+#page-main .bookmark a:hover {
   color: var(--color-orange);
   transition: 200ms;
 }

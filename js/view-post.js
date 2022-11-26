@@ -93,7 +93,7 @@ export const viewPost = async (path) => {
       </div>
       </div>
       <div class="alignBookBtn">
-        <div class-"bookmark">
+        <div class="bookmark">
           <a name=${id}  class="fas fa-mug-hot" onclick="handleBookmark(event)">
           </a>
           <div id="bookmarkcount">${bookmark}</div>

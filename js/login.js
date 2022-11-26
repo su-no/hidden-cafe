@@ -1,13 +1,5 @@
-// * 추가사항
-// * 1. 회원가입 시, 로그인 성공 및 메인 페이지 이동 (83)
-// * 2. 구글 계정으로 가입하기 기능 구현
-// * 3. 로그인 / 회원가입 유효성 검사 기능 구현
-// * 4. 회원가입 시, 아이디 기억하기 체크박스 감추기 구현
-
-// TODO :
-
 // 이메일, 비밀번호 정규식 포맷 가져오기
-import { emailRegex, pwRegex } from "./regex.js";
+import { emailRegex, pwRegex } from "./util.js";
 
 // firebase getAuth 가져오기
 import { authService } from "./firebase.js";

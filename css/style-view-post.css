@@ -74,8 +74,7 @@
   /* border: 1px solid darkgrey; */
   display: flex;
   justify-content: space-between;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   padding: 1.875rem;
   margin-bottom: 1.875rem;
 }
@@ -86,17 +85,17 @@
 }
 
 #page-view-post .bookmark {
+  display: flex;
   text-align: right;
   font-size: 1.25rem;
 }
 
-#page-view-post .bookmark i {
+#page-view-post .bookmark a {
   color: var(--color-brown);
   cursor: pointer;
-  padding-right: 8px;
+  padding-right: 0.5rem;
 }
-
-#page-view-post .bookmark i:hover {
+#page-view-post .bookmark a:hover {
   color: var(--color-orange);
   transition: 200ms;
 }
@@ -125,15 +124,14 @@
 }
 
 #page-view-post .post-buttons {
-  text-align: right;
+  text-align: center;
 }
 
 #page-view-post .comment-wrapper {
   width: 960px;
   /* padding: 20px; */
   margin: 0 auto 10px auto;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 #page-view-post .comments {
   width: 90%;
@@ -170,7 +168,12 @@
 
 #page-view-post .comment-description {
   margin-right: 20px;
-  width: 400px;
+  width: 380px;
+}
+
+#page-view-post .modifycomment-description {
+  margin-right: 20px;
+  width: 380px;
 }
 
 #page-view-post .comment-create-date {

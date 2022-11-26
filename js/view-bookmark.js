@@ -76,23 +76,24 @@ const getBookmarkPost = async bookmarkList => {
       <div class="post-box">
         <div class="post-container">
           <a href="#view-post-${postObj.postId}">
-            <img class="post-img" src="${postObj.postImg}" alt="post-img" />
-          </a>
-          <div class="alignlocal">
-            <div class="post-content">
+            <img class="post-img" src="${
+              postObj.postImg
+            }" alt="post-img" /> </a>
+            <div class="alignlocal">
+              <div class="post-content">
               <a href="#view-post-${postObj.postId}">
                 <h2 class="title">${postObj.title}</h2>
-                <div class="description">${postObj.contents}</div>
-              </a>
+                <div class="description">${postObj.contents}</div></a>
+              </div>
+              <p class="localname">#${postObj.localname}</p>
             </div>
-            <p class="localname">#${postObj.localname}</p>
-          </div>
         </div>
-        <div class-"bookmark">
-          <a name=${
+        <div class="bookmark">
+          <a id="test" name=${
             postObj.id
-          } class="fas fa-mug-hot" onclick="handleBookmark(event)"></a>
-          ${postObj.bookmark}
+          }  class="fas fa-mug-hot" onclick="handleBookmark(event)">
+          </a>
+          <div id="bookmarkcount">${postObj.bookmark}</div>
         </div>
       </div>
     </article>
