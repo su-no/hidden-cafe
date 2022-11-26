@@ -157,12 +157,13 @@
   width: 30px;
   height: 30px;
   object-fit: cover;
-  margin-right: 20px;
+  margin-right: 10px;
   border-radius: 50%;
 }
 
 #page-view-post .comment-user-name {
-  width: 100px;
+  width: 120px;
+  white-space: nowrap;
 }
 
 #page-view-post .comment-description {
@@ -177,12 +178,13 @@
 
 #page-view-post .comment-create-date {
   margin-right: 20px;
+  white-space: nowrap;
 }
 
 #page-view-post .new-comment {
   padding: 0 4px;
   font-size: 16px;
-  width: 500px;
+  width: 540px;
   height: 30px;
   border: 1px solid darkgrey;
   margin-right: 10px;
