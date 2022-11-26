@@ -85,17 +85,17 @@
 }
 
 #page-view-post .bookmark {
+  display: flex;
   text-align: right;
   font-size: 1.25rem;
 }
 
-#page-view-post .bookmark i {
+#page-view-post .bookmark a {
   color: var(--color-brown);
   cursor: pointer;
-  padding-right: 8px;
+  padding-right: 0.5rem;
 }
-
-#page-view-post .bookmark i:hover {
+#page-view-post .bookmark a:hover {
   color: var(--color-orange);
   transition: 200ms;
 }
@@ -124,7 +124,7 @@
 }
 
 #page-view-post .post-buttons {
-  text-align: right;
+  text-align: center;
 }
 
 #page-view-post .comment-wrapper {
