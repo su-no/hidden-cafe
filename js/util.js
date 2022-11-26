@@ -8,3 +8,8 @@ export const getDate = () => {
   const minuites = String(date.getMinutes()).padStart(2, "0");
   return `${year}-${month}-${day} ${hour}:${minuites}`;
 };
+
+// 정규식 파트
+export const emailRegex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+export const pwRegex =
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{10,}$/;
