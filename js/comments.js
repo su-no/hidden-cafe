@@ -53,42 +53,38 @@ export const viewComments = async (path) => {
   // 댓글 목록을 비우고 하나씩 추가
   const commentList = document.querySelector(".comment-list");
   commentList.innerHTML = "";
-  commentObjList.forEach((commentObj) => {
-    console.log("comment", commentObj.id);
+  commentObjList.forEach(commentObj => {
+    // console.log("comment", commentObj.id);
     const isOwner = user.uid === commentObj["creatorId"];
     const tempHtml = `
-    <div class="comment-user">
-      <img
-        class="comment-profile-img"
-        src="${commentObj.profileUrl ?? "/img/profile-img.png"}"
-        alt="profile-img"
-      />
-      <div class="comment-user-name">${commentObj.nickname}</div>
-      <div id="preContent-${commentObj.id}" class="content">${
-      commentObj.contents
-    }</div>
-      <div class="modifyComment">
-        <input id="modifiedComment-${
-          commentObj.id
-        }" type="text" style="display: none" 
-        placeholder="${commentObj.contents}"/>
-      </div> 
-
-      <div class="comment-create-date">${commentObj.createdAt}</div>
-      <div class="comment-buttons"></div>
-    
-      <button onclick="modifyComment(event)" id=${commentObj.id} name=${
+      <div class="comment-user">
+        <img
+          class="comment-profile-img"
+          src="${commentObj.profileUrl ?? "/img/profile-img.png"}"
+          alt="profile-img"
+        />
+        <div class="comment-user-name">${commentObj.nickname}</div>
+        <div id="preContent-${commentObj.id}" class="content">
+        ${commentObj.contents}
+        </div>
+        <div class="modifyComment">
+          <input id="modifiedComment-${commentObj.id}" 
+          type="text" style="display: none" 
+          placeholder="${commentObj.contents}"/>
+        </div> 
+        <div class="comment-create-date">${commentObj.createdAt}</div>
+        <div class="comment-buttons"></div>
+        <button onclick="modifyComment(event)" id=${commentObj.id} name=${
       commentObj.id
     } class="${isOwner ? "comment-modify-btn" : "noDisplay"}">수정</button>
-      <button onclick="deleteComment(event)" id=${commentObj.commentID} name=${
-      commentObj.id
-    } 
-      class="${isOwner ? "comment-delete-btn" : "noDisplay"}">삭제</button>
-
       <button id="comment-modify-done-btn-${commentObj.id}"  name = "${
       commentObj.id
     }"style="display: none"  onclick="updateComment(event)">완료<button> 
-    </div>`;
+        <button onclick="deleteComment(event)" id=${
+          commentObj.commentID
+        } name=${commentObj.id} 
+        class="${isOwner ? "comment-delete-btn" : "noDisplay"}">삭제</button>
+      </div>`;
     //77줄 id값 바꿈!!
 
     //댓글창이 인풋창이어야 하고 등록을 누르면 사라졌다가 수정을 누르면 다시 나타나게 한다
