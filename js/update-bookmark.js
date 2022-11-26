@@ -1,5 +1,5 @@
 import { authService, dbService } from "./firebase.js";
-
+import { getBookmarkList } from "./view-bookmark.js";
 import {
   doc,
   updateDoc,
@@ -11,29 +11,74 @@ import {
   query,
   where,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
-import { getBookmarkList } from "./view-bookmark.js";
 
 export const handleBookmark = async (event) => {
   event.preventDefault();
   const id = event.target.name;
-  const bookmarkcount =
-    event.currentTarget.parentNode.lastChild.previousSibling;
+  const bookmarkDiv = event.currentTarget.parentNode.lastChild.previousSibling;
   const docRef = doc(dbService, "post", id);
   const bookmark = Number(event.currentTarget.parentNode.innerText);
   const data = { bookmark: bookmark + 1 };
-  // 함수 기능 : 북마크 누르면 + 1
 
+  //
+  const userId = sessionStorage.getItem("user");
+
+  // bookmark 컬렉션 문서에서 userId 필드의 값이 uid와 일치하는 문서 가져오기
+  const q = query(
+    collection(dbService, "bookmark"),
+    where("userId", "==", userId)
+  );
+  const querySnapshot = await getDocs(q);
+  let userDataId; // bookmark 컬렉션에 저장된 유저 문서 id
+  let userData; // 유저 문서의 데이터
+  querySnapshot.forEach((doc) => {
+    userDataId = doc.id;
+    userData = doc.data();
+  });
+  //
+
+  const bookmarkList = userData.bookmarks;
+
+  // * 북마크 삭제 완료 부
+  if (bookmarkList.includes(id)) {
+    await updateDoc(docRef, data)
+      .then((docRef) => {
+        const bookmarkCount = bookmarkDiv; // 북마크 값을 가지고 있는 div
+        const countNum = Number(bookmarkCount.innerText); // 위 div의 innerText를 가져와 숫자로 만듬
+        bookmarkCount.innerText = countNum - 1; // 위에서 만든 값에 + 1을 함
+        console.log("북마크 -1 성공");
+      })
+      .catch((error) => {
+        console.log("북마크 -1 실패");
+      });
+
+    // * 북마크 추가 완료 부
+  } else {
+    await updateDoc(docRef, data)
+      .then((docRef) => {
+        const bookmarkCount = bookmarkDiv; // 북마크 값을 가지고 있는 div
+        const countNum = Number(bookmarkCount.innerText); // 위 div의 innerText를 가져와 숫자로 만듬
+        bookmarkCount.innerText = countNum + 1; // 위에서 만든 값에 + 1을 함
+        console.log("북마크 +1 성공");
+      })
+      .catch((error) => {
+        console.log("북마크 +1 실패");
+      });
+  }
+
+  // 함수 기능 : 북마크 누르면 + 1
   // ! 문제 1 : 첫번째 것만 숫자가 업데이트됨. -> 해결
-  updateDoc(docRef, data)
-    .then((docRef) => {
-      const q = bookmarkcount;
-      const qcountnum = Number(q.innerText);
-      q.innerText = qcountnum + 1;
-      console.log("북마크 성공");
-    })
-    .catch((error) => {
-      console.log("북마크 실패");
-    });
+  // 북마크 -1 기능은 아래 함수로 하면 됨 ( -1로)
+  // updateDoc(docRef, data)
+  //   .then((docRef) => {
+  //     const bookmarkCount = bookmarkDiv; // 북마크 값을 가지고 있는 div
+  //     const countNum = Number(bookmarkCount.innerText); // 위 div의 innerText를 가져와 숫자로 만듬
+  //     bookmarkCount.innerText = countNum + 1; // 위에서 만든 값에 + 1을 함
+  //     console.log("북마크 성공");
+  //   })
+  //   .catch((error) => {
+  //     console.log("북마크 실패");
+  //   });
 
   addToBookmarkList(id);
 };
@@ -67,11 +112,13 @@ const addToBookmarkList = async (postId) => {
   // bookmark 컬렉션에 사용자 문서가 존재하고, 해당 게시글이 존재하지 않으면, 추가
   const bookmarkList = userData.bookmarks;
   const docRef = doc(dbService, "bookmark", userDataId);
+  // * 북마크 삭제 완료 부
   if (bookmarkList.includes(postId)) {
     await updateDoc(docRef, {
       bookmarks: arrayRemove(postId),
     });
     console.log(`postId: ${postId} 북마크 삭제 완료!`);
+    // * 북마크 추가 완료 부
   } else {
     await updateDoc(docRef, {
       bookmarks: arrayUnion(postId),
