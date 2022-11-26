@@ -56,11 +56,8 @@ export const viewPost = async (path) => {
     <div class="post-container">
       <img class="post-img" src="${postImg}" alt="post-img" />
       <div class="alignlocal">
-        
-      <div class="post-content">
-
+        <div class="post-content">
           <div id="title">${title}</div>
-
           <div class="input" style="display: none">
             <input
               id="input-title"
@@ -69,7 +66,6 @@ export const viewPost = async (path) => {
               placeholder="${title}"
             />
           </div>
-
           <div id="description">${contents}</div>
           <div class="input" style="display: none">
             <textarea
