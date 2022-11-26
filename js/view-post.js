@@ -91,7 +91,8 @@ export const viewPost = async (path) => {
       <div class="alignBookBtn">
         <div class-"bookmark">
           <a name=${id}  class="fas fa-mug-hot" onclick="handleBookmark(event)">
-          </a>${bookmark}
+          </a>
+          <div id="bookmarkcount">${bookmark}</div>
         </div>
         <div class="${isOwner ? "post-buttons" : "noDisplay"}">
         <button onclick="onEditing(event)" class="post-modify-btn">수정</button>
