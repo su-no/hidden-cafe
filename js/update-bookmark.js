@@ -12,7 +12,7 @@ import {
   where,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 
-export const handleBookmark = async event => {
+export const handleBookmark = async (event) => {
   event.preventDefault();
   const id = event.target.name;
   const bookmarkDiv = event.currentTarget.parentNode.lastChild.previousSibling;
@@ -25,12 +25,12 @@ export const handleBookmark = async event => {
   // bookmark 컬렉션 문서에서 userId 필드의 값이 uid와 일치하는 문서 가져오기
   const q = query(
     collection(dbService, "bookmark"),
-    where("userId", "==", userId),
+    where("userId", "==", userId)
   );
   const querySnapshot = await getDocs(q);
   let userDataId; // bookmark 컬렉션에 저장된 유저 문서 id
   let userData; // 유저 문서의 데이터
-  querySnapshot.forEach(doc => {
+  querySnapshot.forEach((doc) => {
     userDataId = doc.id;
     userData = doc.data();
   });
@@ -42,13 +42,13 @@ export const handleBookmark = async event => {
   if (bookmarkList.includes(id)) {
     const data = { bookmark: bookmark - 1 };
     await updateDoc(docRef, data)
-      .then(docRef => {
+      .then((docRef) => {
         const bookmarkCount = bookmarkDiv; // 북마크 값을 가지고 있는 div
         const countNum = Number(bookmarkCount.innerText); // 위 div의 innerText를 가져와 숫자로 만듬
         bookmarkCount.innerText = countNum - 1; // 위에서 만든 값에 + 1을 함
         console.log("북마크 -1 성공");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log("북마크 -1 실패");
       });
 
@@ -56,13 +56,13 @@ export const handleBookmark = async event => {
   } else {
     const data = { bookmark: bookmark + 1 };
     await updateDoc(docRef, data)
-      .then(docRef => {
+      .then((docRef) => {
         const bookmarkCount = bookmarkDiv; // 북마크 값을 가지고 있는 div
         const countNum = Number(bookmarkCount.innerText); // 위 div의 innerText를 가져와 숫자로 만듬
         bookmarkCount.innerText = countNum + 1; // 위에서 만든 값에 + 1을 함
         console.log("북마크 +1 성공");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log("북마크 +1 실패");
       });
   }
@@ -85,19 +85,19 @@ export const handleBookmark = async event => {
 };
 
 // 북마크 업데이트 시, 현재 사용자의 bookmark 컬렉션에 게시글을 추가한다.
-const handleBookmarkList = async postId => {
+const handleBookmarkList = async (postId) => {
   // 현재 사용자 uid
   const userId = sessionStorage.getItem("user");
 
   // bookmark 컬렉션 문서에서 userId 필드의 값이 uid와 일치하는 문서 가져오기
   const q = query(
     collection(dbService, "bookmark"),
-    where("userId", "==", userId),
+    where("userId", "==", userId)
   );
   const querySnapshot = await getDocs(q);
   let userDataId; // bookmark 컬렉션에 저장된 유저 문서 id
   let userData; // 유저 문서의 데이터
-  querySnapshot.forEach(doc => {
+  querySnapshot.forEach((doc) => {
     userDataId = doc.id;
     userData = doc.data();
   });

@@ -51,6 +51,7 @@ const getFirebaseDocs = async (q) => {
 
   // 게시글 DOM들을 추가할 컨테이너
   const postList = document.getElementById("container");
+  //로그인 시 저장한 세션 데이터 가져오기
   const sessionUser = sessionStorage.getItem("user");
   const sessionUserProfile = sessionStorage.getItem("userProfile");
   const sessionUserNickname = sessionStorage.getItem("userNickname");

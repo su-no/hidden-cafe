@@ -14,7 +14,7 @@ import { getDate } from "./util.js";
 import { viewPost } from "./view-post.js";
 
 // Firebase DB에서 댓글 불러와서 보여주는 함수
-export const viewComments = async path => {
+export const viewComments = async (path) => {
   const postId = path.split("/view-post-")[1];
   // 댓글 작성자 프로필이미지, 닉네임 가져오기
   const user = authService.currentUser;
@@ -35,10 +35,14 @@ export const viewComments = async path => {
   };
 
   // Firebase에서 해당 게시글의 댓글 받아오기
-  const q = query(collection(dbService, "comment"), where("postId", "==", postId), orderBy("createdAt"));
+  const q = query(
+    collection(dbService, "comment"),
+    where("postId", "==", postId),
+    orderBy("createdAt")
+  );
   const querySnapshot = await getDocs(q);
   const commentObjList = [];
-  querySnapshot.forEach(doc => {
+  querySnapshot.forEach((doc) => {
     const commentObj = {
       id: doc.id,
       ...doc.data(),
@@ -48,16 +52,29 @@ export const viewComments = async path => {
 
   // 댓글 목록을 비우고 하나씩 추가
   const commentList = document.querySelector(".comment-list");
+  const sessionUser = sessionStorage.getItem("user");
+  const sessionUserProfile = sessionStorage.getItem("userProfile");
+  const sessionUserNickname = sessionStorage.getItem("userNickname");
   commentList.innerHTML = "";
-  commentObjList.forEach(commentObj => {
-    // console.log("comment", commentObj.id);
+  commentObjList.forEach((commentObj) => {
+    console.log("comment", commentObj);
     const isOwner = user.uid === commentObj["creatorId"];
     const tempHtml = `
     <div class="comment-user">
-      <img class="comment-profile-img" src="${commentObj.profileUrl ?? "/img/profile-img.png"}" alt="profile-img" />
-      <div class="comment-user-name">${commentObj.nickname}</div>
+      <img class="comment-profile-img" src=${
+        commentObj.creatorId === sessionUser
+          ? sessionUserProfile
+          : commentObj.profileUrl ?? "/img/profile-img.png"
+      } alt="profile-img" />
+      <div class="comment-user-name">${
+        commentObj.creatorId === sessionUser
+          ? sessionUserNickname
+          : commentObj.nickname ?? commentObj.email.split("@")[0]
+      }</div>
     </div>
-    <div id="preContent-${commentObj.id}" class="comment-description">${commentObj.contents}</div>
+    <div id="preContent-${commentObj.id}" class="comment-description">${
+      commentObj.contents
+    }</div>
     <div class="modifyComment">
       <input
         id="modifiedComment-${commentObj.id}"
@@ -69,9 +86,9 @@ export const viewComments = async path => {
     </div>
     <div class="comment-create-date">${commentObj.createdAt}</div>
     <div class="comment-buttons"></div>
-    <button onclick="modifyComment(event)" id=${commentObj.id} name=${commentObj.id} class="${
-      isOwner ? "comment-modify-btn" : "noDisplay"
-    }">수정
+    <button onclick="modifyComment(event)" id=${commentObj.id} name=${
+      commentObj.id
+    } class="${isOwner ? "comment-modify-btn" : "noDisplay"}">수정
     <button
       id="comment-modify-done-btn-${commentObj.id}"
       name="${commentObj.id}"
@@ -79,7 +96,9 @@ export const viewComments = async path => {
       onclick="updateComment(event)"
     >
       완료<button>
-        <button onclick="deleteComment(event)" id=${commentObj.commentID} name=${commentObj.id} class="${
+        <button onclick="deleteComment(event)" id=${
+          commentObj.commentID
+        } name=${commentObj.id} class="${
       isOwner ? "comment-delete-btn" : "noDisplay"
     }">삭제
       </button>
@@ -95,7 +114,7 @@ export const viewComments = async path => {
   });
 };
 // 댓글 작성 함수
-const createComment = async path => {
+const createComment = async (path) => {
   const postId = path.split("/view-post-")[1];
   const user = authService.currentUser;
 
@@ -121,7 +140,7 @@ const createComment = async path => {
     .catch(console.error);
 };
 //댓글 삭제
-export const deleteComment = async event => {
+export const deleteComment = async (event) => {
   const commentID = event.target.name;
   const ok = window.confirm("정말 삭제하시겠습니까?");
   if (ok) {
@@ -139,7 +158,7 @@ export const deleteComment = async event => {
 };
 
 // 수정버튼 클릭
-export const modifyComment = event => {
+export const modifyComment = (event) => {
   // console.log(event.currentTarget.id);
 
   event.preventDefault();
@@ -164,11 +183,13 @@ export const modifyComment = event => {
 };
 
 //수정완료 버튼
-export const updateComment = async event => {
+export const updateComment = async (event) => {
   event.preventDefault();
   const id = event.currentTarget.name;
   // console.log(id);
-  const modifiedComment = document.getElementById(`modifiedComment-${id}`).value; //textarea 삽입, 수정 내용
+  const modifiedComment = document.getElementById(
+    `modifiedComment-${id}`
+  ).value; //textarea 삽입, 수정 내용
   const postId = event.target.id; //firebase "post"컬렉션의 문서 id --> 필요없음
   // console.log(modifiedComment);
 
