@@ -34,11 +34,11 @@ export const postUpload = async (event) => {
   }
 
   // document.getElementById("post").disabled = true;
-  const alertM = document.getElementById("alert");
-
   // if (title.value && post.value && response) {
   // console.log(downloadUrl);
   // console.log(document.getElementById("preview-image").src);
+
+  const alertM = document.getElementById("alert");
 
   if (title.value.length === 0) {
     alertM.innerHTML = "제목을 추가하세요";

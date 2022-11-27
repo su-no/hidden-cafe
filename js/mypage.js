@@ -20,20 +20,37 @@ import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 export const changeProfile = async (event) => {
   event.preventDefault();
   document.getElementById("profileBtn").disabled = true;
-  const sessionUser = sessionStorage.getItem("user");
   let postObjList = [];
-  const q = query(
+  const commentObjList = [];
+  const q_post = query(
     collection(dbService, "post"),
     where("creatorId", "==", authService.currentUser.uid)
   );
-  const querySnapshot = await getDocs(q);
 
-  querySnapshot.forEach((doc) => {
+  const q_comment = query(
+    collection(dbService, "comment"),
+    where("creatorId", "==", authService.currentUser.uid)
+    // orderBy("createdAt")
+  );
+  const querySnapshot_post = await getDocs(q_post);
+  const querySnapshot_comment = await getDocs(q_comment);
+
+  //post collection에서의 프로필, 닉네임 변경을 위함
+  querySnapshot_post.forEach((doc) => {
     const postObj = {
       id: doc.id,
       ...doc.data(),
     };
     postObjList.push(postObj);
+  });
+
+  //comment collection에서의 프로필, 닉네임 변경을 위함
+  querySnapshot_comment.forEach((doc) => {
+    const commentObj = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    commentObjList.push(commentObj);
   });
 
   const imgRef = ref(
@@ -48,11 +65,20 @@ export const changeProfile = async (event) => {
     const response = await uploadString(imgRef, imgProfileUrl, "data_url");
     downloadUrl = await getDownloadURL(response.ref);
   }
+  //post collection 업데이트
   postObjList.forEach((postObj) => {
     const docRef = doc(dbService, "post", postObj.id);
     const data = { nickname: newNickname, profileImg: downloadUrl };
-    updateDoc(docRef, data).then(() => console.log("데이터 성공"));
+    updateDoc(docRef, data).then(() => console.log("post 데이터 성공"));
   });
+  //comment 콜렉션 업데이트
+  commentObjList.forEach((commentObj) => {
+    // console.log(commentObj);
+    const docRef = doc(dbService, "comment", commentObj.id);
+    const data = { nickname: newNickname, profileUrl: downloadUrl };
+    updateDoc(docRef, data).then(() => console.log("comment 데이터 성공"));
+  });
+
   //닉네임이 빈칸이면 이전 닉네임으로 설정
   window.sessionStorage.setItem(
     "userNickname",

@@ -13,11 +13,15 @@ export const getBookmarkList = async () => {
   const userId = sessionStorage.getItem("user");
 
   // bookmark 문서 중 userId 필드가 일치하는 문서 가져오기
-  const q = query(collection(dbService, "bookmark"), where("userId", "==", userId));
+
+  const q = query(
+    collection(dbService, "bookmark"),
+    where("userId", "==", userId)
+  );
   const querySnapshot = await getDocs(q);
   // 일치하는 문서의 bookmarks 필드 가져오기
   let bookmarkList;
-  querySnapshot.forEach(doc => {
+  querySnapshot.forEach((doc) => {
     bookmarkList = doc.data().bookmarks;
   });
 
@@ -35,7 +39,7 @@ export const getBookmarkList = async () => {
 };
 
 // 북마크 리스트에서 게시글 하나씩 DOM에 추가하기
-const getBookmarkPost = async bookmarkList => {
+const getBookmarkPost = async (bookmarkList) => {
   const postList = document.getElementById("container");
   postList.innerHTML = "";
   const sessionUser = sessionStorage.getItem("user");
@@ -79,7 +83,9 @@ const getBookmarkPost = async bookmarkList => {
       <div class="post-box">
         <div class="post-container">
           <a href="#view-post-${postObj.postId}">
-            <img class="post-img" src="${postObj.postImg}" alt="post-img" /> </a>
+            <img class="post-img" src="${
+              postObj.postImg
+            }" alt="post-img" /> </a>
             <div class="alignlocal">
               <div class="post-content">
               <a href="#view-post-${postObj.postId}">
@@ -90,7 +96,9 @@ const getBookmarkPost = async bookmarkList => {
             </div>
         </div>
         <div class="bookmark">
-          <a id="test" name=${postObj.id}  class="fas fa-mug-hot" onclick="handleBookmark(event)">
+          <a id="test" name=${
+            postObj.id
+          }  class="fas fa-mug-hot" onclick="handleBookmark(event)">
           </a>
           <div id="bookmarkcount">${postObj.bookmark}</div>
         </div>
