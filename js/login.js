@@ -177,9 +177,9 @@ export const onLoginButton = event => {
     window.location.hash = "main";
     console.log("로그아웃 성공!");
     //세션초기화
-    window.sessionStorage.setItem("user", "");
-    window.sessionStorage.setItem("userProfile", "");
-    window.sessionStorage.setItem("userNickname", "");
-    window.sessionStorage.setItem("userEmail", "");
+    window.sessionStorage.removeItem("user");
+    window.sessionStorage.removeItem("userProfile");
+    window.sessionStorage.removeItem("userNickname");
+    window.sessionStorage.removeItem("userEmail");
   }
 };
