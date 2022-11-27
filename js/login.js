@@ -2,20 +2,23 @@
 import { emailRegex, pwRegex } from "./util.js";
 
 // firebase getAuth 가져오기
-import { authService } from "./firebase.js";
+import { authService, dbService } from "./firebase.js";
+
+import {
+  addDoc,
+  collection,
+} from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
-  signInWithRedirect,
-  signOut,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
 
 // 로그인 / 회원가입 (로그인 성공 시 메인 화면으로 이동)
-export const handleAuth = (event) => {
+export const handleAuth = event => {
   event.preventDefault();
   const email = document.getElementById("email");
   const emailVal = email.value;
@@ -38,25 +41,22 @@ export const handleAuth = (event) => {
   const authBtnText = document.querySelector("#authBtn").value;
   if (authBtnText === "로그인") {
     signInWithEmailAndPassword(authService, emailVal, pwVal)
-      .then((userCredential) => {
+      .then(userCredential => {
         // Signed in
         const user = userCredential.user;
-        console.log("user:", user);
-        console.log(authService.currentUser);
+        // console.log("user:", user);
+        // console.log(authService.currentUser);
         //세션설정
         window.sessionStorage.setItem("user", user.uid);
-        window.sessionStorage.setItem(
-          "userProfile",
-          user.photoURL ?? "/img/profile-img.png"
-        );
+        window.sessionStorage.setItem("userProfile", user.photoURL ?? "/img/profile-img.png");
         window.sessionStorage.setItem(
           "userNickname",
-          user.displayName ?? authService.currentUser.email.split("@")[0]
+          user.displayName ?? authService.currentUser.email.split("@")[0],
         );
         window.sessionStorage.setItem("userEmail", user.email);
         window.location.hash = "main";
       })
-      .catch((error) => {
+      .catch(error => {
         const errorMessage = error.message;
         console.log("errorMessage:", errorMessage);
         if (errorMessage.includes("user-not-found")) {
@@ -77,24 +77,28 @@ export const handleAuth = (event) => {
       return;
     }
     if (matchedPw === null) {
-      alert(
-        "비밀번호는 10자리 이상이어야 하고 영문자, 숫자, 특수문자를 모두 포함해야 합니다."
-      );
+      alert("비밀번호는 10자리 이상이어야 하고 영문자, 숫자, 특수문자를 모두 포함해야 합니다.");
       pw.focus();
       return;
     }
     // 회원가입 버튼 클릭의 경우
     createUserWithEmailAndPassword(authService, emailVal, pwVal)
-      .then((userCredential) => {
+      .then(userCredential => {
         // Signed in
         // 초기 닉네임, 프로필사진 설정
         authService.currentUser.displayName = emailVal.split("@")[0];
         authService.currentUser.photoURL = "/img/profile-img.png";
         console.log("회원가입 성공!");
-        const user = userCredential.user;
+
+        // 사용자 컬렉션 생성
+        addDoc(collection(dbService, "bookmark"), {
+          userId: authService.currentUser.uid,
+          bookmarks: [],
+        });
+
         window.location.hash = "main";
       })
-      .catch((error) => {
+      .catch(error => {
         const errorMessage = error.message;
         console.log("errorMessage:", errorMessage);
         if (errorMessage.includes("email-already-in-use")) {
@@ -105,14 +109,14 @@ export const handleAuth = (event) => {
 };
 
 // 구글 로그인
-export const socialLogin = (event) => {
+export const socialLogin = event => {
   const { name } = event.target;
   let provider;
   if (name === "google") {
     provider = new GoogleAuthProvider();
   }
   signInWithPopup(authService, provider)
-    .then((result) => {
+    .then(result => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
@@ -126,7 +130,7 @@ export const socialLogin = (event) => {
       console.log("로그인 성공!");
       window.location.hash = "main";
     })
-    .catch((error) => {
+    .catch(error => {
       // Handle Errors here.
       console.log("error:", error);
       const errorCode = error.code;
@@ -153,7 +157,7 @@ export const onToggle = () => {
 };
 
 // 로그인 상태에 따라 로그인, 로그아웃 버튼 구현
-onAuthStateChanged(authService, (user) => {
+onAuthStateChanged(authService, user => {
   const loginBtn = document.querySelector("header .btn-login");
   if (user) {
     loginBtn.textContent = "로그아웃";
@@ -163,7 +167,7 @@ onAuthStateChanged(authService, (user) => {
 });
 
 // 로그인, 로그아웃 버튼 클릭시 핸들 함수
-export const onLoginButton = (event) => {
+export const onLoginButton = event => {
   // 로그인 버튼일 경우, 페이지 이동
   if (event.target.textContent === "로그인") {
     window.location.hash = event.target.hash;
